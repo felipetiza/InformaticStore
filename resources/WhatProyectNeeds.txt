@@ -7,3 +7,27 @@ Según lo explicado en clase antes del día 17 de Enero de 2017 debéis entregar
 - Bocetos de las pantallas que tendrá la aplicación (usando NinjaMock u otra aplicació similar)
 
 En cuanto tengáis esto (si es antes mejor) podemos proceder a revisarlo y seguir adelante.
+
+
+
+
+
+Proyecto final JD
+-------------------
+Crear proyecto en Github y ser constante subiendo
+17 Enero lo quiere por escrito    Documento sobre como ira (pantallas que tendra)
+
+                                  tablas (5 min)
+                                  entidad relacion
+LOGIN
+--------
+- Redirigir     header("Location: index.php");
+- Login: password con md5 y prepare() + bind_param()
+- Prevenir ataques
+
+CREATE TABLE USUARIO (USERNAME VARCHAR2(50), PASSWORD VARCHAR2(64));
+INSERT INTO USUARIO VALUES("correo", md5("123456"));
+INSERT INTO USUARIO VALUES("correo", sha2("123456"));
+
+Estructura de MundoInformatica - Para tabla Pedidos hacerlo mejor con Sesiones
+Todo nombre minusculas, sin ñ y sin acentos
