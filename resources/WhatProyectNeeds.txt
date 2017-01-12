@@ -10,6 +10,8 @@ En cuanto tengáis esto (si es antes mejor) podemos proceder a revisarlo y segui
 
 
 
+como se llama el mundo de one piece? Grand Line
+
 
 
 Proyecto final JD
@@ -20,8 +22,12 @@ Crear proyecto en Github y ser constante subiendo
                                   tablas (5 min)
                                   entidad relacion
 
+- Mejora: [Clientes] Los clientes tengan dinero y al comprar se les reste
+- Mejora: [Admin] Meter tabla contabilidad: Llevar las ganancias de la tienda. Los gastos de los proveedores.
+- Mejora: Cambiar el idioma segun el usuario. Guardar atributo en la BD.
 - Desloguear
-- Comentarios grandes
+- Comentarios grandes en el codigo
+- Escribir comentarios en las funciones
 
 LOGIN
 --------
