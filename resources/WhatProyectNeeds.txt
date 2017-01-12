@@ -19,11 +19,16 @@ Crear proyecto en Github y ser constante subiendo
 
                                   tablas (5 min)
                                   entidad relacion
+
+- Desloguear
+- Comentarios grandes
+
 LOGIN
 --------
 - Redirigir     header("Location: index.php");
-- Login: password con md5 y prepare() + bind_param()
-- Prevenir ataques
+- Login: password con md5 y prepare() + bind_param()        http://php.net/manual/es/mysqli.prepare.php
+- Prevenir ataques SQLi, CSRF y XSS
+- Guardar pass cifradas
 
 CREATE TABLE USUARIO (USERNAME VARCHAR2(50), PASSWORD VARCHAR2(64));
 INSERT INTO USUARIO VALUES("correo", md5("123456"));
