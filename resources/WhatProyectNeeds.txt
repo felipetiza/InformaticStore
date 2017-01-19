@@ -15,6 +15,7 @@ Crear proyecto en Github y ser constante subiendo
 
 LOGIN
 --------
+- Poner el login dentro del menu, en forma de ventana emergente o de alguna manera
 - Redirigir     header("Location: index.php");
 - Login: password con md5 y prepare() + bind_param()        http://php.net/manual/es/mysqli.prepare.php
 - Prevenir ataques SQLi, CSRF y XSS
