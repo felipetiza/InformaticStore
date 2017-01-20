@@ -1,52 +1,81 @@
-<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <title>Login</title>
+    <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
 
     <?php
+        include_once "db_connection.php";
+
         if (isset($_POST["user"])) {
 
-            $connection = new mysqli("localhost", "tf", "123456", "tf");
+            $user = $_POST['user'];
+            $pass = $_POST['pass'];
 
-            if ($connection->connect_errno) {
-                printf("Connection failed: %s\n", $connection->connect_error);
-                exit();
+            $login = "SELECT idcustomer
+                      FROM customer
+                      WHERE username = ? AND
+                            password = ?;
+                     ";
+
+            if ($query = $connection->prepare($login)) {
+
+                $query->bind_param("ss", $user, $pass);
+                $query->execute();
+                $query->bind_result($person);
+                $query->fetch();
+
+                if(!empty($person)){
+                    header('Location: menu.php');
+                }else
+                    echo "Invalid Login";
+
+                $query->close();
             }
-
-            //Password coded with md5 at the database. Look for better options
-            $consulta="select * from usuario where
-            username='".$_POST["user"]."' and password=md5('".$_POST["password"]."');";
-
-            //Test if the query was correct
-            //SQL Injection Possible
-            //Check http://php.net/manual/es/mysqli.prepare.php for more security
-            if ($result = $connection->query($consulta)) {
-
-                //No rows returned
-                if ($result->num_rows === 0) {
-                    echo "LOGIN INVALIDO";
-                } else {
-                    //VALID LOGIN. SETTING SESSION VARS
-                    $_SESSION["user"]     = $_POST["user"];
-                    $_SESSION["language"] = "es";
-
-                    header("Location: index.php");
-                }
-
-            }else
-                echo "Wrong Query";
         }
     ?>
 
-    <form action="login.php" method="post">
-        <p><input name="user" required></p>
-        <p><input name="password" type="password" required></p>
-        <p><input type="submit" value="Log In"></p>
+    <img id="logo" src="resources/img/logo.png">
+    <form class='login' method="post">
+        <div>
+            <label>Username</label>
+            <input name="user" type="text" required>
+        </div>
+        <div>
+            <label>Password</label>
+            <input name="pass" type="password" required>
+        </div>
+        <div>
+            <input type="submit" value="Log In">
+        </div>
+        <div>Don't have an account? <a href="sign_up.php">Sign Up</a></div>
     </form>
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

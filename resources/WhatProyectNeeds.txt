@@ -6,6 +6,19 @@ Crear proyecto en Github y ser constante subiendo
                                   tablas (5 min)
                                   entidad relacion
 
+PONER ENLACE a Crear User y al Menu
+Poner iconos en lugar de texto
+cambiar el logo de colorines con CSS
+
+Login   Funcion prepare()
+        Sesiones
+        Pass en SHA2
+        Cuadrado - Stay logged in
+
+QUIERO REDIRECCIONAR
+
+
+
 - Mejora: [Clientes] Los clientes tengan dinero y al comprar se les reste
 - Mejora: [Admin] Meter tabla contabilidad: Llevar las ganancias de la tienda. Los gastos de los proveedores.
 - Mejora: Cambiar el idioma segun el usuario. Guardar atributo en la BD.
@@ -27,3 +40,9 @@ INSERT INTO USUARIO VALUES("correo", sha2("123456"));
 
 Estructura de MundoInformatica - Para tabla Pedidos hacerlo mejor con Sesiones
 Todo nombre minusculas, sin ñ y sin acentos
+
+
+
+SHOPPINGCART - En esta tabla inserto los datos de los productos durante el tiempo que dure la compra. Una el cliente haya comprado, borro de esta tabla los productos asociados a dicho cliente
+
+- Todas las restricciones serán del lado del cliente para ahorrar trabajo de produccion al servidor.
