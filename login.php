@@ -41,11 +41,11 @@
     <img id="logo" src="resources/img/logo.png">
     <form class='login' method="post">
         <div>
-            <label>Username</label>
+            <img width="32" src="resources/img/user.png">
             <input name="user" type="text" required>
         </div>
         <div>
-            <label>Password</label>
+            <img width="32" src="resources/img/pass.png">
             <input name="pass" type="password" required>
         </div>
         <div>

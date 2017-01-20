@@ -1,22 +1,6 @@
-Proyecto final JD
--------------------
-Crear proyecto en Github y ser constante subiendo
-17 Enero lo quiere por escrito    Documento sobre como ira (pantallas que tendra)
-
-                                  tablas (5 min)
-                                  entidad relacion
-
-PONER ENLACE a Crear User y al Menu
-Poner iconos en lugar de texto
-cambiar el logo de colorines con CSS
-
 Login   Funcion prepare()
         Sesiones
         Pass en SHA2
-        Cuadrado - Stay logged in
-
-QUIERO REDIRECCIONAR
-
 
 
 - Mejora: [Clientes] Los clientes tengan dinero y al comprar se les reste
@@ -29,14 +13,7 @@ QUIERO REDIRECCIONAR
 LOGIN
 --------
 - Poner el login dentro del menu, en forma de ventana emergente o de alguna manera
-- Redirigir     header("Location: index.php");
-- Login: password con md5 y prepare() + bind_param()        http://php.net/manual/es/mysqli.prepare.php
 - Prevenir ataques SQLi, CSRF y XSS
-- Guardar pass cifradas
-
-CREATE TABLE USUARIO (USERNAME VARCHAR2(50), PASSWORD VARCHAR2(64));
-INSERT INTO USUARIO VALUES("correo", md5("123456"));
-INSERT INTO USUARIO VALUES("correo", sha2("123456"));
 
 Estructura de MundoInformatica - Para tabla Pedidos hacerlo mejor con Sesiones
 Todo nombre minusculas, sin ñ y sin acentos
