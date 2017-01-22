@@ -1,0 +1,29 @@
+*{
+	font-family: sans-serif;
+	font-size: 12px;
+	color: #798e94;
+}
+body{
+	background: #E2ECEE;
+	width: 80%;
+	margin: 50px auto;
+}
+#menu{
+	height: 350px;
+	border: 1px solid #CED5D7;
+	border-radius: 6px;
+	padding: 45px 45px 20px;
+	margin: -20px auto;
+	background: white;
+	box-shadow: 0px 5px 10px #B5C1C5, 0 0 0 10px #EEF5F7 inset;
+}
+label {
+  width: 100px;
+  display: inline-block;
+}
+#form{
+
+}
+#form div{
+	padding-top: 5px;
+}

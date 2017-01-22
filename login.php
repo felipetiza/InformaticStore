@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
     <title>Login</title>
     <link rel="stylesheet" href="css/login.css">
 </head>
@@ -29,6 +28,8 @@
                 $query->fetch();
 
                 if(!empty($person)){
+                    session_start();
+                    $_SESSION["iduser"] = $person;
                     header('Location: menu.php');
                 }else
                     echo "Invalid Login";

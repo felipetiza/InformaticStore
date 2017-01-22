@@ -1,7 +1,22 @@
-Login   Funcion prepare()
-        Sesiones
-        Pass en SHA2
+JD - Se puede usar JavaScript en lugar de PHP en algunos sitios
+     A la hora de obtener campos de un form, en vez de enviarlos al mismo fichero por POST, mejor con JS
+   - La funcion prepare() que evita SQLi, solo es para el login o tmb se deberia poner
+     en los campos de insertar (clientes, productos, ...)
+   - Es mejor hacer el proyecto 1 solo lenguaje para no mezclar? O en cambio si hay cosas que se puede hacer de forma mas facil en JS por ejemplo, usarlo como 2º lenguaje
 
+Como insertar usuario desde sign_up.php
+PONER DISEÑO AL MENÚ
+Ver como poner CSS en comun en distintos ficheros css
+
+
+M
+V   HTML y CSS
+C   PHP
+
+
+Login   Funcion prepare()   X
+        sesiones            X
+        Pass en SHA2
 
 - Mejora: [Clientes] Los clientes tengan dinero y al comprar se les reste
 - Mejora: [Admin] Meter tabla contabilidad: Llevar las ganancias de la tienda. Los gastos de los proveedores.
@@ -23,3 +38,23 @@ Todo nombre minusculas, sin ñ y sin acentos
 SHOPPINGCART - En esta tabla inserto los datos de los productos durante el tiempo que dure la compra. Una el cliente haya comprado, borro de esta tabla los productos asociados a dicho cliente
 
 - Todas las restricciones serán del lado del cliente para ahorrar trabajo de produccion al servidor.
+
+
+Ejemplo Bootstrap
+https://github.com/pekechis/teaching_examples/tree/master/CSS/BootStrap_Example
+
+Subir imagenes al servidor
+https://github.com/pekechis/teaching_examples/blob/master/Php/Passing_Info/upload_image.php
+
+
+
+
+
+
+
+
+
+
+
+
+
