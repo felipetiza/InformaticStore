@@ -1,7 +1,5 @@
 JD - Se puede usar JavaScript en lugar de PHP en algunos sitios
      A la hora de obtener campos de un form, en vez de enviarlos al mismo fichero por POST, mejor con JS
-   - La funcion prepare() que evita SQLi, solo es para el login o tmb se deberia poner
-     en los campos de insertar (clientes, productos, ...)
    - Es mejor hacer el proyecto 1 solo lenguaje para no mezclar? O en cambio si hay cosas que se puede hacer de forma mas facil en JS por ejemplo, usarlo como 2º lenguaje
 
 Como insertar usuario desde sign_up.php
