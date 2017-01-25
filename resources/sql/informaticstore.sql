@@ -2,13 +2,11 @@ DROP DATABASE IF EXISTS `informaticstore`;
 CREATE DATABASE IF NOT EXISTS `informaticstore`;
 USE `informaticstore`;
 
-
    set storage_engine = InnoDB;
 -- set storage_engine = MyISAM;
 -- set storage_engine = Falcon;
 -- set storage_engine = PBXT;
 -- set storage_engine = Maria;
-
 
 CREATE USER IF NOT EXISTS 'informatic'@'localhost' IDENTIFIED BY 'store';
 GRANT ALL PRIVILEGES ON informaticstore.* TO 'informatic'@'localhost';
