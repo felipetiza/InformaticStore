@@ -10,46 +10,47 @@
         include_once "db_connection.php";
 
         if (isset($_POST["user"])) {
+            $name    = $_POST['name'];
+            $surname = $_POST['surname'];
+            $email   = $_POST['email'];
+            $address = $_POST['address'];
+            $phone   = $_POST['phone'];
+            $type    = "User";
+            $user    = $_POST['user'];
+            $pass    = $_POST['pass'];
 
-            $login = "SELECT *
-                      FROM customer
-                      WHERE username = '{$_POST['user']}' AND
-                            password = '{$_POST['pass']}';
-                     ";
-
-            if ($result = $connection->query($login)) {
-
-                if ($result->num_rows > 0) {
-                    header('Location: menu.php');
-                } else{
-                    // echo "Invalid Login";
-                }
+            $insert = "INSERT INTO customer
+                       VALUES(NULL, '$name', '$surname', '$email', '$address', '$phone', '$type', '$user', '$pass');
+                      ";
+            if ($result = $connection->query($insert)) {
+                sleep(5);
+                header('Location: login.php');
             }else
                 echo "Wrong Query";
         }
     ?>
 
 	<div id="menu">
-		<div id="form">
+		<form method="post">
 			<div>
             	<label>Name</label>
-            	<input name="user" type="text" required>
+            	<input name="name" type="text" required>
         	</div>
         	<div>
             	<label>Surname</label>
-            	<input name="user" type="text" required>
+            	<input name="surname" type="text" required>
         	</div>
         	<div>
             	<label>Email</label>
-            	<input name="user" type="text" required>
+            	<input name="email" type="text" required>
         	</div>
         	<div>
             	<label>Address</label>
-            	<input name="user" type="text" required>
+            	<input name="address" type="text" required>
         	</div>
         	<div>
             	<label>Phone</label>
-            	<input name="user" type="text" required>
+            	<input name="phone" type="text" required>
         	</div>
         	<div>
             	<label>Username</label>
@@ -57,9 +58,12 @@
         	</div>
         	<div>
             	<label>Password</label>
-            	<input name="user" type="text" required>
+            	<input name="pass" type="text" required>
         	</div>
-		</div>
+            <div>
+                <input type="submit" value="Sign up">
+            </div>
+		</form>
 
 
 	</div>
