@@ -30,35 +30,38 @@
         }
     ?>
 
-	<div id="menu">
+	<div id="wrapper">
+        <h1>Create an account</h1>
+        <hr>
+        <br>
 		<form method="post">
 			<div>
             	<label>Name</label>
-            	<input name="name" type="text" required>
+            	<input name="name" type="text" maxlength="25" required>
         	</div>
         	<div>
             	<label>Surname</label>
-            	<input name="surname" type="text" required>
+            	<input name="surname" type="text" maxlength="50" required>
         	</div>
         	<div>
             	<label>Email</label>
-            	<input name="email" type="text" required>
+            	<input name="email" type="email" maxlength="45" required>
         	</div>
         	<div>
             	<label>Address</label>
-            	<input name="address" type="text" required>
+            	<input name="address" type="text" maxlength="100" required>
         	</div>
         	<div>
             	<label>Phone</label>
-            	<input name="phone" type="text" required>
+            	<input name="phone" type="tel" pattern="[0-9]{9}" required>
         	</div>
         	<div>
             	<label>Username</label>
-            	<input name="user" type="text" required>
+            	<input name="user" type="text" maxlength="40" required>
         	</div>
         	<div>
             	<label>Password</label>
-            	<input name="pass" type="text" required>
+            	<input name="pass" type="password" maxlength="20" required>
         	</div>
             <div>
                 <input type="submit" value="Sign up">
