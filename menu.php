@@ -19,8 +19,13 @@
 	 //    }
 	?>
 
-	<div id="menu">
-		Menu
+	<div id="wrapper">
+		<h1>Menu</h1>
+        <hr>
+        <br>
+		<div id="content">
+
+		</div>
 	</div>
 
 

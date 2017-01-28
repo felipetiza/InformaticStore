@@ -3,8 +3,12 @@ JD - Se puede usar JavaScript en lugar de PHP en algunos sitios
    - Es mejor hacer el proyecto 1 solo lenguaje para no mezclar? O en cambio si hay cosas que se puede hacer de forma mas facil en JS por ejemplo, usarlo como 2º lenguaje
 
 Como insertar usuario desde sign_up.php
+
+
 PONER DISEÑO AL MENÚ
 Ver como poner CSS en comun en distintos ficheros css
+
+
 
 
 M
@@ -14,7 +18,7 @@ C   PHP
 
 Login   Funcion prepare()   X
         sesiones            X
-        Pass en SHA2
+        Pass en SHA1        X
 
 - Mejora: [Clientes] Los clientes tengan dinero y al comprar se les reste
 - Mejora: [Admin] Meter tabla contabilidad: Llevar las ganancias de la tienda. Los gastos de los proveedores.

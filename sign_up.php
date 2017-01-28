@@ -17,7 +17,7 @@
             $phone   = $_POST['phone'];
             $type    = "User";
             $user    = $_POST['user'];
-            $pass    = $_POST['pass'];
+            $pass    = sha1($_POST['pass']);
 
             $insert = "INSERT INTO customer
                        VALUES(NULL, '$name', '$surname', '$email', '$address', '$phone', '$type', '$user', '$pass');
