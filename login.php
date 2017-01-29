@@ -41,7 +41,7 @@
 
     <img id="logo" src="resources/img/logo.png">
     <div id="wrapper">
-        <form login method="post">
+        <form method="post">
             <div>
                 <img width="32" src="resources/img/user.png">
                 <input name="user" type="text" required>

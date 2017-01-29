@@ -9,6 +9,9 @@ PONER DISEÑO AL MENÚ
 Ver como poner CSS en comun en distintos ficheros css
 
 
+NO ESTOY LOGUEADO Y CARGO MENU.PHP
+
+3º - Bienvenido + nº User - hace falta otra consulta
 
 
 M
