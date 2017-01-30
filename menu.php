@@ -41,7 +41,7 @@
         <form method="post" id="unlogin">
 			<input type="submit" name="unlogin" value="Logout">
         </form>
-        <?php echo "<p>Welcome $username</p>" ?>
+        <?php echo "<p>Welcome, $username</p>" ?>
         <br>
 		<div id="content">
 

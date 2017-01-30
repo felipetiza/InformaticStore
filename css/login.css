@@ -11,6 +11,7 @@ body{
 #logo{
   	width: 350px;
 	margin: auto 80px;
+	padding-bottom: 5px;
   	filter: sepia(30%);
 }
 #wrapper{
@@ -25,14 +26,14 @@ body{
 }
 #wrapper img{
 	position: absolute;
-	margin: 4px 18px;
+	margin: 4px 13px;
 	filter: brightness(150%) saturate(85%);
 }
 div{
 	margin-bottom: 10px;
 }
 input[type='text'], input[type='password']{
-	padding: 7px 25px;
+	padding: 7px 22px;
 	border: 1px solid #CED5D7;
 	box-shadow:0 0 0 3px #EEF5F7;
 	margin: 3px 72px;
