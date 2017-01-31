@@ -9,7 +9,6 @@ body{
 	margin: 50px auto;
 }
 #wrapper{
-	height: 425px;
 	border: 1px solid #CED5D7;
 	border-radius: 6px;
 	padding: 20px 45px;
@@ -24,10 +23,6 @@ h1{
 	text-align: center;
 	font-size: 18px;
 }
-#content{
-  	margin: 0 auto;
-	width: 325px;
-}
 #unlogin{
   	float: right;
 	text-decoration: none;
@@ -37,18 +32,39 @@ p{
 	margin-top: -30px;
 }
 form{
-		margin-top: -40px;
+	margin-top: -40px;
 }
-
-
-
-
-
-
-
-
-
-
+#content{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	border: 1px solid #555;
+}
+.product{
+		padding: 5px;
+	  background: #E2ECEE;
+		border-radius: 6px;
+		transition: 250ms;
+	  margin: 5px 5px;
+}
+.product:hover{
+	transition: 250ms;
+	background: #D8E7EA;
+}
+.product img{
+	width: 160px;
+	height: 100px;
+	border: 2px solid #CED5D7;
+	border-radius: 6px;
+}
+.product h3{
+ 	margin-top: 7px;
+	margin-left: 5px;
+}
+.product p{
+ 	margin-top: -5px;
+	margin-left: 5px;
+}
 
 
 
