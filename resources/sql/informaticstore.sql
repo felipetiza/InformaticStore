@@ -88,13 +88,13 @@ INSERT INTO customer VALUES(NULL, 'Rupert', 'Smith', 'rupert@gmail.com','Street'
 INSERT INTO customer VALUES(NULL, 'Wilson', 'Morrison', 'wilson@gmail.com','Street','6765432', 'User', 'wilson41', 'myself');
 INSERT INTO customer VALUES(NULL, 'Howard', 'Albertson', 'howard@gmail.com','Street','6765432', 'User', 'howii', 'howii');
 
-INSERT INTO product VALUES(NULL, 'Mouse', 'Awesome mouse', 12.5, 14, 'http://image.com');
-INSERT INTO product VALUES(NULL, 'Keyboard', 'Awesome keyboard', 17.30, 9, 'http://image.com');
-INSERT INTO product VALUES(NULL, 'Speakers', 'Awesome speakers', 40.00, 6, 'http://image.com');
-INSERT INTO product VALUES(NULL, 'Pen drive', 'Awesome pen drive', 26.45, 80, 'http://image.com');
-INSERT INTO product VALUES(NULL, 'CD-Rom', 'Awesome cd-rom', 2.25, 300, 'http://image.com');
-INSERT INTO product VALUES(NULL, 'Floppy Disk', 'Awesome floppy disk', 1.50, 200, 'http://image.com');
-INSERT INTO product VALUES(NULL, 'DVD Reader', 'Awesome dvd reader', 24.85, 34, 'http://image.com');
+INSERT INTO product VALUES(NULL, 'Mouse', 'Awesome mouse', 12.5, 14, 'resources/img/product/mouse.jpg');
+INSERT INTO product VALUES(NULL, 'Keyboard', 'Awesome keyboard', 17.30, 9, 'resources/img/product/keyboard.jpg');
+INSERT INTO product VALUES(NULL, 'Speakers', 'Awesome speakers', 40.00, 6, 'resources/img/product/speakers.jpg');
+INSERT INTO product VALUES(NULL, 'Pen drive', 'Awesome pen drive', 26.45, 80, 'resources/img/product/pendrive.jpg');
+INSERT INTO product VALUES(NULL, 'CD-Rom', 'Awesome cd-rom', 2.25, 300, 'resources/img/product/cd-rom.jpg');
+INSERT INTO product VALUES(NULL, 'Floppy Disk', 'Awesome floppy disk', 1.50, 200, 'resources/img/product/floppydisk.jpg');
+INSERT INTO product VALUES(NULL, 'DVD Reader', 'Awesome dvd reader', 24.85, 34, 'resources/img/product/dvdreader.jpg');
 
 INSERT INTO provider VALUES(NULL, 'Colonial Avenue', 'Sound equipment');
 INSERT INTO provider VALUES(NULL, 'Industrial area the queens', 'Storage disks');
