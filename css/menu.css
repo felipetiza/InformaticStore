@@ -38,7 +38,7 @@ form{
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-around;
-	border: 1px solid #555;
+	/* border: 1px solid #555; */
 }
 .product{
 		padding: 5px;

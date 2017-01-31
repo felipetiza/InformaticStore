@@ -65,61 +65,16 @@
         <?php echo "<p>Welcome, $username</p>" ?>
         <br>
 		<div id="content">
-			<div class="product">
-				<img src="resources/img/product/mouse.jpg">
-				<h3>Mouse</h3>
-				<p>14€</p>
-			</div>
-			<div class="product">
-				<img src="resources/img/product/mouse.jpg">
-				<h3>Mouse</h3>
-				<p>14€</p>
-			</div>
-			<div class="product">
-				<img src="resources/img/product/mouse.jpg">
-				<h3>Mouse</h3>
-				<p>14€</p>
-			</div>
-			<div class="product">
-				<img src="resources/img/product/mouse.jpg">
-				<h3>Mouse</h3>
-				<p>14€</p>
-			</div>
-			<div class="product">
-				<img src="resources/img/product/mouse.jpg">
-				<h3>Mouse</h3>
-				<p>14€</p>
-			</div>
-			<div class="product">
-				<img src="resources/img/product/mouse.jpg">
-				<h3>Mouse</h3>
-				<p>14€</p>
-			</div>
-			<div class="product">
-				<img src="resources/img/product/mouse.jpg">
-				<h3>Mouse</h3>
-				<p>14€</p>
-			</div>
-			<div class="product">
-				<img src="resources/img/product/mouse.jpg">
-				<h3>Mouse</h3>
-				<p>14€</p>
-			</div>
-			<div class="product">
-				<img src="resources/img/product/mouse.jpg">
-				<h3>Mouse</h3>
-				<p>14€</p>
-			</div>
+			<?php
+				for($i=0;$i<count($productName);$i++){
+	    			echo "<div class='product'>";
+	    			echo "<img src='".$productImage[$i]."'>";
+	    			echo "<h3>".$productName[$i]."</h3>";
+	    			echo "<p>".$productPrice[$i]."</p>";
+	    			echo "</div>";
+				}
+			?>
 		</div>
 	</div>
-
-
-
-<!-- 	foreach($productName as $p)
-    		echo $p;
--->
-
-
-
 </body>
 </html>
