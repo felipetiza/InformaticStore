@@ -24,7 +24,7 @@ CREATE TABLE customer
 	phone			VARCHAR(16),
 	type			VARCHAR(75),
 	username		VARCHAR(40),
-	password		VARCHAR(20),
+	password		VARCHAR(50),
 	PRIMARY KEY(idcustomer)
 );
 

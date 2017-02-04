@@ -37,7 +37,7 @@ form{
 #content{
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-around;
+	/* justify-content: space-around; */
 	/* border: 1px solid #555; */
 }
 .product{

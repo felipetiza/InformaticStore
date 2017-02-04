@@ -70,7 +70,7 @@
 	    			echo "<div class='product'>";
 	    			echo "<img src='".$productImage[$i]."'>";
 	    			echo "<h3>".$productName[$i]."</h3>";
-	    			echo "<p>".$productPrice[$i]."</p>";
+	    			echo "<p>".$productPrice[$i]."€</p>";
 	    			echo "</div>";
 				}
 			?>
