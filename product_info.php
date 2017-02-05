@@ -10,21 +10,14 @@
 		include_once "db_connection.php";
 
 	    session_start();
-
-		if(isset($_POST["productID"])){
-			echo $_POST["productID"];
-		}else
-			echo "Puta Mierda";
-
-
 	    // If user clicked on unlogin button
 		if(isset($_POST["unlogin"])){
 			session_destroy();
 			header('Location: login.php');
 		}
 
-		// If user is logged
-		if(isset($_SESSION["iduser"])){
+		// If user is logged & has arrived the product id from menu.php
+		if(isset($_SESSION["iduser"]) && isset($_POST["productID"])){
 			// Get username from database
 			$username = "";
             $getusername = "SELECT name
@@ -40,11 +33,31 @@
             }else
                 echo "Wrong Query";
 
+            // Get product data
+			$productName;
+			$productDescrip;
+			$productPrice;
+			$productAmount;
+			$productImage;
 
+            $getproduct = "SELECT *
+                           FROM product
+                           WHERE idproduct = {$_POST['productID']};
+                          ";
 
+            if ($result = $connection->query($getproduct)) {
+                if ($result->num_rows > 0){
+                	$product = $result->fetch_object();
 
-
-
+					$productName    = $product->name;
+					$productDescrip = $product->description;
+					$productPrice   = $product->price;
+					$productAmount  = $product->amount;
+					$productImage   = $product->urlimage;
+                }else
+                    echo "Impossible to get the product";
+            }else
+                echo "Wrong Query";
 		}else
 			header('Location: login.php');
 	?>
@@ -60,23 +73,16 @@
 		<div id="content">
 			<div id="row1">
 				<div id="image">
-					<img src="resources/img/product/mouse.jpg">
+					<img src="<?php echo $productImage; ?>">
 				</div>
 				<div id="info">
-					<h1>Mouse</h1>
-					<h2>12.50€</h2>
-					<h3>14 units</h3>
+					<h1><?php echo $productName; ?></h1>
+					<h2><?php echo $productPrice; ?></h2>
+					<h3><?php echo $productAmount; ?></h3>
 				</div>
 			</div>
 			<div id="row2">
-				<p>
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-				</p>
+				<p><?php echo $productDescrip; ?></p>
 			</div>
 		</div>
 	</div>

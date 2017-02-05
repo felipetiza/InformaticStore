@@ -41,20 +41,20 @@ form{
 	margin-top: -40px;
 }
 #content{
+	/* border: 1px solid #555; */
 	display: flex;
-	flex-wrap: wrap;
-	border: 1px solid #555;
+	flex-direction: column;
 	padding: 5px;
 	background: #E2ECEE;
 	border-radius: 6px;
 	margin: 5px 5px;
 }
 #row1{
-  	border: 1px solid blue;
+  	/* border: 1px solid blue; */
 	display: flex;
 }
 #row2{
-	border: 1px solid red;
+	/* border: 1px solid red; */
 	padding: 0 5px;
 }
 #row1 > image{
@@ -85,6 +85,7 @@ form{
 #content p{
 	margin-top: 7px;
 	margin-left: 5px;
+	padding-top: 5px;
 }
 
 
