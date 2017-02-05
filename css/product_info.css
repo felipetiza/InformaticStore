@@ -24,7 +24,7 @@ h1{
 	font-size: 18px;
 }
 #unlogin{
-  float: right;
+  	float: right;
 }
 input[type=submit] {
 	float: right;
@@ -43,35 +43,49 @@ form{
 #content{
 	display: flex;
 	flex-wrap: wrap;
-	/* justify-content: space-around; */
-	/* border: 1px solid #555; */
-}
-.product{
+	border: 1px solid #555;
 	padding: 5px;
 	background: #E2ECEE;
 	border-radius: 6px;
-	transition: 250ms;
 	margin: 5px 5px;
 }
-.product:hover{
-	transition: 250ms;
-	background: #C8D6E4;
+#row1{
+  	border: 1px solid blue;
+	display: flex;
 }
-.product img{
-	width: 160px;
-	height: 100px;
+#row2{
+	border: 1px solid red;
+	padding: 0 5px;
+}
+#row1 > image{
+
+}
+#row1 > info{
+
+}
+#content img{
+	width: 280px;
+	height: 200px;
 	border: 2px solid #CED5D7;
 	border-radius: 6px;
 }
-.product h3{
- 	margin-top: 7px;
+#content h1{
+	margin-top: 7px;
+	margin-left: 20px;
+	font-size: 18px;
+}
+#content h2{
+ 	margin-top: 20px;
+	margin-left: 20px;
+}
+#content h3{
+ 	margin-top: 20px;
+	margin-left: 20px;
+}
+#content p{
+	margin-top: 7px;
 	margin-left: 5px;
 }
-.product p{
- 	margin-top: -5px;
-	margin-left: 5px;
-}
-
 
 
 

@@ -3,6 +3,21 @@
 <head>
 	<title>Menu</title>
 	<link rel="stylesheet" href="css/menu.css">
+	<script>
+		// Get productID of the product clicked and send it to product_info.php by POST
+		window.onload = function(){
+			var listProduct = document.querySelectorAll(".product");
+
+			for(i in listProduct){
+				listProduct[i].onclick = function() {
+					var productID = this.dataset.id;	// Get ID value - Attribute 'data-id' of product class
+					console.log(productID);
+
+
+				};
+			}
+		};
+	</script>
 </head>
 <body>
 
@@ -10,15 +25,16 @@
 		include_once "db_connection.php";
 
 	    session_start();
+	   	// If user clicked on unlogin button
 		if(isset($_POST["unlogin"])){
 			session_destroy();
 			header('Location: login.php');
 		}
 
+		// If user is logged
 		if(isset($_SESSION["iduser"])){
-			$username = "";
-
 			// Get username from database
+			$username = "";
             $getusername = "SELECT name
                             FROM customer
                             WHERE idcustomer = {$_SESSION['iduser']};
@@ -33,6 +49,7 @@
                 echo "Wrong Query";
 
             // Get products data
+			$productID    = [];
 			$productName  = [];
 			$productPrice = [];
 			$productImage = [];
@@ -44,6 +61,7 @@
             if ($result = $connection->query($getproduct)) {
                 if ($result->num_rows > 0){
                 	while($product = $result->fetch_object()){
+                		array_push($productID, $product->idproduct);
                 		array_push($productName, $product->name);
                 		array_push($productPrice, $product->price);
                 		array_push($productImage, $product->urlimage);
@@ -67,7 +85,7 @@
 		<div id="content">
 			<?php
 				for($i=0;$i<count($productName);$i++){
-	    			echo "<div class='product'>";
+	    			echo "<div class='product' data-id='$productID[$i]'>";
 	    			echo "<img src='".$productImage[$i]."'>";
 	    			echo "<h3>".$productName[$i]."</h3>";
 	    			echo "<p>".$productPrice[$i]."€</p>";
@@ -78,3 +96,4 @@
 	</div>
 </body>
 </html>
+
