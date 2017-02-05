@@ -11,8 +11,8 @@
 
 	    session_start();
 
-		if(isset($_POST["felipe"])){
-			echo $_POST["felipe"];
+		if(isset($_POST["productID"])){
+			echo $_POST["productID"];
 		}else
 			echo "Puta Mierda";
 

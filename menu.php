@@ -13,7 +13,12 @@
 					var productID = this.dataset.id;	// Get ID value - Attribute 'data-id' of product class
 					console.log(productID);
 
-
+					// How to I send the productID by POST? I made a form and clicked it
+					// Impossible by AJAX. Don't let me change the screen. It just return me the result
+					var form = "<form action='product_info.php' method='post' id='changeScreen'><input id='press' type='submit' name='productID' value='"+productID+"'></form>";
+					var content = document.getElementById("wrapper").insertAdjacentHTML("afterend", form);
+					document.getElementById("changeScreen").style.display = 'none';
+					document.getElementById('press').click();
 				};
 			}
 		};
