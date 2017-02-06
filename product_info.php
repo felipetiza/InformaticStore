@@ -90,7 +90,7 @@
 				</div>
 			</div>
 			<div id="row2">
-				<p><?php echo $productDescrip; ?></p>
+				<p><?php echo nl2br($productDescrip); ?></p>
 			</div>
 		</div>
 	</div>

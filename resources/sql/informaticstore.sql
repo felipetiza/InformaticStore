@@ -32,7 +32,7 @@ CREATE TABLE product
 (
 	idproduct		INT AUTO_INCREMENT NOT NULL,
 	name			VARCHAR(50),
-	description		VARCHAR(500),
+	description		VARCHAR(1000),
 	price			DECIMAL(7,2),
 	amount			INT,
 	urlimage		VARCHAR(250),
@@ -94,7 +94,7 @@ INSERT INTO product VALUES(NULL, 'Speakers', 'Awesome speakers', 40.00, 6, 'reso
 INSERT INTO product VALUES(NULL, 'Pen drive', 'Awesome pen drive', 26.45, 80, 'resources/img/product/pendrive.jpg');
 INSERT INTO product VALUES(NULL, 'CD-Rom', 'Awesome cd-rom', 2.25, 300, 'resources/img/product/cd-rom.jpg');
 INSERT INTO product VALUES(NULL, 'Floppy Disk', 'Awesome floppy disk', 1.50, 200, 'resources/img/product/floppydisk.jpg');
-INSERT INTO product VALUES(NULL, 'LG Grabadora DVD Slim Interna 9.5mm SATA', 'Introducing LG´s GUD0N.AUAA10B, an internal DVD Slim recorder with playback disc and M-Disc support.', 24.85, 34, 'resources/img/product/dvdreader.jpg');
+INSERT INTO product VALUES(NULL, 'LG DVD Recorder. Internal Slim 9.5mm SATA', 'Introducing LG´s GUD0N.AUAA10B, an internal DVD Slim recorder with playback disc and M-Disc support.\n\nThe player of your dreams, with an image of great realism and able to reproduce practically any type of disc. You will enjoy the most of your movies and music.\n\nCharacteristics:\n\n- DivX Ultra certification for enhanced DivX video playback\n- 12-bit / 108 Mhz video processing for a crisp, natural image\n- USB media connection for multimedia playback from USB flash drives\n- ProReader Drive for smooth playback with almost any disc\n- Screen adjustment for optimal viewing at all times\n- Intelligent Image Control allows you to customize settings', 24.85, 34, 'resources/img/product/dvdreader.jpg');
 
 INSERT INTO provider VALUES(NULL, 'Colonial Avenue', 'Sound equipment');
 INSERT INTO provider VALUES(NULL, 'Industrial area the queens', 'Storage disks');
