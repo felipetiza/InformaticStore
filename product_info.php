@@ -3,6 +3,8 @@
 <head>
 	<title>Product Info</title>
 	<link rel="stylesheet" href="css/product_info.css">
+	<script src="js/author.js"></script>
+	<meta charset="UTF-8">
 </head>
 <body>
 
@@ -16,8 +18,13 @@
 			header('Location: login.php');
 		}
 
-		// If user is logged & has arrived the product id from menu.php
-		if(isset($_SESSION["iduser"]) && isset($_POST["productID"])){
+		// If user is logged
+		if(isset($_SESSION["iduser"])){
+
+			// If hasn't arrived the product id from menu.php
+			if(!isset($_POST["productID"]))
+				header('Location: menu.php');
+
 			// Get username from database
 			$username = "";
             $getusername = "SELECT name
@@ -77,7 +84,8 @@
 				</div>
 				<div id="info">
 					<h1><?php echo $productName; ?></h1>
-					<h2><?php echo $productPrice; ?></h2>
+					<hr>
+					<h2><?php echo $productPrice."€"; ?></h2>
 					<h3><?php echo $productAmount; ?></h3>
 				</div>
 			</div>

@@ -47,11 +47,15 @@ form{
 	/* border: 1px solid #555; */
 }
 .product{
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
 	padding: 5px;
 	background: #E2ECEE;
 	border-radius: 6px;
 	transition: 250ms;
 	margin: 5px 5px;
+	width: 165px;
 }
 .product:hover{
 	transition: 250ms;

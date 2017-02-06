@@ -3,6 +3,7 @@
 <head>
     <title>Login</title>
     <link rel="stylesheet" href="css/login.css">
+    <script src="js/author.js"></script>
 </head>
 <body>
 

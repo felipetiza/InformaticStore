@@ -31,7 +31,7 @@ CREATE TABLE customer
 CREATE TABLE product
 (
 	idproduct		INT AUTO_INCREMENT NOT NULL,
-	name			VARCHAR(25),
+	name			VARCHAR(50),
 	description		VARCHAR(500),
 	price			DECIMAL(7,2),
 	amount			INT,
@@ -94,7 +94,7 @@ INSERT INTO product VALUES(NULL, 'Speakers', 'Awesome speakers', 40.00, 6, 'reso
 INSERT INTO product VALUES(NULL, 'Pen drive', 'Awesome pen drive', 26.45, 80, 'resources/img/product/pendrive.jpg');
 INSERT INTO product VALUES(NULL, 'CD-Rom', 'Awesome cd-rom', 2.25, 300, 'resources/img/product/cd-rom.jpg');
 INSERT INTO product VALUES(NULL, 'Floppy Disk', 'Awesome floppy disk', 1.50, 200, 'resources/img/product/floppydisk.jpg');
-INSERT INTO product VALUES(NULL, 'DVD Reader', 'Awesome dvd reader', 24.85, 34, 'resources/img/product/dvdreader.jpg');
+INSERT INTO product VALUES(NULL, 'LG Grabadora DVD Slim Interna 9.5mm SATA', 'Introducing LG´s GUD0N.AUAA10B, an internal DVD Slim recorder with playback disc and M-Disc support.', 24.85, 34, 'resources/img/product/dvdreader.jpg');
 
 INSERT INTO provider VALUES(NULL, 'Colonial Avenue', 'Sound equipment');
 INSERT INTO provider VALUES(NULL, 'Industrial area the queens', 'Storage disks');

@@ -3,6 +3,7 @@
 <head>
 	<title>Menu</title>
 	<link rel="stylesheet" href="css/menu.css">
+	<script src="js/author.js"></script>
 	<script>
 		// Get productID of the product clicked and send it to product_info.php by POST
 		window.onload = function(){

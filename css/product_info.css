@@ -45,17 +45,23 @@ form{
 	display: flex;
 	flex-direction: column;
 	padding: 5px;
-	background: #E2ECEE;
-	border-radius: 6px;
+	/* background: #E2ECEE; */
+	/* border-radius: 6px; */
 	margin: 5px 5px;
 }
 #row1{
-  	/* border: 1px solid blue; */
+  /* border: 1px solid blue; */
+	padding: 10px 10px;
 	display: flex;
+	background: #E2ECEE;
+	border-radius: 6px;
 }
 #row2{
 	/* border: 1px solid red; */
 	padding: 0 5px;
+	background: #E2ECEE;
+	border-radius: 6px;
+  	margin-top: 10px;
 }
 #row1 > image{
 
