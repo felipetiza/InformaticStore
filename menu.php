@@ -4,7 +4,7 @@
 	<title>Menu</title>
 	<link rel="stylesheet" href="css/menu.css">
 	<script src="js/author.js"></script>
-	<script>
+<!-- 	<script>
 		// Get productID of the product clicked and send it to product_info.php by POST
 		window.onload = function(){
 			var listProduct = document.querySelectorAll(".product");
@@ -23,7 +23,7 @@
 				};
 			}
 		};
-	</script>
+	</script> -->
 </head>
 <body>
 
@@ -91,11 +91,13 @@
 		<div id="content">
 			<?php
 				for($i=0;$i<count($productName);$i++){
+	    			echo "<a href='product_info.php?id=".$productID[$i]."'>";
 	    			echo "<div class='product' data-id='$productID[$i]'>";
 	    			echo "<img src='".$productImage[$i]."'>";
 	    			echo "<h3>".$productName[$i]."</h3>";
 	    			echo "<p>".$productPrice[$i]."€</p>";
 	    			echo "</div>";
+	    			echo "</a>";
 				}
 			?>
 		</div>

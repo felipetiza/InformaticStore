@@ -63,11 +63,14 @@ form{
 	border-radius: 6px;
   	margin-top: 10px;
 }
-#row1 > image{
+#row1 > #image{
 
 }
-#row1 > info{
-
+#row1 > #info{
+	padding: 0px 10px;
+}
+#content hr{
+  	color: #798e9460;
 }
 #content img{
 	width: 280px;
@@ -77,22 +80,42 @@ form{
 }
 #content h1{
 	margin-top: 7px;
-	margin-left: 20px;
-	font-size: 18px;
+	margin-left: 15px;
+	font-size: 16px;
 }
 #content h2{
- 	margin-top: 20px;
-	margin-left: 20px;
+ 	margin-top: 10px;
+	margin-left: 15px;
+	font-size: 18px
 }
 #content h3{
- 	margin-top: 20px;
-	margin-left: 20px;
+ 	margin-top: 10px;
+	margin-left: 15px;
 }
 #content p{
 	margin-top: 7px;
 	margin-left: 5px;
 	padding-top: 5px;
 }
-
+#content input[type='submit']{
+	float: left;
+	border: 1px solid #CED5D7;
+	padding: 8px 26px;
+	border-radius: 7px;
+	font-weight: bold;
+	margin: 10px 15px;
+	background: #2a6581cc;
+	color: #dbe9f0;
+	transition: 150ms;
+}
+#content input[type='submit']:hover{
+	background: #2a6581ee;
+	transition: 150ms;
+}
+#content input[type='submit']:active{
+	background: #cfe6ef;
+	background: -moz-linear-gradient(top, #cfe6ef 0%, #edfcff 100%);
+	background: -webkit-linear-gradient(top, #cfe6ef 0%,#edfcff 100%);
+}
 
 

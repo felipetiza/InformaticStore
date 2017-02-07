@@ -22,7 +22,7 @@
 		if(isset($_SESSION["iduser"])){
 
 			// If hasn't arrived the product id from menu.php
-			if(!isset($_POST["productID"]))
+			if(!isset($_GET["id"]))
 				header('Location: menu.php');
 
 			// Get username from database
@@ -49,7 +49,7 @@
 
             $getproduct = "SELECT *
                            FROM product
-                           WHERE idproduct = {$_POST['productID']};
+                           WHERE idproduct = {$_GET['id']};
                           ";
 
             if ($result = $connection->query($getproduct)) {
@@ -86,7 +86,13 @@
 					<h1><?php echo $productName; ?></h1>
 					<hr>
 					<h2><?php echo $productPrice."€"; ?></h2>
-					<h3><?php echo $productAmount; ?></h3>
+					<h3>Availability:
+						<?php
+							$availability = ($productAmount > 0) ? "In Stock!" : "Sold out";
+							echo $availability;
+						?>
+					</h3>
+					<input type="submit" value="Add to cart">
 				</div>
 			</div>
 			<div id="row2">

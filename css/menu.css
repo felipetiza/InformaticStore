@@ -46,7 +46,8 @@ form{
 	/* justify-content: space-around; */
 	/* border: 1px solid #555; */
 }
-.product{
+a{
+	text-decoration: none;
 	display: flex;
 	flex-direction: column;
 	flex-wrap: wrap;
@@ -56,6 +57,9 @@ form{
 	transition: 250ms;
 	margin: 5px 5px;
 	width: 165px;
+}
+.product{
+
 }
 .product:hover{
 	transition: 250ms;
