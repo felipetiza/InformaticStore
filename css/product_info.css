@@ -95,11 +95,31 @@ form{
 #content h2{
  	margin-top: 10px;
 	margin-left: 10px;
-	font-size: 22px;
+}
+h2 label{
+
+}
+h2 label#integer{
+  font-size: 26px;
+}
+h2 label#decimal{
+  font-size: 20px;
+	margin-left: 0px;
 }
 #content h3{
  	margin-top: 10px;
 	margin-left: 10px;
+}
+h3 label{
+	color: #dcf3f1;
+	padding: 2px 5px;
+	border-radius: 3px;
+}
+h3 label#green{
+	background: #28ba28;
+}
+h3 label#red{
+	background: #c82d2d;
 }
 #content p{
 	margin-top: 7px;
@@ -138,18 +158,7 @@ form{
 	margin: 0px 16px;
 	/*! padding-right: 100px; */
 }
-label{
-	color: #dcf3f1;
-	padding: 2px 5px;
-	border-radius: 3px;
 
-}
-label#green{
-	background: #28ba28;
-}
-label#red{
-	background: #c82d2d;
-}
 
 
 

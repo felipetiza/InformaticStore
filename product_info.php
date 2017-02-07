@@ -85,21 +85,26 @@
 				<div id="info">
 					<h1><?php echo $productName; ?></h1>
 					<hr>
-					<h2><?php echo $productPrice."€"; ?></h2>
+					<h2>
+						<?php
+							if($position = strpos($productPrice, ".")){
+								$integer = substr($productPrice, 0, $position);
+								$decimal = substr($productPrice, $position + 1, $position + 2);
+								echo "<label id='integer'>$integer</label><label id='decimal'>,".$decimal."€</label>";
+							}else
+								echo "<label id='integer'>".$productPrice."€</label>";
+						?>
+					</h2>
 					<h3>Availability:
 						<?php
-						$availability = ($productAmount > 0) ? "<label id='green'>In Stock!</label>" : "<label id='red'>Sold out</label>";
-							echo $availability;
+							if($productAmount > 0)
+								echo "<label id='green'>In Stock!</label>";
+							else
+								echo "<label id='red'>Sold out</label>";
 						?>
 					</h3>
 					<h3>Quantity:
-						<?php
-							$min;
-							if($productAmount > 0)
-								$min = 1;
-							else
-								$min = 0;
-						?>
+						<?php $min = ($productAmount > 0) ? 1 : 0 ?>
 						<input type="number" name="quantity" min="<?php echo $min; ?>" max="<?php echo $productAmount; ?>" value="<?php echo $min; ?>" >
 					</h3>
 					<input type="submit" value="Add to cart">
