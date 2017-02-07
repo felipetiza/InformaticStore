@@ -88,11 +88,22 @@
 					<h2><?php echo $productPrice."€"; ?></h2>
 					<h3>Availability:
 						<?php
-							$availability = ($productAmount > 0) ? "In Stock!" : "Sold out";
+						$availability = ($productAmount > 0) ? "<label id='green'>In Stock!</label>" : "<label id='red'>Sold out</label>";
 							echo $availability;
 						?>
 					</h3>
+					<h3>Quantity:
+						<?php
+							$min;
+							if($productAmount > 0)
+								$min = 1;
+							else
+								$min = 0;
+						?>
+						<input type="number" name="quantity" min="<?php echo $min; ?>" max="<?php echo $productAmount; ?>" value="<?php echo $min; ?>" >
+					</h3>
 					<input type="submit" value="Add to cart">
+					<input type="submit" value="Buy">
 				</div>
 			</div>
 			<div id="row2">

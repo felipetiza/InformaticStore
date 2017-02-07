@@ -45,52 +45,61 @@ form{
 	display: flex;
 	flex-direction: column;
 	padding: 5px;
-	/* background: #E2ECEE; */
+	/*! background: #E2ECEE; */
 	/* border-radius: 6px; */
 	margin: 5px 5px;
+	/*! justify-content: space-around; */
 }
 #row1{
-  /* border: 1px solid blue; */
+  /*! border: 1px solid blue; */
 	padding: 10px 10px;
 	display: flex;
 	background: #E2ECEE;
 	border-radius: 6px;
+	width: 575px;
+  margin: 0 auto;
 }
 #row2{
 	/* border: 1px solid red; */
-	padding: 2px 7px;
+	padding: 3px 10px;
 	background: #E2ECEE;
 	border-radius: 6px;
-  	margin-top: 10px;
+	width: 575px;
+	margin: 10px auto;
 }
 #row1 > #image{
 
 }
 #row1 > #info{
-	padding: 0px 10px;
+	padding: 0px 5px;
+	margin-left: 5px;
 }
 #content hr{
   	color: #798e9460;
+  	/*! padding: 5px; */
+  	width: 250px;
+  	/*! float: left; */
+  	margin-left: 8px;
 }
 #content img{
-	width: 280px;
-	height: 200px;
+	width: 290px;
+	height: 210px;
 	border: 2px solid #CED5D7;
 	border-radius: 6px;
 }
 #content h1{
 	margin-top: 7px;
-	margin-left: 15px;
+	margin-left: -5px;
 	font-size: 16px;
 }
 #content h2{
  	margin-top: 10px;
-	margin-left: 15px;
-	font-size: 18px
+	margin-left: 10px;
+	font-size: 22px;
 }
 #content h3{
  	margin-top: 10px;
-	margin-left: 15px;
+	margin-left: 10px;
 }
 #content p{
 	margin-top: 7px;
@@ -99,23 +108,54 @@ form{
 }
 #content input[type='submit']{
 	float: left;
-	border: 1px solid #CED5D7;
-	padding: 8px 26px;
+	border: none;
+	padding: 5px 0px;
+	width: 110px;
 	border-radius: 7px;
 	font-weight: bold;
-	margin: 10px 15px;
+	margin: 8px 10px;
 	background: #2a6581cc;
 	color: #dbe9f0;
 	transition: 150ms;
 }
 #content input[type='submit']:hover{
-	background: #2a6581ee;
+	background: #2a6581bb;
 	transition: 150ms;
 }
 #content input[type='submit']:active{
-	background: #cfe6ef;
-	background: -moz-linear-gradient(top, #cfe6ef 0%, #edfcff 100%);
-	background: -webkit-linear-gradient(top, #cfe6ef 0%,#edfcff 100%);
+	background: #2a6581ee;
+	transition: 150ms;
 }
+#content input[type='number']{
+	background: #c8d7decc;
+	color: #798e94;
+	transition: 150ms;
+	border: none;
+	padding: 6px 0px;
+	padding-left: 23px;
+	width: 46px;
+	border-radius: 7px;
+	margin: 0px 16px;
+	/*! padding-right: 100px; */
+}
+label{
+	color: #dcf3f1;
+	padding: 2px 5px;
+	border-radius: 3px;
+
+}
+label#green{
+	background: #28ba28;
+}
+label#red{
+	background: #c82d2d;
+}
+
+
+
+
+
+
+
 
 
