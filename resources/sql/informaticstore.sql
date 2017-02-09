@@ -64,6 +64,7 @@ CREATE TABLE shopping_cart
 (
 	idcustomer		INT,
 	idproduct		INT,
+	amount 			INT,
 	PRIMARY KEY(idcustomer, idproduct),
 	FOREIGN KEY(idcustomer) REFERENCES customer(idcustomer) ON DELETE CASCADE,
 	FOREIGN KEY(idproduct) REFERENCES product(idproduct) ON DELETE CASCADE

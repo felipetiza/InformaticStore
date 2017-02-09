@@ -12,73 +12,113 @@
 		include_once "db_connection.php";
 
 	    session_start();
+
+		// If user is not logged
+		if(!isset($_SESSION["iduser"]))
+			header('Location: login.php');
+
+		// If hasn't arrived the product id from menu.php
+		if(!isset($_GET["id"]))
+			header('Location: menu.php');
+
 	    // If user clicked on unlogin button
 		if(isset($_POST["unlogin"])){
 			session_destroy();
 			header('Location: login.php');
 		}
 
-		// If user is logged
-		if(isset($_SESSION["iduser"])){
+		// Get username from database
+		$username = "";
+        $getusername = "SELECT name
+                        FROM customer
+                        WHERE idcustomer = {$_SESSION['iduser']};
+                       ";
 
-			// If hasn't arrived the product id from menu.php
-			if(!isset($_GET["id"]))
-				header('Location: menu.php');
+        if ($result = $connection->query($getusername)) {
+            if ($result->num_rows > 0)
+                $username = $result->fetch_object()->name;
+            else
+                echo "Impossible to get the username";
+        }else
+            echo "Wrong Query";
 
-			// Get username from database
-			$username = "";
-            $getusername = "SELECT name
-                            FROM customer
-                            WHERE idcustomer = {$_SESSION['iduser']};
-                           ";
+        // Get product data
+		$productName;
+		$productCategory;
+		$productDescrip;
+		$productPrice;
+		$productAmount;
+		$productImage;
 
-            if ($result = $connection->query($getusername)) {
-                if ($result->num_rows > 0)
-                    $username = $result->fetch_object()->name;
-                else
-                    echo "Impossible to get the username";
+        $getproduct = "SELECT *
+                       FROM product
+                       WHERE idproduct = {$_GET['id']};
+                      ";
+
+        if ($result = $connection->query($getproduct)) {
+            if ($result->num_rows > 0){
+            	$product = $result->fetch_object();
+
+				$productName     = $product->name;
+				$productCategory = $product->category;
+				$productDescrip  = $product->description;
+				$productPrice    = $product->price;
+				$productAmount   = $product->amount;
+				$productImage    = $product->urlimage;
             }else
-                echo "Wrong Query";
+                echo "Impossible to get the product";
+        }else
+            echo "Wrong Query";
 
-            // Get product data
-			$productName;
-			$productCategory;
-			$productDescrip;
-			$productPrice;
-			$productAmount;
-			$productImage;
-
-            $getproduct = "SELECT *
-                           FROM product
-                           WHERE idproduct = {$_GET['id']};
+        // Add to Cart
+		if(isset($_POST["addToCart"])){
+            $getproduct = "INSERT INTO shopping_cart
+            			   VALUES({$_SESSION["iduser"]}, {$_GET["id"]}, {$_POST["quantity"]});
                           ";
 
             if ($result = $connection->query($getproduct)) {
-                if ($result->num_rows > 0){
-                	$product = $result->fetch_object();
-
-					$productName     = $product->name;
-					$productCategory = $product->category;
-					$productDescrip  = $product->description;
-					$productPrice    = $product->price;
-					$productAmount   = $product->amount;
-					$productImage    = $product->urlimage;
-                }else
-                    echo "Impossible to get the product";
+                if (!$result)
+                    echo "Impossible insert the product within shopping cart";
             }else
                 echo "Wrong Query";
-		}else
-			header('Location: login.php');
+		}
+
+		// Get amount products from shopping cart
+		$amount = 0;
+
+        $getusername = "SELECT idproduct
+                        FROM shopping_cart
+                        WHERE idcustomer = {$_SESSION['iduser']};
+                       ";
+
+        if ($result = $connection->query($getusername)) {
+            if ($result->num_rows > 0){
+                	while($result->fetch_object())
+                		$amount++;
+            }else
+                echo "Impossible to get the username";
+        }else
+            echo "Wrong Query";
+
+
 	?>
 
 	<div id="wrapper">
-		<h1>Product Info</h1>
+		<div id="basic">
+	        <div id="user"><?php echo "<p>Welcome, $username</p>" ?></div>
+			<div id="title"><h1>Product Info</h1></div>
+			<div id="cart"><label><?php echo $amount; ?></label><img src="resources/img/cart.png"></div>
+		</div>
         <hr>
-        <form method="post" id="unlogin">
-			<input type="submit" name="unlogin" value="Logout">
-        </form>
-        <?php echo "<p>Welcome, $username</p>" ?>
-        <div id="path"><a href="menu.php">Home</a> > <a href="menu.php?categ=<?php echo $productCategory; ?>"><?php echo $productCategory ?></a></div>
+        <div id="infobar">
+	        <div id="path">
+	        	<a href="menu.php">Home</a> >
+	        	<a href="menu.php?categ=<?php echo strtolower($productCategory); ?>"><?php echo $productCategory ?></a>
+	        </div>
+	        <form method="post" id="unlogin">
+				<input type="submit" name="unlogin" value="Logout">
+	        </form>
+        </div>
         <br>
 		<div id="content">
 			<div id="row1">
@@ -97,8 +137,8 @@
 							}else if($position = strpos($productPrice, ".")){
 								$integer = substr($productPrice, 0, $position);
 								$decimal = substr($productPrice, $position + 1, $position + 2);
-								echo "<label id='integer'>$integer</label>
-								      <label id='decimal'>,".$decimal."€</label>";
+								echo "<label id='integer'>".$integer.",</label>
+								      <label id='decimal'>".$decimal."€</label>";
 							}
 						?>
 					</h2>
@@ -110,12 +150,14 @@
 								echo "<label id='red'>Sold out</label>";
 						?>
 					</h3>
-					<h3>Quantity:
-						<?php $min = ($productAmount > 0) ? 1 : 0 ?>
-						<input type="number" name="quantity" min="<?php echo $min; ?>" max="<?php echo $productAmount; ?>" value="<?php echo $min; ?>" >
-					</h3>
-					<input type="submit" value="Add to cart">
-					<input type="submit" value="Buy">
+			        <form method="post" id="buttons">
+						<h3>Quantity:
+							<?php $min = ($productAmount > 0) ? 1 : 0 ?>
+							<input type="number" name="quantity" min="<?php echo $min; ?>" max="<?php echo $productAmount; ?>" value="<?php echo $min; ?>" >
+						</h3>
+						<input type="submit" name="addToCart" value="Add to cart">
+						<input type="submit" name="buy" value="Buy">
+			        </form>
 				</div>
 			</div>
 			<div id="row2">
