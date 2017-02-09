@@ -46,7 +46,7 @@ form{
 	/* justify-content: space-around; */
 	/* border: 1px solid #555; */
 }
-a{
+#content a{
 	text-decoration: none;
 	display: flex;
 	flex-direction: column;
@@ -58,24 +58,24 @@ a{
 	margin: 5px 5px;
 	width: 165px;
 }
-.product{
+#content .product{
 
 }
-.product:hover{
+#content a:hover{
 	transition: 250ms;
 	background: #C8D6E4;
 }
-.product img{
+#content .product img{
 	width: 160px;
 	height: 100px;
 	border: 2px solid #CED5D7;
 	border-radius: 6px;
 }
-.product h3{
+#content .product h3{
  	margin-top: 7px;
 	margin-left: 5px;
 }
-.product p{
+#content .product p{
  	margin-top: -5px;
 	margin-left: 5px;
 }

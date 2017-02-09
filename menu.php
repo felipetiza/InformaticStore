@@ -64,14 +64,19 @@
 			$productPrice = [];
 			$productImage = [];
 
-            $getproduct = "";
+            $getProducts = "";
 
             if(isset($_GET['categ']))
-	            $getproduct = "SELECT * FROM product WHERE category = '{$_GET['categ']}';";
+	            $getProducts = "SELECT * FROM product WHERE category = '{$_GET['categ']}';";
             else
-	            $getproduct = "SELECT * FROM product;";
+	            $getProducts = "SELECT * FROM product;";
 
-            if ($result = $connection->query($getproduct)) {
+			// $productsAll      = "SELECT * FROM product;";
+			// $productsCategory = "SELECT * FROM product WHERE category = '{$_GET['categ']}';";
+
+			// $getProducts = (isset($_GET['categ'])) ? $productsAll : $productsCategory;
+
+            if ($result = $connection->query($getProducts)) {
                 if ($result->num_rows > 0){
                 	while($product = $result->fetch_object()){
                 		array_push($productID, $product->idproduct);
