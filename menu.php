@@ -54,15 +54,22 @@
             }else
                 echo "Wrong Query";
 
+
+			// If I receive the category of a product I show it,
+			// else I show all the store products
+
             // Get products data
 			$productID    = [];
 			$productName  = [];
 			$productPrice = [];
 			$productImage = [];
 
-            $getproduct = "SELECT *
-                           FROM product;
-                          ";
+            $getproduct = "";
+
+            if(isset($_GET['categ']))
+	            $getproduct = "SELECT * FROM product WHERE category = '{$_GET['categ']}';";
+            else
+	            $getproduct = "SELECT * FROM product;";
 
             if ($result = $connection->query($getproduct)) {
                 if ($result->num_rows > 0){

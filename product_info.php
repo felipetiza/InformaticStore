@@ -42,6 +42,7 @@
 
             // Get product data
 			$productName;
+			$productCategory;
 			$productDescrip;
 			$productPrice;
 			$productAmount;
@@ -56,11 +57,12 @@
                 if ($result->num_rows > 0){
                 	$product = $result->fetch_object();
 
-					$productName    = $product->name;
-					$productDescrip = $product->description;
-					$productPrice   = $product->price;
-					$productAmount  = $product->amount;
-					$productImage   = $product->urlimage;
+					$productName     = $product->name;
+					$productCategory = $product->category;
+					$productDescrip  = $product->description;
+					$productPrice    = $product->price;
+					$productAmount   = $product->amount;
+					$productImage    = $product->urlimage;
                 }else
                     echo "Impossible to get the product";
             }else
@@ -76,6 +78,7 @@
 			<input type="submit" name="unlogin" value="Logout">
         </form>
         <?php echo "<p>Welcome, $username</p>" ?>
+        <div id="path"><a href="menu.php">Home</a> > <a href="menu.php?categ=<?php echo $productCategory; ?>"><?php echo $productCategory ?></a></div>
         <br>
 		<div id="content">
 			<div id="row1">

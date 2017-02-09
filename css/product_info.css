@@ -25,6 +25,7 @@ h1{
 }
 #unlogin{
   	float: right;
+	margin-top: -4px;
 }
 input[type=submit] {
 	float: right;
@@ -39,6 +40,17 @@ p{
 }
 form{
 	margin-top: -40px;
+}
+#path{
+	background: #E2ECEE;
+	color: #798e94;
+	padding: 7px;
+	border-radius: 0px 0px 6px 6px;
+	margin-top: -3px;
+}
+#path a{
+	text-decoration: none;
+	color: #798e94;
 }
 #content{
 	/* border: 1px solid #555; */
