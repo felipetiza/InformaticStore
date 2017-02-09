@@ -89,13 +89,17 @@
 					<h1><?php echo $productName; ?></h1>
 					<hr>
 					<h2>
+						<!-- MySQL automatically inserts 2 decimal zeros even if you do not specify it -->
 						<?php
-							if($position = strpos($productPrice, ".")){
+							if($position = strpos($productPrice, ".00")){
+								$integer = substr($productPrice, 0, $position);
+								echo "<label id='integer'>".$integer."€</label>";
+							}else if($position = strpos($productPrice, ".")){
 								$integer = substr($productPrice, 0, $position);
 								$decimal = substr($productPrice, $position + 1, $position + 2);
-								echo "<label id='integer'>$integer</label><label id='decimal'>,".$decimal."€</label>";
-							}else
-								echo "<label id='integer'>".$productPrice."€</label>";
+								echo "<label id='integer'>$integer</label>
+								      <label id='decimal'>,".$decimal."€</label>";
+							}
 						?>
 					</h2>
 					<h3>Availability:
