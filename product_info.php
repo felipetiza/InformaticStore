@@ -70,22 +70,70 @@
         }else
             echo "Wrong Query";
 
-        // Add to Cart
-		if(isset($_POST["addToCart"])){
-            $getproduct = "INSERT INTO shopping_cart
-            			   VALUES({$_SESSION["iduser"]}, {$_GET["id"]}, {$_POST["quantity"]});
+
+
+        // ***********************
+		// Add to Cart
+        // ***********************
+
+        // Check wheter the product id has already been inserted
+        // - Reason? Can not insert 2 times the id product (it's primary key)
+        // - Solution? Sum the new quantity to the product quantity
+        if(isset($_POST["addToCart"]) && $_POST["quantity"] > 0){
+			$productInserted = false;
+
+            $getproduct = "SELECT idproduct
+            			   FROM shopping_cart
+            			   WHERE idproduct = {$_GET["id"]};
                           ";
 
-            if ($result = $connection->query($getproduct)) {
-                if (!$result)
-                    echo "Impossible insert the product within shopping cart";
-            }else
+            if ($result = $connection->query($getproduct))
+				$productInserted = ($result->num_rows > 0) ? true : false;
+            else
                 echo "Wrong Query";
+
+			if(!$productInserted){
+	            $getproduct = "INSERT INTO shopping_cart
+	            			   VALUES({$_SESSION["iduser"]}, {$_GET["id"]}, {$_POST["quantity"]});
+	                          ";
+
+	            if ($result = $connection->query($getproduct)){
+	                if (!$result)
+	                    echo "Impossible insert the product within shopping cart";
+	            }else
+	                echo "Wrong Query";
+			}else{
+				$amount = 0;
+				// 1. Select the amount of that product
+	            $getproduct = "SELECT amount
+	            			   FROM shopping_cart
+	            			   WHERE idproduct = {$_GET["id"]};
+	                          ";
+
+	            if ($result = $connection->query($getproduct)){
+	                if ($result->num_rows > 0)
+		            	$amount = $result->fetch_object()->amount;
+	            }else
+	                echo "Wrong Query";
+
+				// 2. Sum the new quantity
+	            $amount += $_POST["quantity"];
+
+	            $getproduct = "UPDATE shopping_cart
+	            			   SET amount = $amount
+	                           WHERE idproduct = {$_GET["id"]};
+	                          ";
+
+	            if ($result = $connection->query($getproduct)){
+	                if (!$result)
+	                    echo "Impossible update the new quantity of a product";
+	            }else
+	                echo "Wrong Query";
+			}
 		}
 
 		// Get amount products from shopping cart
 		$amount = 0;
-
         $getusername = "SELECT idproduct
                         FROM shopping_cart
                         WHERE idcustomer = {$_SESSION['iduser']};
@@ -96,7 +144,7 @@
                 	while($result->fetch_object())
                 		$amount++;
             }else
-                echo "Impossible to get the username";
+                echo "Impossible to get the amount of products within shopping cart";
         }else
             echo "Wrong Query";
 
