@@ -11,6 +11,39 @@
             x.className = "show";
             setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
         }
+
+        // Modal Window - Shopping Cart
+
+        function loadModalWindow(){
+        	var modal = document.getElementById('myModal');
+			var span = document.getElementsByClassName("close")[0];
+
+			span.onclick = function() {
+			    modal.style.display = "none";
+			}
+			window.onclick = function(event) {
+			    if (event.target == modal){
+			        modal.style.display = "none";
+			    }
+			}
+        }
+
+		document.addEventListener("load", function(){
+			var modal = document.getElementById('myModal');
+			var btn = document.getElementsByClassName("myBtn");
+			var span = document.getElementsByClassName("close")[0];
+
+			btn[0].onclick = function() { modal.style.display = "block"; }
+			btn[1].onclick = function() { modal.style.display = "block"; }
+			span.onclick = function() {
+			    modal.style.display = "none";
+			}
+			window.onclick = function(event) {
+			    if (event.target == modal){
+			        modal.style.display = "none";
+			    }
+			}
+		}, true);
     </script>
 </head>
 <body>
@@ -36,14 +69,14 @@
 
 		// Get username from database
 		$username = "";
-        $getusername = "SELECT name
+        $getusername = "SELECT username
                         FROM customer
                         WHERE idcustomer = {$_SESSION['iduser']};
                        ";
 
         if ($result = $connection->query($getusername)) {
             if ($result->num_rows > 0)
-                $username = $result->fetch_object()->name;
+                $username = $result->fetch_object()->username;
             else
                 echo "Impossible to get the username";
         }else
@@ -77,6 +110,35 @@
         }else
             echo "Wrong Query";
 
+        // Get products category
+		$listProductCategory = [];
+
+        $getProducts = "SELECT DISTINCT category FROM product ORDER BY category ASC;";
+
+        if ($result = $connection->query($getProducts)) {
+            if ($result->num_rows > 0){
+            	while($product = $result->fetch_object())
+            		array_push($listProductCategory, $product->category);
+            }else
+                echo "Impossible to get the products category";
+        }else
+            echo "Wrong Query";
+
+		// Get amount products from shopping cart
+		$amount = 0;
+        $getusername = "SELECT idproduct
+                        FROM shopping_cart
+                        WHERE idcustomer = {$_SESSION['iduser']};
+                       ";
+
+        if ($result = $connection->query($getusername)) {
+            if ($result->num_rows > 0){
+                	while($result->fetch_object())
+                		$amount++;
+            }else
+                echo "Impossible to get the amount of products within shopping cart";
+        }else
+            echo "Wrong Query";
 
 
         // ***********************
@@ -144,41 +206,54 @@
         	}
 		}
 
-		// Get amount products from shopping cart
-		$amount = 0;
-        $getusername = "SELECT idproduct
-                        FROM shopping_cart
-                        WHERE idcustomer = {$_SESSION['iduser']};
-                       ";
-
-        if ($result = $connection->query($getusername)) {
-            if ($result->num_rows > 0){
-                	while($result->fetch_object())
-                		$amount++;
-            }else
-                echo "Impossible to get the amount of products within shopping cart";
-        }else
-            echo "Wrong Query";
-
-
 	?>
 
 	<div id="wrapper">
+		<!-- Level 1 -->
 		<div id="basic">
-	        <div id="user"><?php echo "<p>Welcome, $username</p>" ?></div>
+	        <div id="user">
+			    <div class="dropdown">
+			        <button class="dropbtnCategory">Category</button>
+			        <div class="dropdown-content">
+ 						<?php
+							for($i=0;$i<count($listProductCategory);$i++){
+								echo "<a href='menu.php?categ=".strtolower($listProductCategory[$i])."' ?>";
+								echo $listProductCategory[$i]."</a>";
+							}
+						?>
+			        </div>
+			    </div>
+	        </div>
 			<div id="title"><h1>Product Info</h1></div>
-			<div id="cart"><label><?php echo $amount; ?></label><img src="resources/img/cart.png"></div>
+			<div id="cart">
+				<label><?php echo $amount; ?></label><img class="myBtn" src="resources/img/cart.png">
+			</div>
 		</div>
         <hr>
+		<!-- Level 2 -->
         <div id="infobar">
-	        <div id="path">
-	        	<a href="menu.php">Home</a> >
-	        	<a href="menu.php?categ=<?php echo strtolower($productCategory); ?>"><?php echo $productCategory ?></a>
+	        <div id="left">
+		        <div id="path">
+		        	<a href="menu.php">Home</a> >
+		        	<a href="menu.php?categ=<?php echo strtolower($productCategory); ?>">
+		        		<?php echo $productCategory ?>
+		        	</a>
+		        </div>
 	        </div>
-	        <form method="post" id="unlogin">
-				<input type="submit" name="unlogin" value="Logout">
-	        </form>
+	        <div id="right">
+
+	        	<div id="btnUser" class="dropdown">
+			        <button class="dropbtnUser"><?php echo $username; ?></button>
+			        <div class="dropdown-content-user">
+			        	<a class="myBtn">Shopping Cart</a>
+			        	<a href="order.php">Orders</a>
+						<form method="post"><input type="submit" name="unlogin" value="Logout"></form>
+			        </div>
+			    </div>
+
+	        </div>
         </div>
+        <!-- Level 3 -->
         <br>
 		<div id="content">
 			<div id="row1">
@@ -223,6 +298,15 @@
 			<div id="row2">
 				<p><?php echo nl2br($productDescrip); ?></p>
 			</div>
+
+			<!-- Modal Window -->
+			<div id="myModal" class="modal">
+				<div class="modal-content">
+				    <span class="close">&times;</span>
+				    <p>Some text in the Modal..</p>
+			  	</div>
+			</div>
+
 		</div>
 	</div>
 </body>

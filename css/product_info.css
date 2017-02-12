@@ -2,6 +2,7 @@
 	font-family: sans-serif;
 	font-size: 12px;
 	color: #798e94;
+	text-decoration: none;
 }
 body{
 	background: #E2ECEE;
@@ -57,26 +58,24 @@ hr{
 #infobar{
 	background: #E2ECEE;
 	color: #798e94;
-	padding: 3px 10px;
+	padding: 4px 10px;
 	border-radius: 0px 0px 6px 6px;
 	margin-top: -7px;
 	display: flex;
 }
-#path{
+#infobar > #left{
 	width: 50%;
 }
-#path a{
-	text-decoration: none;
+#infobar > #left > #path{
+  margin-top: 2px;
 }
-#unlogin{
+#infobar > #right{
 	width: 50%;
-	text-align: right;
+	/*! border: 1px solid #555; */
+	display: flex;
 }
-input[type=submit] {
-	background:#E2ECEE;
-	border:0 none;
-	cursor:pointer;
-	border-radius: 5px;
+#infobar > #right > #btnUser{
+  margin-left: auto;
 }
 #content{
 	/* border: 1px solid #555; */
@@ -88,7 +87,7 @@ input[type=submit] {
 	margin: 5px 5px;
 	/*! justify-content: space-around; */
 }
-#row1{
+#content #row1{
   /*! border: 1px solid blue; */
 	padding: 10px 10px;
 	display: flex;
@@ -97,7 +96,7 @@ input[type=submit] {
 	width: 575px;
   margin: 0 auto;
 }
-#row2{
+#content #row2{
 	/* border: 1px solid red; */
 	padding: 3px 10px;
 	background: #E2ECEE;
@@ -134,13 +133,13 @@ input[type=submit] {
  	margin-top: 10px;
 	margin-left: 10px;
 }
-h2 label{
+#content h2 label{
 
 }
-h2 label#integer{
+#content h2 label#integer{
   font-size: 26px;
 }
-h2 label#decimal{
+#content h2 label#decimal{
   font-size: 20px;
 	margin-left: 0px;
 }
@@ -148,15 +147,15 @@ h2 label#decimal{
  	margin-top: 10px;
 	margin-left: 10px;
 }
-h3 label{
+#content h3 label{
 	color: #dcf3f1;
 	padding: 2px 5px;
 	border-radius: 3px;
 }
-h3 label#green{
+#content h3 label#green{
 	background: #28ba28;
 }
-h3 label#red{
+#content h3 label#red{
 	background: #c82d2d;
 }
 #content p{
@@ -175,6 +174,7 @@ h3 label#red{
 	background: #2a6581cc;
 	color: #dbe9f0;
 	transition: 150ms;
+	cursor: pointer;
 }
 #content input[type='submit']:hover{
 	background: #2a6581bb;
@@ -224,11 +224,120 @@ h3 label#red{
     to {bottom: 0; opacity: 0;}
 }
 
+/* ================================  */
 
+.dropbtnCategory {
+	padding:5px 15px;
+	background:#E2ECEE;
+	border:0 none;
+	cursor:pointer;
+	border-radius: 5px;
+	margin-top: 10px;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-content {
+	position: absolute;
+    display: none;
+	background: #E2ECEEff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+ 	border-radius: 0px 6px 6px 6px;
+	margin-top: -3px;
+}
+.dropdown-content a {
+    color: #798e94;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.dropdown-content a:hover {background-color: #f1f1f1}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.dropdown:hover .dropbtn {
+    /*! background: #3e8e41; */
+    opacity: 0.8;
+}
 
+/* ================================  */
 
+.dropbtnUser {
+	padding:3px 15px;
+	background:#fff;
+	border:0 none;
+	cursor:pointer;
+	border-radius: 5px;
+}
+.dropdown-content-user {
+	position: absolute;
+	background: #E2ECEEff;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+ 	border-radius: 0px 6px 6px 6px;
+	margin-top: 0px;
+	text-align: center;
+	margin-left: -50px;
+  display: none;
+}
+.dropdown-content-user a {
+    color: #798e94;
+	cursor: pointer;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.dropdown-content-user a:hover {background-color: #f1f1f1}
+.dropdown-content-user input{
+    color: #798e94;
+    padding: 12px 16px;
+    width: 100%;
+    text-decoration: none;
+    display: block;
+		border: none;
+	/* background: fff0; */
+		background: #E2ECEEff;
+  cursor: pointer;
+}
+.dropdown-content-user input:hover {background-color: #f1f1f1}
+.dropdown:hover .dropdown-content-user {
+    display: block;
+}
 
+/* ================================  */
 
-
-
-
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: rgb(0,0,0);
+    background: rgba(0,0,0,0.4);
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
