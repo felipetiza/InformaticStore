@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Product Info</title>
+	<link rel="stylesheet" href="css/resources.css">
 	<link rel="stylesheet" href="css/product_info.css">
 	<script src="js/author.js"></script>
 	<meta charset="UTF-8">
@@ -13,21 +14,6 @@
         }
 
         // Modal Window - Shopping Cart
-
-        function loadModalWindow(){
-        	var modal = document.getElementById('myModal');
-			var span = document.getElementsByClassName("close")[0];
-
-			span.onclick = function() {
-			    modal.style.display = "none";
-			}
-			window.onclick = function(event) {
-			    if (event.target == modal){
-			        modal.style.display = "none";
-			    }
-			}
-        }
-
 		document.addEventListener("load", function(){
 			var modal = document.getElementById('myModal');
 			var btn = document.getElementsByClassName("myBtn");
@@ -39,9 +25,8 @@
 			    modal.style.display = "none";
 			}
 			window.onclick = function(event) {
-			    if (event.target == modal){
+			    if (event.target == modal)
 			        modal.style.display = "none";
-			    }
 			}
 		}, true);
     </script>
@@ -124,26 +109,59 @@
         }else
             echo "Wrong Query";
 
-		// Get amount products from shopping cart
-		$amount = 0;
-        $getusername = "SELECT idproduct
+        // -----------------------
+		// Get from Shopping_Cart
+        // ----------------------
+
+        // Get client's products from shopping_cart
+		$cartTotalPrice    = 0;
+		$cartProductsTotalAmount   = 0;
+		$cartProductID     = [];
+		$cartProductAmount = [];
+
+        $getusername = "SELECT *
                         FROM shopping_cart
                         WHERE idcustomer = {$_SESSION['iduser']};
                        ";
 
         if ($result = $connection->query($getusername)) {
             if ($result->num_rows > 0){
-                	while($result->fetch_object())
-                		$amount++;
+                while($product = $result->fetch_object()){
+					array_push($cartProductID, $product->idproduct);
+					array_push($cartProductAmount, $product->amount);
+                	$cartProductsTotalAmount++;
+                }
             }else
-                echo "Impossible to get the amount of products within shopping cart";
+                echo "Impossible to get client's products from shopping_cart";
         }else
             echo "Wrong Query";
 
+        // Get products data of client
+		$cartProductName  = [];
+		$cartProductPrice = [];
 
-        // ***********************
+		for($i=0;$i<$cartProductsTotalAmount;$i++){
+	        $getProducts = "SELECT *
+	                        FROM product
+	                        WHERE idproduct = ".$cartProductID[$i].";
+	                       ";
+
+	        if ($result = $connection->query($getProducts)) {
+	            if ($result->num_rows > 0){
+	            	while($product = $result->fetch_object()){
+	            		array_push($cartProductName, $product->name);
+	            		array_push($cartProductPrice, $product->price);
+	            	}
+	            }else
+	                echo "Impossible to get the products";
+	        }else
+	            echo "Wrong Query";
+		}
+
+
+        // -----------------------
 		// Add to Cart
-        // ***********************
+        // ----------------------
 
         // Check wheter the product id has already been inserted
         // - Reason? Can not insert 2 times the id product (it's primary key)
@@ -173,7 +191,7 @@
 		            }else
 		                echo "Wrong Query";
 				}else{
-					$amount = 0;
+					$cartProductsTotalAmount = 0;
 					// 1. Select the amount of that product
 		            $getproduct = "SELECT amount
 		            			   FROM shopping_cart
@@ -182,15 +200,15 @@
 
 		            if ($result = $connection->query($getproduct)){
 		                if ($result->num_rows > 0)
-			            	$amount = $result->fetch_object()->amount;
+			            	$cartProductsTotalAmount = $result->fetch_object()->amount;
 		            }else
 		                echo "Wrong Query";
 
 					// 2. Sum the new quantity
-		            $amount += $_POST["quantity"];
+		            $cartProductsTotalAmount += $_POST["quantity"];
 
 		            $getproduct = "UPDATE shopping_cart
-		            			   SET amount = $amount
+		            			   SET amount = $cartProductsTotalAmount
 		                           WHERE idproduct = {$_GET["id"]};
 		                          ";
 
@@ -200,6 +218,7 @@
 		            }else
 		                echo "Wrong Query";
 				}
+				header("Refresh:0");
         	}else{
         		echo "<div id='toast'>The product is out of stock</div>";
                 echo "<script>loadToast();</script>";
@@ -226,7 +245,7 @@
 	        </div>
 			<div id="title"><h1>Product Info</h1></div>
 			<div id="cart">
-				<label><?php echo $amount; ?></label><img class="myBtn" src="resources/img/cart.png">
+				<label><?php echo $cartProductsTotalAmount; ?></label><img class="myBtn" src="resources/img/cart.png">
 			</div>
 		</div>
         <hr>
@@ -303,7 +322,31 @@
 			<div id="myModal" class="modal">
 				<div class="modal-content">
 				    <span class="close">&times;</span>
-				    <p>Some text in the Modal..</p>
+				    <p>(<?php echo $cartProductsTotalAmount; ?>) Products in your shopping cart</p>
+
+					<table>
+						<tr>
+					  		<th>Product</th>
+					  		<th>Price</th>
+					  		<th>Units</th>
+					  		<th>Total</th>
+						</tr>
+					    <?php
+							for($i=0;$i<$cartProductsTotalAmount;$i++){
+				    			echo "<tr>";
+				    			echo "<td><a href='product_info.php?id=$cartProductID[$i]'>$cartProductName[$i]</a></td>";
+				    			echo "<td>".$cartProductPrice[$i]."€</td>";
+				    			echo "<td>".$cartProductAmount[$i]."</td>";
+				    			echo "<td>".$cartProductPrice[$i] * $cartProductAmount[$i]."€</td>";
+				    			echo "</tr>";
+				    			$cartTotalPrice += $cartProductPrice[$i] * $cartProductAmount[$i];
+				    		}
+					    ?>
+					</table>
+					<br/>
+					<br/>
+					<p><?php echo "Total: ".$cartTotalPrice."€"; ?></p>
+
 			  	</div>
 			</div>
 

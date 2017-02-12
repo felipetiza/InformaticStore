@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Menu</title>
+	<link rel="stylesheet" href="css/resources.css">
 	<link rel="stylesheet" href="css/menu.css">
 	<script src="js/author.js"></script>
 <!-- 	<script>
@@ -57,10 +58,13 @@
         }else
             echo "Wrong Query";
 
+
+        // -----------------------
+		// Get products data
+        // ----------------------
+
 		// If I receive the category of a product I show it,
 		// else I show all the store products
-
-        // Get products data
 		$productID    = [];
 		$productName  = [];
 		$productPrice = [];
