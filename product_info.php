@@ -5,6 +5,13 @@
 	<link rel="stylesheet" href="css/product_info.css">
 	<script src="js/author.js"></script>
 	<meta charset="UTF-8">
+	<script>
+        function loadToast() {
+            var x = document.getElementById("toast")
+            x.className = "show";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        }
+    </script>
 </head>
 <body>
 
@@ -79,57 +86,62 @@
         // Check wheter the product id has already been inserted
         // - Reason? Can not insert 2 times the id product (it's primary key)
         // - Solution? Sum the new quantity to the product quantity
-        if(isset($_POST["addToCart"]) && $_POST["quantity"] > 0){
-			$productInserted = false;
+        if(isset($_POST["addToCart"])){
+        	if($_POST["quantity"] > 0){
+	    		$productInserted = false;
 
-            $getproduct = "SELECT idproduct
-            			   FROM shopping_cart
-            			   WHERE idproduct = {$_GET["id"]};
-                          ";
-
-            if ($result = $connection->query($getproduct))
-				$productInserted = ($result->num_rows > 0) ? true : false;
-            else
-                echo "Wrong Query";
-
-			if(!$productInserted){
-	            $getproduct = "INSERT INTO shopping_cart
-	            			   VALUES({$_SESSION["iduser"]}, {$_GET["id"]}, {$_POST["quantity"]});
-	                          ";
-
-	            if ($result = $connection->query($getproduct)){
-	                if (!$result)
-	                    echo "Impossible insert the product within shopping cart";
-	            }else
-	                echo "Wrong Query";
-			}else{
-				$amount = 0;
-				// 1. Select the amount of that product
-	            $getproduct = "SELECT amount
+	            $getproduct = "SELECT idproduct
 	            			   FROM shopping_cart
 	            			   WHERE idproduct = {$_GET["id"]};
 	                          ";
 
-	            if ($result = $connection->query($getproduct)){
-	                if ($result->num_rows > 0)
-		            	$amount = $result->fetch_object()->amount;
-	            }else
+	            if ($result = $connection->query($getproduct))
+					$productInserted = ($result->num_rows > 0) ? true : false;
+	            else
 	                echo "Wrong Query";
 
-				// 2. Sum the new quantity
-	            $amount += $_POST["quantity"];
+				if(!$productInserted){
+		            $getproduct = "INSERT INTO shopping_cart
+		            			   VALUES({$_SESSION["iduser"]}, {$_GET["id"]}, {$_POST["quantity"]});
+		                          ";
 
-	            $getproduct = "UPDATE shopping_cart
-	            			   SET amount = $amount
-	                           WHERE idproduct = {$_GET["id"]};
-	                          ";
+		            if ($result = $connection->query($getproduct)){
+		                if (!$result)
+		                    echo "Impossible insert the product within shopping cart";
+		            }else
+		                echo "Wrong Query";
+				}else{
+					$amount = 0;
+					// 1. Select the amount of that product
+		            $getproduct = "SELECT amount
+		            			   FROM shopping_cart
+		            			   WHERE idproduct = {$_GET["id"]};
+		                          ";
 
-	            if ($result = $connection->query($getproduct)){
-	                if (!$result)
-	                    echo "Impossible update the new quantity of a product";
-	            }else
-	                echo "Wrong Query";
-			}
+		            if ($result = $connection->query($getproduct)){
+		                if ($result->num_rows > 0)
+			            	$amount = $result->fetch_object()->amount;
+		            }else
+		                echo "Wrong Query";
+
+					// 2. Sum the new quantity
+		            $amount += $_POST["quantity"];
+
+		            $getproduct = "UPDATE shopping_cart
+		            			   SET amount = $amount
+		                           WHERE idproduct = {$_GET["id"]};
+		                          ";
+
+		            if ($result = $connection->query($getproduct)){
+		                if (!$result)
+		                    echo "Impossible update the new quantity of a product";
+		            }else
+		                echo "Wrong Query";
+				}
+        	}else{
+        		echo "<div id='toast'>The product is out of stock</div>";
+                echo "<script>loadToast();</script>";
+        	}
 		}
 
 		// Get amount products from shopping cart
