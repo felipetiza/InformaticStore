@@ -4,14 +4,26 @@
     <title>Login</title>
     <link rel="stylesheet" href="css/login.css">
     <script src="js/author.js"></script>
+    <script>
+        function loadToast() {
+            var x = document.getElementById("toast")
+            x.className = "show";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        }
+    </script>
 </head>
 <body>
 
     <?php
         include_once "db_connection.php";
 
-        if (isset($_POST["user"])) {
+        // If user is logged
+        session_start();
+        if(isset($_SESSION["iduser"]))
+            header('Location: menu.php');
 
+        // The user try to logging
+        if (isset($_POST["user"])) {
             $user = $_POST['user'];
             $pass = $_POST['pass'];
 
@@ -28,13 +40,13 @@
                 $query->bind_result($person);
                 $query->fetch();
 
-                if(!empty($person)){
-                    session_start();
+                if(isset($person)){
                     $_SESSION["iduser"] = $person;
                     header('Location: menu.php');
-                }else
-                    echo "Invalid Login";
-
+                }else{
+                    echo "<div id='toast'>Invalid Login</div>";
+                    echo "<script>loadToast();</script>";
+                }
                 $query->close();
             }
         }
