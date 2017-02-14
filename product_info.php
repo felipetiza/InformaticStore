@@ -7,17 +7,19 @@
 	<script src="js/author.js"></script>
 	<meta charset="UTF-8">
 	<script>
-        function loadToast() {
+        function loadToast(){
             var x = document.getElementById("toast")
             x.className = "show";
             setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
         }
 
-        // Modal Window - Shopping Cart
-		document.addEventListener("load", function(){
-			var modal = document.getElementById('myModal');
-			var btn = document.getElementsByClassName("myBtn");
-			var span = document.getElementsByClassName("close")[0];
+        function loadModalWindow(showWithoutClick){
+        	var modal = document.getElementById('myModal');
+			var btn   = document.getElementsByClassName("myBtn");
+			var span  = document.getElementsByClassName("close")[0];
+
+			if(showWithoutClick)
+				btn[0].click();
 
 			btn[0].onclick = function() { modal.style.display = "block"; }
 			btn[1].onclick = function() { modal.style.display = "block"; }
@@ -28,6 +30,10 @@
 			    if (event.target == modal)
 			        modal.style.display = "none";
 			}
+        }
+
+		document.addEventListener("load", function(){
+			loadModalWindow(false);
 		}, true);
     </script>
 </head>
@@ -35,6 +41,7 @@
 
  	<?php
 		include_once "db_connection.php";
+		include_once "management.php";
 
 	    session_start();
 
@@ -52,111 +59,70 @@
 			header('Location: login.php');
 		}
 
-		// Get username from database
-		$username = "";
-        $getusername = "SELECT username
-                        FROM customer
-                        WHERE idcustomer = {$_SESSION['iduser']};
-                       ";
 
-        if ($result = $connection->query($getusername)) {
-            if ($result->num_rows > 0)
-                $username = $result->fetch_object()->username;
-            else
-                echo "Impossible to get the username";
-        }else
-            echo "Wrong Query";
+		// addToCart($connection);
+		if(isset($_POST["cartProductID"]))
+			deleteProductFromCart($connection, $_POST["cartProductID"]);
 
-        // Get product data
-		$productName;
-		$productCategory;
-		$productDescrip;
-		$productPrice;
-		$productAmount;
-		$productImage;
+		$username = getUsername($connection);
 
-        $getproduct = "SELECT *
-                       FROM product
-                       WHERE idproduct = {$_GET['id']};
-                      ";
-
-        if ($result = $connection->query($getproduct)) {
-            if ($result->num_rows > 0){
-            	$product = $result->fetch_object();
-
-				$productName     = $product->name;
-				$productCategory = $product->category;
-				$productDescrip  = $product->description;
-				$productPrice    = $product->price;
-				$productAmount   = $product->amount;
-				$productImage    = $product->urlimage;
-            }else
-                echo "Impossible to get the product";
-        }else
-            echo "Wrong Query";
+		// Product data from current product
+		$productData = getProductData($connection, $_GET['id']);
+		$productName     = $productData['name'];
+		$productCategory = $productData['category'];
+		$productDescrip  = $productData['description'];
+		$productPrice    = $productData['price'];
+		$productAmount   = $productData['amount'];
+		$productImage    = $productData['urlimage'];
 
         // Get products category
-		$listProductCategory = [];
+		$listProductCategory = getProductCategory($connection);
 
-        $getProducts = "SELECT DISTINCT category FROM product ORDER BY category ASC;";
 
-        if ($result = $connection->query($getProducts)) {
-            if ($result->num_rows > 0){
-            	while($product = $result->fetch_object())
-            		array_push($listProductCategory, $product->category);
-            }else
-                echo "Impossible to get the products category";
-        }else
-            echo "Wrong Query";
+
 
         // -----------------------
 		// Get from Shopping_Cart
         // ----------------------
 
-        // Get client's products from shopping_cart
-		$cartTotalPrice    = 0;
-		$cartProductsTotalAmount   = 0;
+        // Get client's products from shopping cart
+		$cartProductIDAndAmount = getProductIDFromCart($connection, $_SESSION['iduser']);
+		$cartProductsNumber     = count($cartProductIDAndAmount);
+		$cartTotalPrice         = 0;
+
+        // Get products data of client
 		$cartProductID     = [];
 		$cartProductAmount = [];
 
-        $getusername = "SELECT *
-                        FROM shopping_cart
-                        WHERE idcustomer = {$_SESSION['iduser']};
-                       ";
-
-        if ($result = $connection->query($getusername)) {
-            if ($result->num_rows > 0){
-                while($product = $result->fetch_object()){
-					array_push($cartProductID, $product->idproduct);
-					array_push($cartProductAmount, $product->amount);
-                	$cartProductsTotalAmount++;
-                }
-            }else
-                echo "Impossible to get client's products from shopping_cart";
-        }else
-            echo "Wrong Query";
-
-        // Get products data of client
-		$cartProductName  = [];
-		$cartProductPrice = [];
-
-		for($i=0;$i<$cartProductsTotalAmount;$i++){
-	        $getProducts = "SELECT *
-	                        FROM product
-	                        WHERE idproduct = ".$cartProductID[$i].";
-	                       ";
-
-	        if ($result = $connection->query($getProducts)) {
-	            if ($result->num_rows > 0){
-	            	while($product = $result->fetch_object()){
-	            		array_push($cartProductName, $product->name);
-	            		array_push($cartProductPrice, $product->price);
-	            	}
-	            }else
-	                echo "Impossible to get the products";
-	        }else
-	            echo "Wrong Query";
+		foreach($cartProductIDAndAmount as $id=>$amount){
+			array_push($cartProductID, $id);
+			array_push($cartProductAmount, $amount);
 		}
+
+		$cartProductData  = getProductDataFromCart($connection, $cartProductsNumber, $cartProductID);
+		$cartProductName  = $cartProductData['name'];
+		$cartProductPrice = $cartProductData['price'];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         // -----------------------
@@ -166,64 +132,68 @@
         // Check wheter the product id has already been inserted
         // - Reason? Can not insert 2 times the id product (it's primary key)
         // - Solution? Sum the new quantity to the product quantity
-        if(isset($_POST["addToCart"])){
-        	if($_POST["quantity"] > 0){
-	    		$productInserted = false;
 
-	            $getproduct = "SELECT idproduct
-	            			   FROM shopping_cart
-	            			   WHERE idproduct = {$_GET["id"]};
-	                          ";
+        function addToCart($connection){
+	        if(isset($_POST["addToCart"])){
+	        	if($_POST["quantity"] > 0){
+		    		$productInserted = false;
 
-	            if ($result = $connection->query($getproduct))
-					$productInserted = ($result->num_rows > 0) ? true : false;
-	            else
-	                echo "Wrong Query";
-
-				if(!$productInserted){
-		            $getproduct = "INSERT INTO shopping_cart
-		            			   VALUES({$_SESSION["iduser"]}, {$_GET["id"]}, {$_POST["quantity"]});
-		                          ";
-
-		            if ($result = $connection->query($getproduct)){
-		                if (!$result)
-		                    echo "Impossible insert the product within shopping cart";
-		            }else
-		                echo "Wrong Query";
-				}else{
-					$cartProductsTotalAmount = 0;
-					// 1. Select the amount of that product
-		            $getproduct = "SELECT amount
+		            $getproduct = "SELECT idproduct
 		            			   FROM shopping_cart
 		            			   WHERE idproduct = {$_GET["id"]};
 		                          ";
 
-		            if ($result = $connection->query($getproduct)){
-		                if ($result->num_rows > 0)
-			            	$cartProductsTotalAmount = $result->fetch_object()->amount;
-		            }else
+		            if ($result = $connection->query($getproduct))
+						$productInserted = ($result->num_rows > 0) ? true : false;
+		            else
 		                echo "Wrong Query";
 
-					// 2. Sum the new quantity
-		            $cartProductsTotalAmount += $_POST["quantity"];
+					if(!$productInserted){
+			            $getproduct = "INSERT INTO shopping_cart
+			            			   VALUES({$_SESSION["iduser"]}, {$_GET["id"]}, {$_POST["quantity"]});
+			                          ";
 
-		            $getproduct = "UPDATE shopping_cart
-		            			   SET amount = $cartProductsTotalAmount
-		                           WHERE idproduct = {$_GET["id"]};
-		                          ";
+			            if ($result = $connection->query($getproduct)){
+			                if (!$result)
+			                    echo "Impossible insert the product within shopping cart";
+			            }else
+			                echo "Wrong Query";
+					}else{
+						$quantity = 0;
+						// 1. Select the amount of that product
+			            $getproduct = "SELECT amount
+			            			   FROM shopping_cart
+			            			   WHERE idproduct = {$_GET["id"]};
+			                          ";
 
-		            if ($result = $connection->query($getproduct)){
-		                if (!$result)
-		                    echo "Impossible update the new quantity of a product";
-		            }else
-		                echo "Wrong Query";
-				}
-				header("Refresh:0");
-        	}else{
-        		echo "<div id='toast'>The product is out of stock</div>";
-                echo "<script>loadToast();</script>";
-        	}
+			            if ($result = $connection->query($getproduct)){
+			                if ($result->num_rows > 0)
+				            	$quantity = $result->fetch_object()->amount;
+			            }else
+			                echo "Wrong Query";
+
+						// 2. Sum the new quantity
+			            $quantity += $_POST["quantity"];
+
+			            $getproduct = "UPDATE shopping_cart
+			            			   SET amount = $quantity
+			                           WHERE idproduct = {$_GET["id"]};
+			                          ";
+
+			            if ($result = $connection->query($getproduct)){
+			                if (!$result)
+			                    echo "Impossible update the new quantity of a product";
+			            }else
+			                echo "Wrong Query";
+					}
+					header("Refresh:0");
+	        	}else{
+	        		echo "<div id='toast'>The product is out of stock</div>";
+	                echo "<script>loadToast();</script>";
+	        	}
+			}
 		}
+
 
 	?>
 
@@ -245,7 +215,7 @@
 	        </div>
 			<div id="title"><h1>Product Info</h1></div>
 			<div id="cart">
-				<label><?php echo $cartProductsTotalAmount; ?></label><img class="myBtn" src="resources/img/cart.png">
+				<label><?php echo $cartProductsNumber; ?></label><img class="myBtn" src="resources/img/cart.png">
 			</div>
 		</div>
         <hr>
@@ -317,40 +287,51 @@
 			<div id="row2">
 				<p><?php echo nl2br($productDescrip); ?></p>
 			</div>
-
-			<!-- Modal Window -->
-			<div id="myModal" class="modal">
-				<div class="modal-content">
-				    <span class="close">&times;</span>
-				    <p>(<?php echo $cartProductsTotalAmount; ?>) Products in your shopping cart</p>
-
-					<table>
-						<tr>
-					  		<th>Product</th>
-					  		<th>Price</th>
-					  		<th>Units</th>
-					  		<th>Total</th>
-						</tr>
-					    <?php
-							for($i=0;$i<$cartProductsTotalAmount;$i++){
-				    			echo "<tr>";
-				    			echo "<td><a href='product_info.php?id=$cartProductID[$i]'>$cartProductName[$i]</a></td>";
-				    			echo "<td>".$cartProductPrice[$i]."€</td>";
-				    			echo "<td>".$cartProductAmount[$i]."</td>";
-				    			echo "<td>".$cartProductPrice[$i] * $cartProductAmount[$i]."€</td>";
-				    			echo "</tr>";
-				    			$cartTotalPrice += $cartProductPrice[$i] * $cartProductAmount[$i];
-				    		}
-					    ?>
-					</table>
-					<br/>
-					<br/>
-					<p><?php echo "Total: ".$cartTotalPrice."€"; ?></p>
-
-			  	</div>
-			</div>
-
 		</div>
+
+		<!-- Modal Window -->
+		<div id="myModal" class="modal">
+			<div class="modal-content">
+			    <span class="close">&times;</span>
+			    <p>(<?php echo $cartProductsNumber; ?>) Products in your shopping cart</p>
+
+ 					<table>
+					<tr>
+				  		<th>Product</th>
+				  		<th>Price</th>
+				  		<th>Units</th>
+				  		<th>Total</th>
+				  		<th></th>
+					</tr>
+ 				    <?php
+						for($i=0;$i<$cartProductsNumber;$i++){
+			    			echo "<tr>";
+			    			echo "<td><a href='product_info.php?id=$cartProductID[$i]'>$cartProductName[$i]</a></td>";
+			    			echo "<td>".$cartProductPrice[$i]."€</td>";
+			    			echo "<td>".$cartProductAmount[$i]."</td>";
+			    			echo "<td>".$cartProductPrice[$i] * $cartProductAmount[$i]."€</td>";
+			    			// echo "<td class='delete'>&times;</td>";
+			    			echo "<td>
+				    				  <form method='post'>
+				    					  <input class='delete' type='submit' name='delete' value='&times;'>
+				    					  <input type='text' name='cartProductID' value='$cartProductID[$i]'>
+				    				  </form>
+			    				  </td>";
+			    			echo "</tr>";
+			    			$cartTotalPrice += $cartProductPrice[$i] * $cartProductAmount[$i];
+			    		}
+				    ?>
+				</table>
+				<br/>
+				<br/>
+				<p><?php echo "Total: ".$cartTotalPrice."€"; ?></p>
+
+		  	</div>
+		</div>
+
+
+
+
 	</div>
 </body>
 </html>

@@ -136,7 +136,7 @@
 }
 
 /* ----------------------------------------------- */
-/* Modal Window
+/* Modal Window - Shopping Cart
 /* ----------------------------------------------- */
 
 .modal {
@@ -169,11 +169,6 @@
     text-decoration: none;
     cursor: pointer;
 }
-
-/* ----------------------------------------------- */
-/* Shopping Cart
-/* ----------------------------------------------- */
-
 table {
     width: 520px;
     text-align: left;
@@ -197,3 +192,32 @@ td{
     padding: 5px;
     padding-left: 10px;
 }
+.delete{
+
+}
+.delete:hover,
+.delete:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+table input[type="text"]{
+    display: none;
+}
+table input[type="submit"]{
+    text-decoration: none;
+    border: none;
+    background: #ccc0;
+    padding: 1px;
+}
+
+
+
+
+
+
+
+
+
+
+
