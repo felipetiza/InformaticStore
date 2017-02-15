@@ -1,16 +1,28 @@
 <?php
 
-	function getUsername($connection){
-		$getusername = "SELECT username
+	function getUserData($connection, $userID){
+		$userData = [];
+		$getusername = "SELECT *
 	                    FROM customer
-	                    WHERE idcustomer = {$_SESSION['iduser']};
+	                    WHERE idcustomer = $userID;
 	                   ";
 
 	    if ($result = $connection->query($getusername)) {
-	        if ($result->num_rows > 0)
-	            return $result->fetch_object()->username;
-	        else
-	            echo "Impossible to get the username";
+	        if ($result->num_rows > 0){
+	            $product = $result->fetch_object();
+
+				$userData['name']     = $product->name;
+				$userData['surname']  = $product->surname;
+				$userData['email']    = $product->email;
+				$userData['address']  = $product->address;
+				$userData['phone']    = $product->phone;
+				$userData['type']     = $product->type;
+				$userData['username'] = $product->username;
+				$userData['password'] = $product->password;
+
+	        	return $userData;
+	        }else
+	            echo "Impossible to get the user data";
 	    }else
 	        echo "Wrong Query";
 	}
@@ -35,7 +47,7 @@
 
 				return $productData;
 	        }else
-	            echo "Impossible to get the product";
+	            echo "Impossible to get the product data";
 	    }else
 	        echo "Wrong Query";
     }
@@ -61,7 +73,7 @@
 
         if ($result = $connection->query($getProducts)) {
             if ($result){
-            	// $_SESSION["modalWindow"] = true;
+            	$_SESSION["modalWindow"] = "true";
             	header("Refresh:0");
             }else
                 echo "Impossible to delete the product";

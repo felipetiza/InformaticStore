@@ -59,12 +59,24 @@
 			header('Location: login.php');
 		}
 
+		// Modal window of cart doesn't vanish when remove a product
+		if(!isset($_SESSION["modalWindow"]))
+			$_SESSION["modalWindow"] = "false";
+
+		if($_SESSION["modalWindow"] == "true"){
+			echo "<script>document.addEventListener('load', function(){ loadModalWindow(true); }, true);</script>";
+			$_SESSION["modalWindow"] = "false";
+		}
+
 		// Delete from Shopping_Cart
 		if(isset($_POST["cartProductID"]))
 			deleteProductFromCart($connection, $_POST["cartProductID"]);
 
-		$username            = getUsername($connection);
 		$listProductCategory = getProductCategory($connection);
+
+		// User data from logged customer
+		$userData = getUserData($connection, $_SESSION['iduser']);
+		$username = $userData['username'];
 
 		// Product data from current product
 		$productData = getProductData($connection, $_GET['id']);
@@ -74,7 +86,6 @@
 		$productPrice    = $productData['price'];
 		$productAmount   = $productData['amount'];
 		$productImage    = $productData['urlimage'];
-
 
         // -----------------------
 		// Get from Shopping_Cart
