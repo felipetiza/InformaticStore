@@ -92,15 +92,16 @@
             if ($result->num_rows > 0){
                 while($product = $result->fetch_object())
 					$cartProductID[$product->idproduct] = $product->amount;
-				return $cartProductID;
-            }else
-                echo "Impossible to get client's products from shopping cart";
+            }else{
+                // echo "The shopping cart is empty";
+            }
         }else
             echo "Wrong Query";
+		return $cartProductID;
     }
 
 	function getProductDataFromCart($connection, $productNumber, $prodID){
-		$cartProductData = [[]];
+		$cartProductData = [];		// Array 2 dimensions
 
 		for($i=0;$i<$productNumber;$i++){
 	        $getProducts = "SELECT *

@@ -95,7 +95,6 @@
 		$cartProductIDAndAmount = getProductIDFromCart($connection, $_SESSION['iduser']);
 		$cartProductsNumber     = count($cartProductIDAndAmount);
 		$cartTotalPrice         = 0;
-
         // Get products data of client
 		$cartProductID     = [];
 		$cartProductAmount = [];
@@ -106,8 +105,8 @@
 		}
 
 		$cartProductData  = getProductDataFromCart($connection, $cartProductsNumber, $cartProductID);
-		$cartProductName  = $cartProductData['name'];
-		$cartProductPrice = $cartProductData['price'];
+		$cartProductName  = (count($cartProductData) != 0) ? $cartProductData['name'] : [];
+		$cartProductPrice = (count($cartProductData) != 0) ? $cartProductData['price'] : [];
 
         // -----------------------
 		// Add to Cart
@@ -127,7 +126,7 @@
 					$productAmount = getAmountProductOfCart($connection, $_GET["id"]);
 					riseAmountProductOfCart($connection, $productAmount, $_POST["amountToAdd"], $_SESSION["iduser"], $_GET["id"]);
 				}
-				// Refresh cart data 		header("Refresh:0");
+				// Refresh cart data
 				header("Refresh:0");
         	}else{
         		echo "<div id='toast'>The product is out of stock</div>";
