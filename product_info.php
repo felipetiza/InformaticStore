@@ -59,12 +59,12 @@
 			header('Location: login.php');
 		}
 
-
-		// addToCart($connection);
+		// Delete from Shopping_Cart
 		if(isset($_POST["cartProductID"]))
 			deleteProductFromCart($connection, $_POST["cartProductID"]);
 
-		$username = getUsername($connection);
+		$username            = getUsername($connection);
+		$listProductCategory = getProductCategory($connection);
 
 		// Product data from current product
 		$productData = getProductData($connection, $_GET['id']);
@@ -74,11 +74,6 @@
 		$productPrice    = $productData['price'];
 		$productAmount   = $productData['amount'];
 		$productImage    = $productData['urlimage'];
-
-        // Get products category
-		$listProductCategory = getProductCategory($connection);
-
-
 
 
         // -----------------------
@@ -103,98 +98,31 @@
 		$cartProductName  = $cartProductData['name'];
 		$cartProductPrice = $cartProductData['price'];
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         // -----------------------
 		// Add to Cart
         // ----------------------
 
         // Check wheter the product id has already been inserted
         // - Reason? Can not insert 2 times the id product (it's primary key)
-        // - Solution? Sum the new quantity to the product quantity
+        // - Solution? Increase the new quantity to the product quantity
 
-        function addToCart($connection){
-	        if(isset($_POST["addToCart"])){
-	        	if($_POST["quantity"] > 0){
-		    		$productInserted = false;
+        if(isset($_POST["addToCart"])){
+        	if($_POST["amountToAdd"] > 0){
+	    		$productInserted = checkProductIsInserted($connection, $_GET["id"]);
 
-		            $getproduct = "SELECT idproduct
-		            			   FROM shopping_cart
-		            			   WHERE idproduct = {$_GET["id"]};
-		                          ";
-
-		            if ($result = $connection->query($getproduct))
-						$productInserted = ($result->num_rows > 0) ? true : false;
-		            else
-		                echo "Wrong Query";
-
-					if(!$productInserted){
-			            $getproduct = "INSERT INTO shopping_cart
-			            			   VALUES({$_SESSION["iduser"]}, {$_GET["id"]}, {$_POST["quantity"]});
-			                          ";
-
-			            if ($result = $connection->query($getproduct)){
-			                if (!$result)
-			                    echo "Impossible insert the product within shopping cart";
-			            }else
-			                echo "Wrong Query";
-					}else{
-						$quantity = 0;
-						// 1. Select the amount of that product
-			            $getproduct = "SELECT amount
-			            			   FROM shopping_cart
-			            			   WHERE idproduct = {$_GET["id"]};
-			                          ";
-
-			            if ($result = $connection->query($getproduct)){
-			                if ($result->num_rows > 0)
-				            	$quantity = $result->fetch_object()->amount;
-			            }else
-			                echo "Wrong Query";
-
-						// 2. Sum the new quantity
-			            $quantity += $_POST["quantity"];
-
-			            $getproduct = "UPDATE shopping_cart
-			            			   SET amount = $quantity
-			                           WHERE idproduct = {$_GET["id"]};
-			                          ";
-
-			            if ($result = $connection->query($getproduct)){
-			                if (!$result)
-			                    echo "Impossible update the new quantity of a product";
-			            }else
-			                echo "Wrong Query";
-					}
-					header("Refresh:0");
-	        	}else{
-	        		echo "<div id='toast'>The product is out of stock</div>";
-	                echo "<script>loadToast();</script>";
-	        	}
-			}
+				if(!$productInserted)
+					addToCart($connection, $_SESSION["iduser"], $_GET["id"], $_POST["amountToAdd"]);
+				else{
+					$productAmount = getAmountProductOfCart($connection, $_GET["id"]);
+					riseAmountProductOfCart($connection, $productAmount, $_POST["amountToAdd"], $_SESSION["iduser"], $_GET["id"]);
+				}
+				// Refresh cart data 		header("Refresh:0");
+				header("Refresh:0");
+        	}else{
+        		echo "<div id='toast'>The product is out of stock</div>";
+                echo "<script>loadToast();</script>";
+        	}
 		}
-
-
 	?>
 
 	<div id="wrapper">
@@ -277,7 +205,7 @@
 			        <form method="post" id="buttons">
 						<h3>Quantity:
 							<?php $min = ($productAmount > 0) ? 1 : 0 ?>
-							<input type="number" name="quantity" min="<?php echo $min; ?>" max="<?php echo $productAmount; ?>" value="<?php echo $min; ?>" >
+							<input type="number" name="amountToAdd" min="<?php echo $min; ?>" max="<?php echo $productAmount; ?>" value="<?php echo $min; ?>" >
 						</h3>
 						<input type="submit" name="addToCart" value="Add to cart">
 						<input type="submit" name="buy" value="Buy">

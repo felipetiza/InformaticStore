@@ -109,11 +109,61 @@
 	    return $cartProductData;
 	}
 
+    function checkProductIsInserted($connection, $prodID){
+	    $productInserted = false;
 
+        $getproduct = "SELECT idproduct
+        			   FROM shopping_cart
+        			   WHERE idproduct = $prodID;
+                      ";
 
+        if ($result = $connection->query($getproduct)){
+			$productInserted = ($result->num_rows > 0) ? true : false;
+        	return $productInserted;
+        }else
+            echo "Wrong Query";
+    }
 
+    function addToCart($connection, $userID, $prodID, $prodAmount){
+	    $getproduct = "INSERT INTO shopping_cart
+        			   VALUES($userID, $prodID, $prodAmount);
+                      ";
 
+        if ($result = $connection->query($getproduct)){
+            if (!$result)
+                echo "Impossible insert the product within shopping cart";
+        }else
+            echo "Wrong Query";
+    }
 
+	function getAmountProductOfCart($connection, $prodID){
+        $getproduct = "SELECT amount
+        			   FROM shopping_cart
+        			   WHERE idproduct = $prodID;
+                      ";
+
+        if ($result = $connection->query($getproduct)){
+            if ($result->num_rows > 0)
+            	return $result->fetch_object()->amount;
+        }else
+            echo "Wrong Query";
+	}
+
+    function riseAmountProductOfCart($connection, $currentAmount, $newAmount, $userID, $prodID){
+        $quantity = $currentAmount;
+        $quantity += $newAmount;
+
+        $getproduct = "UPDATE shopping_cart
+        			   SET amount = $quantity
+                       WHERE idproduct = $prodID;
+                      ";
+
+        if ($result = $connection->query($getproduct)){
+            if (!$result)
+                echo "Impossible update the new quantity of a product";
+        }else
+            echo "Wrong Query";
+    }
 
 
 
