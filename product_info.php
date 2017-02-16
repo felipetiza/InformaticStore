@@ -111,8 +111,13 @@
 			clearCart($connection);
 			refreshCart($connection);
 		}
-		if(isset($_POST["buy"])){
-			makePurchase($connection, $_SESSION['iduser'], $cartProductsNumber, $cartTotalPrice);
+		if(isset($_POST["buy"]) || isset($_POST["buyDirectly"])){
+			if(isset($_POST["buy"]))
+				makePurchase($connection, $_SESSION['iduser'], $cartProductsNumber, $cartTotalPrice);
+			else if(isset($_POST["buyDirectly"])){	// Products within cart + current product
+				$money = $cartTotalPrice + ($productPrice * $_POST["amountToAdd"]);
+				makePurchase($connection, $_SESSION['iduser'], $cartProductsNumber + 1, $money);
+			}
 			clearCart($connection);
 			refreshCart($connection);
 			echo "<div id='toast'>Purchase made with success</div>";
@@ -203,7 +208,7 @@
 							<input type="number" name="amountToAdd" min="<?php echo $min; ?>" max="<?php echo $productAmount; ?>" value="<?php echo $min; ?>" >
 						</h3>
 						<input type="submit" name="add" value="Add to cart">
-						<input type="submit" name="buy" value="Buy">
+						<input type="submit" name="buyDirectly" value="Buy">
 			        </form>
 				</div>
 			</div>
