@@ -68,9 +68,13 @@
 			$_SESSION["modalWindow"] = "false";
 		}
 
-		// Delete from Shopping_Cart
-		if(isset($_POST["cartProductID"]))
+		// Delete from cart
+		if(isset($_POST["delete"]))
 			deleteProductFromCart($connection, $_POST["cartProductID"]);
+
+		// Clear the cart
+		if(isset($_POST["clear"]))
+			clearCart($connection);
 
 		$listProductCategory = getProductCategory($connection);
 
@@ -248,7 +252,6 @@
 			    			echo "<td>".$cartProductPrice[$i]."€</td>";
 			    			echo "<td>".$cartProductAmount[$i]."</td>";
 			    			echo "<td>".$cartProductPrice[$i] * $cartProductAmount[$i]."€</td>";
-			    			// echo "<td class='delete'>&times;</td>";
 			    			echo "<td>
 				    				  <form method='post'>
 				    					  <input class='delete' type='submit' name='delete' value='&times;'>
@@ -263,6 +266,10 @@
 				<br/>
 				<br/>
 				<p><?php echo "Total: ".$cartTotalPrice."€"; ?></p>
+				<br/>
+			    <form method='post'>
+					<input type='submit' name='clear' value='Clear'>
+				</form>
 
 		  	</div>
 		</div>

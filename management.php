@@ -69,7 +69,7 @@
 	}
 
     function deleteProductFromCart($connection, $id){
-        $getProducts = "DELETE FROM shopping_cart WHERE idproduct = $id";
+        $getProducts = "DELETE FROM shopping_cart WHERE idproduct = $id;";
 
         if ($result = $connection->query($getProducts)) {
             if ($result){
@@ -77,6 +77,19 @@
             	header("Refresh:0");
             }else
                 echo "Impossible to delete the product";
+        }else
+            echo "Wrong Query";
+    }
+
+    function clearCart($connection){
+        $getProducts = "DELETE FROM shopping_cart;";
+
+        if ($result = $connection->query($getProducts)) {
+            if ($result){
+            	$_SESSION["modalWindow"] = "true";
+            	header("Refresh:0");
+            }else
+                echo "Impossible to clear the cart";
         }else
             echo "Wrong Query";
     }
