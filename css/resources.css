@@ -46,26 +46,26 @@
 /* ----------------------------------------------- */
 
 .dropbtnCategory {
-	padding:5px 15px;
-	background:#E2ECEE;
-	border:0 none;
-	cursor:pointer;
-	border-radius: 5px;
-	margin-top: 10px;
+    padding:5px 15px;
+    background:#E2ECEE;
+    border:0 none;
+    cursor:pointer;
+    border-radius: 5px;
+    margin-top: 10px;
 }
 .dropdown {
     position: relative;
     display: inline-block;
 }
 .dropdown-content {
-	position: absolute;
+    position: absolute;
     display: none;
-	background: #E2ECEEff;
+    background: #E2ECEEff;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
- 	border-radius: 0px 6px 6px 6px;
-	margin-top: -3px;
+    border-radius: 0px 6px 6px 6px;
+    margin-top: -3px;
 }
 .dropdown-content a {
     color: #798e94;
@@ -89,27 +89,27 @@
 /* ----------------------------------------------- */
 
 .dropbtnUser {
-	padding:3px 15px;
-	background:#fff;
-	border:0 none;
-	cursor:pointer;
-	border-radius: 5px;
+    padding:3px 15px;
+    background:#fff;
+    border:0 none;
+    cursor:pointer;
+    border-radius: 5px;
 }
 .dropdown-content-user {
-	position: absolute;
-	background: #E2ECEEff;
+    position: absolute;
+    background: #E2ECEEff;
     min-width: 120px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
- 	border-radius: 0px 6px 6px 6px;
-	margin-top: 0px;
-	text-align: center;
-	margin-left: -50px;
+    border-radius: 0px 6px 6px 6px;
+    margin-top: 0px;
+    text-align: center;
+    margin-left: -50px;
   display: none;
 }
 .dropdown-content-user a {
     color: #798e94;
-	cursor: pointer;
+    cursor: pointer;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
@@ -123,9 +123,9 @@
     width: 100%;
     text-decoration: none;
     display: block;
-		border: none;
-	/* background: fff0; */
-		background: #E2ECEEff;
+        border: none;
+    /* background: fff0; */
+        background: #E2ECEEff;
   cursor: pointer;
 }
 .dropdown-content-user input:hover {
@@ -151,23 +151,32 @@
     background: rgba(0,0,0,0.4);
 }
 .modal-content {
-    background-color: #fefefe;
     margin: 5% auto;
-    padding: 20px;
+    padding: 20px 45px;
     border: 1px solid #888;
-    width: 80%;
+    width: 525px;
+    border: 1px solid #CED5D7;
+    border-radius: 6px;
+    background: #ffff;
+    box-shadow: 0px 5px 10px #B5C1C5, 0 0 0 10px #EEF5F7 inset;
 }
 .close {
-    color: #aaa;
+    color: #798e94;
     float: right;
-    font-size: 28px;
+    font-size: 20px;
     font-weight: bold;
+    background: #E2ECEE;
+    border-radius: 20px;
+    padding: 0px 5px 1px 5px;
+    transition: 150ms;
+    margin-left: 50px;
 }
 .close:hover,
 .close:focus {
-    color: black;
+    color: #798e94cc;
     text-decoration: none;
     cursor: pointer;
+    transition: 150ms;
 }
 table {
     width: 520px;

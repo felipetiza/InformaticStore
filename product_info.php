@@ -33,7 +33,8 @@
         }
 
 		document.addEventListener("load", function(){
-			loadModalWindow(false);
+			// loadModalWindow(false);
+			loadModalWindow(true);
 		}, true);
     </script>
 </head>
@@ -236,8 +237,7 @@
 			<div class="modal-content">
 			    <span class="close">&times;</span>
 			    <p>(<?php echo $cartProductsNumber; ?>) Products in your shopping cart</p>
-
- 					<table>
+					<table>
 					<tr>
 				  		<th>Product</th>
 				  		<th>Price</th>
@@ -270,13 +270,8 @@
 			    <form method='post'>
 					<input type='submit' name='clear' value='Clear'>
 				</form>
-
 		  	</div>
 		</div>
-
-
-
-
 	</div>
 </body>
 </html>
