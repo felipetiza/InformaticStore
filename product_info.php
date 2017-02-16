@@ -33,8 +33,8 @@
         }
 
 		document.addEventListener("load", function(){
-			// loadModalWindow(false);
-			loadModalWindow(true);
+			loadModalWindow(false);
+			// loadModalWindow(true);
 		}, true);
     </script>
 </head>
@@ -45,7 +45,6 @@
 		include_once "management.php";
 
 	    session_start();
-
 		// If user is not logged
 		if(!isset($_SESSION["iduser"]))
 			header('Location: login.php');
@@ -69,14 +68,6 @@
 			$_SESSION["modalWindow"] = "false";
 		}
 
-		// Delete from cart
-		if(isset($_POST["delete"]))
-			deleteProductFromCart($connection, $_POST["cartProductID"]);
-
-		// Clear the cart
-		if(isset($_POST["clear"]))
-			clearCart($connection);
-
 		$listProductCategory = getProductCategory($connection);
 
 		// User data from logged customer
@@ -92,36 +83,11 @@
 		$productAmount   = $productData['amount'];
 		$productImage    = $productData['urlimage'];
 
-        // -----------------------
 		// Get from Shopping_Cart
-        // ----------------------
+		refreshCart($connection);
 
-        // Get client's products from shopping cart
-		$cartProductIDAndAmount = getProductIDFromCart($connection, $_SESSION['iduser']);
-		$cartProductsNumber     = count($cartProductIDAndAmount);
-		$cartTotalPrice         = 0;
-        // Get products data of client
-		$cartProductID     = [];
-		$cartProductAmount = [];
-
-		foreach($cartProductIDAndAmount as $id=>$amount){
-			array_push($cartProductID, $id);
-			array_push($cartProductAmount, $amount);
-		}
-
-		$cartProductData  = getProductDataFromCart($connection, $cartProductsNumber, $cartProductID);
-		$cartProductName  = (count($cartProductData) != 0) ? $cartProductData['name'] : [];
-		$cartProductPrice = (count($cartProductData) != 0) ? $cartProductData['price'] : [];
-
-        // -----------------------
-		// Add to Cart
-        // ----------------------
-
-        // Check wheter the product id has already been inserted
-        // - Reason? Can not insert 2 times the id product (it's primary key)
-        // - Solution? Increase the new quantity to the product quantity
-
-        if(isset($_POST["addToCart"])){
+		// Actions of shopping cart
+        if(isset($_POST["add"])){
         	if($_POST["amountToAdd"] > 0){
 	    		$productInserted = checkProductIsInserted($connection, $_GET["id"]);
 
@@ -131,12 +97,26 @@
 					$productAmount = getAmountProductOfCart($connection, $_GET["id"]);
 					riseAmountProductOfCart($connection, $productAmount, $_POST["amountToAdd"], $_SESSION["iduser"], $_GET["id"]);
 				}
-				// Refresh cart data
-				header("Refresh:0");
+				refreshCart($connection);
         	}else{
         		echo "<div id='toast'>The product is out of stock</div>";
                 echo "<script>loadToast();</script>";
         	}
+		}
+		if(isset($_POST["delete"])){
+			deleteProductFromCart($connection, $_POST["cartProductID"]);
+			refreshCart($connection);
+		}
+		if(isset($_POST["clear"])){
+			clearCart($connection);
+			refreshCart($connection);
+		}
+		if(isset($_POST["buy"])){
+			makePurchase($connection, $_SESSION['iduser'], $cartProductsNumber, $cartTotalPrice);
+			clearCart($connection);
+			refreshCart($connection);
+			echo "<div id='toast'>Purchase made with success</div>";
+            echo "<script>loadToast();</script>";
 		}
 	?>
 
@@ -145,7 +125,7 @@
 		<div id="basic">
 	        <div id="user">
 			    <div class="dropdown">
-			        <button class="dropbtnCategory">Category</button>
+			        <button class="flatButton dropbtnCategory">Category</button>
 			        <div class="dropdown-content">
  						<?php
 							for($i=0;$i<count($listProductCategory);$i++){
@@ -222,7 +202,7 @@
 							<?php $min = ($productAmount > 0) ? 1 : 0 ?>
 							<input type="number" name="amountToAdd" min="<?php echo $min; ?>" max="<?php echo $productAmount; ?>" value="<?php echo $min; ?>" >
 						</h3>
-						<input type="submit" name="addToCart" value="Add to cart">
+						<input type="submit" name="add" value="Add to cart">
 						<input type="submit" name="buy" value="Buy">
 			        </form>
 				</div>
@@ -259,7 +239,6 @@
 				    				  </form>
 			    				  </td>";
 			    			echo "</tr>";
-			    			$cartTotalPrice += $cartProductPrice[$i] * $cartProductAmount[$i];
 			    		}
 				    ?>
 				</table>
@@ -268,7 +247,8 @@
 				<p><?php echo "Total: ".$cartTotalPrice."€"; ?></p>
 				<br/>
 			    <form method='post'>
-					<input type='submit' name='clear' value='Clear'>
+					<input class="standardButton" id="btnClear" type='submit' name='clear' value='Clear'>
+					<input class="standardButton" id="btnBuy" type='submit' name='buy' value='Buy'>
 				</form>
 		  	</div>
 		</div>

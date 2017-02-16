@@ -129,7 +129,7 @@
 		<div id="basic">
 	        <div id="user">
 			    <div class="dropdown">
-			        <button class="dropbtnCategory">Category</button>
+			        <button class="flatButton dropbtnCategory">Category</button>
 			        <div class="dropdown-content">
  						<?php
 							for($i=0;$i<count($listProductCategory);$i++){

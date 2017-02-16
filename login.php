@@ -65,7 +65,7 @@
                 <input name="pass" type="password" required>
             </div>
             <div>
-                <input type="submit" value="Log In">
+                <input class="standardButton" type="submit" value="Log In">
             </div>
             <div>Don't have an account? <a href="sign_up.php">Sign Up</a></div>
         </form>

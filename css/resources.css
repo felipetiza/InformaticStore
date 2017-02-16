@@ -10,6 +10,39 @@
 }
 
 /* ----------------------------------------------- */
+/* Button
+/* ----------------------------------------------- */
+
+.flatButton{
+    padding:5px 15px;
+    background:#E2ECEE;
+    border:0 none;
+    cursor:pointer;
+    border-radius: 5px;
+}
+.standardButton{
+    padding:5px 15px;
+    border: 1px solid #CED5D7;
+    box-shadow:0 0 0 3px #EEF5F7;
+    border-radius: 7px;
+    text-shadow: 1px 1px 0px white;
+
+    background: #e4f1f6;
+    background: -moz-linear-gradient(top, #e4f1f6 0%, #cfe6ef 100%);
+    background: -webkit-linear-gradient(top, #e4f1f6 0%,#cfe6ef 100%);
+}
+.standardButton:hover{
+    background: #edfcff;
+    background: -moz-linear-gradient(top, #edfcff 0%, #cfe6ef 100%);
+    background: -webkit-linear-gradient(top, #edfcff 0%,#cfe6ef 100%);
+}
+.standardButton:active{
+    background: #cfe6ef;
+    background: -moz-linear-gradient(top, #cfe6ef 0%, #edfcff 100%);
+    background: -webkit-linear-gradient(top, #cfe6ef 0%,#edfcff 100%);
+}
+
+/* ----------------------------------------------- */
 /* Toast
 /* ----------------------------------------------- */
 
@@ -46,11 +79,6 @@
 /* ----------------------------------------------- */
 
 .dropbtnCategory {
-    padding:5px 15px;
-    background:#E2ECEE;
-    border:0 none;
-    cursor:pointer;
-    border-radius: 5px;
     margin-top: 10px;
 }
 .dropdown {
@@ -219,8 +247,12 @@ table input[type="submit"]{
     background: #ccc0;
     padding: 1px;
 }
-
-
+#btnClear{
+    width: 70px;
+}
+#btnBuy{
+    width: 70px;
+}
 
 
 

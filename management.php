@@ -1,5 +1,15 @@
 <?php
 
+	// Cart variables
+	$cartProductIDAndAmount = [[]];
+	$cartProductsNumber     = 0;
+	$cartTotalPrice         = 0;
+	$cartProductID          = [];
+	$cartProductAmount      = [];
+	$cartProductData        = [[]];
+	$cartProductName        = [];
+	$cartProductPrice       = [];
+
 	function getUserData($connection, $userID){
 		$userData = [];
 		$getusername = "SELECT *
@@ -72,10 +82,9 @@
         $getProducts = "DELETE FROM shopping_cart WHERE idproduct = $id;";
 
         if ($result = $connection->query($getProducts)) {
-            if ($result){
+            if ($result)
             	$_SESSION["modalWindow"] = "true";
-            	header("Refresh:0");
-            }else
+            else
                 echo "Impossible to delete the product";
         }else
             echo "Wrong Query";
@@ -85,20 +94,32 @@
         $getProducts = "DELETE FROM shopping_cart;";
 
         if ($result = $connection->query($getProducts)) {
-            if ($result){
+            if ($result)
             	$_SESSION["modalWindow"] = "true";
-            	header("Refresh:0");
-            }else
+            else
                 echo "Impossible to clear the cart";
         }else
             echo "Wrong Query";
     }
 
-    function getProductIDFromCart($connection, $idUser){
+    function makePurchase($connection, $userID, $prodNumber, $prodTotalPrice){
+    	$date = date('Y-m-d');
+    	$getproduct = "INSERT INTO order2
+        			   VALUES(NULL, $userID, '$date', $prodNumber, $prodTotalPrice);
+                      ";
+
+        if ($result = $connection->query($getproduct)){
+            if (!$result)
+                echo "Can't make the purchase. Impossible insert within of the order.";
+        }else
+            echo "Wrong Query";
+    }
+
+    function getProductIDFromCart($connection, $userID){
         $cartProductID = [];	// Asociative array
         $getusername = "SELECT *
                         FROM shopping_cart
-                        WHERE idcustomer = $idUser;
+                        WHERE idcustomer = $userID;
                        ";
 
         if ($result = $connection->query($getusername)) {
@@ -191,7 +212,37 @@
             echo "Wrong Query";
     }
 
+	function refreshCart($connection){
+		global $cartProductIDAndAmount;
+		global $cartProductsNumber;
+		global $cartTotalPrice;
+		global $cartProductID;
+		global $cartProductAmount;
+		global $cartProductData;
+		global $cartProductName;
+		global $cartProductPrice;
 
+        // Get client's products from shopping cart
+		$cartProductIDAndAmount = getProductIDFromCart($connection, $_SESSION['iduser']);
+		$cartProductsNumber     = count($cartProductIDAndAmount);
+		$cartTotalPrice         = 0;
+        // Get products data of client
+		$cartProductID     = [];
+		$cartProductAmount = [];
+
+		foreach($cartProductIDAndAmount as $id=>$amount){
+			array_push($cartProductID, $id);
+			array_push($cartProductAmount, $amount);
+		}
+
+		$cartProductData  = getProductDataFromCart($connection, $cartProductsNumber, $cartProductID);
+		$cartProductName  = (count($cartProductData) != 0) ? $cartProductData['name'] : [];
+		$cartProductPrice = (count($cartProductData) != 0) ? $cartProductData['price'] : [];
+
+		// Calculates the purchase price
+		for($i=0;$i<$cartProductsNumber;$i++)
+			$cartTotalPrice += $cartProductPrice[$i] * $cartProductAmount[$i];
+	}
 
 
 

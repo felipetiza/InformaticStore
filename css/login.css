@@ -3,6 +3,9 @@ body{
 	width: 500px;
 	margin: 70px auto;
 }
+a{
+	text-decoration: underline;
+}
 #logo{
   	width: 350px;
 	margin: auto 80px;
@@ -27,39 +30,23 @@ body{
 div{
 	margin-bottom: 10px;
 }
-input[type='text'], input[type='password']{
+input[type='text'],
+input[type='password']{
 	padding: 7px 22px;
 	border: 1px solid #CED5D7;
 	box-shadow:0 0 0 3px #EEF5F7;
 	margin: 3px 72px;
 	border-radius: 7px;
 }
-input[type='text']:focus, input[type='password']:focus{
+input[type='text']:focus,
+input[type='password']:focus{
 	outline: none;
 	box-shadow:0 0 0 3px #dde9ec;
 }
 input[type='submit']{
-	border: 1px solid #CED5D7;
-	box-shadow:0 0 0 3px #EEF5F7;
-	padding: 8px 126px;
-	border-radius: 7px;
-	font-weight: bold;
-	text-shadow: 1px 1px 0px white;
-	margin: 15px 0px;
-
-	background: #e4f1f6;
-	background: -moz-linear-gradient(top, #e4f1f6 0%, #cfe6ef 100%);
-	background: -webkit-linear-gradient(top, #e4f1f6 0%,#cfe6ef 100%);
-}
-input[type='submit']:hover{
-	background: #edfcff;
-	background: -moz-linear-gradient(top, #edfcff 0%, #cfe6ef 100%);
-	background: -webkit-linear-gradient(top, #edfcff 0%,#cfe6ef 100%);
-}
-input[type='submit']:active{
-	background: #cfe6ef;
-	background: -moz-linear-gradient(top, #cfe6ef 0%, #edfcff 100%);
-	background: -webkit-linear-gradient(top, #cfe6ef 0%,#edfcff 100%);
+    margin: 15px 0px;
+    padding: 8px 126px;
+    font-weight: bold;
 }
 
 
