@@ -125,7 +125,7 @@
 
         if ($result = $connection->query($getProducts)) {
             if ($result)
-            	$_SESSION["modalWindow"] = "true";
+            	$_SESSION["showCart"] = "true";
             else
                 echo "Impossible to delete the product";
         }else
@@ -137,7 +137,7 @@
 
         if ($result = $connection->query($getProducts)) {
             if ($result)
-            	$_SESSION["modalWindow"] = "true";
+            	$_SESSION["showCart"] = "true";
             else
                 echo "Impossible to clear the cart";
         }else
@@ -177,7 +177,7 @@
     }
 
 	function getProductDataFromCart($connection, $productNumber, $prodID){
-		$cartProductData = [];		// Array 2 dimensions
+		$cartProductData = [[]];
 
 		for($i=0;$i<$productNumber;$i++){
 	        $getProducts = "SELECT *
@@ -188,8 +188,8 @@
 	        if ($result = $connection->query($getProducts)) {
 	            if ($result->num_rows > 0){
 	            	$product = $result->fetch_object();
-						$cartProductData['name'][$i]  = $product->name;
-						$cartProductData['price'][$i] = $product->price;
+					$cartProductData['name'][$i]  = $product->name;
+					$cartProductData['price'][$i] = $product->price;
 	            }else
 	                echo "Impossible to get the products";
 	        }else
@@ -277,13 +277,20 @@
 			array_push($cartProductAmount, $amount);
 		}
 
+		// (count($cartProductData) != 1)  --> It means that the cart isn't empty. '1' because is array 2 dimensions
 		$cartProductData  = getProductDataFromCart($connection, $cartProductsNumber, $cartProductID);
-		$cartProductName  = (count($cartProductData) != 0) ? $cartProductData['name'] : [];
-		$cartProductPrice = (count($cartProductData) != 0) ? $cartProductData['price'] : [];
+		$cartProductName  = (count($cartProductData) != 1) ? $cartProductData['name'] : [];
+		$cartProductPrice = (count($cartProductData) != 1) ? $cartProductData['price'] : [];
 
 		// Calculates the purchase price
 		for($i=0;$i<$cartProductsNumber;$i++)
 			$cartTotalPrice += $cartProductPrice[$i] * $cartProductAmount[$i];
+
+		// Modal window of cart doesn't vanish when remove a product
+		if($_SESSION["showCart"] == "true"){
+			echo "<script>document.addEventListener('load', function(){ loadModalWindow(true); }, true);</script>";
+			$_SESSION["showCart"] = "false";
+		}
 	}
 
 	function showToast($message){
@@ -291,9 +298,25 @@
         echo "<script>loadToast();</script>";
 	}
 
+	function toggleDesignCart(){
+		global $cartProductsNumber;
 
-
-
+		if($cartProductsNumber == 0){
+			echo "<script>";
+			echo "document.addEventListener('load', function(){";
+			echo "document.getElementById('inner').style.display = 'none';";
+			echo "document.getElementById('cartEmpty').style.display = 'flex';";
+			echo "}, true);";
+			echo "</script>";
+		}else{
+			echo "<script>";
+			echo "document.addEventListener('load', function(){";
+			echo "document.getElementById('inner').style.display = 'inline';";
+			echo "document.getElementById('cartEmpty').style.display = 'none';";
+			echo "}, true);";
+			echo "</script>";
+		}
+	}
 
 
 

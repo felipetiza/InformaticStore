@@ -117,6 +117,8 @@
 	        }else
                 showToast("The product is out of stock");
 		}
+
+		toggleDesignCart();
 	?>
 
 	<div id="wrapper">
@@ -180,41 +182,44 @@
 		<!-- Modal Window -->
 		<div id="myModal" class="modal">
 			<div class="modal-content">
-			    <span class="close">&times;</span>
-			    <p>(<?php echo $cartProductsNumber; ?>) Products in your shopping cart</p>
-					<table>
-					<tr>
-				  		<th>Product</th>
-				  		<th>Price</th>
-				  		<th>Units</th>
-				  		<th>Total</th>
-				  		<th></th>
-					</tr>
- 				    <?php
-						for($i=0;$i<$cartProductsNumber;$i++){
-			    			echo "<tr>";
-			    			echo "<td><a href='product_info.php?id=$cartProductID[$i]'>$cartProductName[$i]</a></td>";
-			    			echo "<td>".$cartProductPrice[$i]."€</td>";
-			    			echo "<td>".$cartProductAmount[$i]."</td>";
-			    			echo "<td>".$cartProductPrice[$i] * $cartProductAmount[$i]."€</td>";
-			    			echo "<td>
-				    				  <form method='post'>
-				    					  <input class='delete' type='submit' name='delete' value='&times;'>
-				    					  <input type='text' name='cartProductID' value='$cartProductID[$i]'>
-				    				  </form>
-			    				  </td>";
-			    			echo "</tr>";
-			    		}
-				    ?>
-				</table>
-				<br/>
-				<br/>
-				<p><?php echo "Total: ".$cartTotalPrice."€"; ?></p>
-				<br/>
-			    <form method='post'>
-					<input class="standardButton" id="btnClear" type='submit' name='clear' value='Clear'>
-					<input class="standardButton" id="btnBuy" type='submit' name='buy' value='Buy'>
-				</form>
+				<p id="cartEmpty">The cart is empty</p>
+				<div id="inner">
+				    <span class="close">&times;</span>
+				    <p>(<?php echo $cartProductsNumber; ?>) Products in your shopping cart</p>
+						<table>
+						<tr>
+					  		<th>Product</th>
+					  		<th>Price</th>
+					  		<th>Units</th>
+					  		<th>Total</th>
+					  		<th></th>
+						</tr>
+	 				    <?php
+							for($i=0;$i<$cartProductsNumber;$i++){
+				    			echo "<tr>";
+				    			echo "<td><a href='product_info.php?id=$cartProductID[$i]'>$cartProductName[$i]</a></td>";
+				    			echo "<td>".$cartProductPrice[$i]."€</td>";
+				    			echo "<td>".$cartProductAmount[$i]."</td>";
+				    			echo "<td>".$cartProductPrice[$i] * $cartProductAmount[$i]."€</td>";
+				    			echo "<td>
+					    				  <form method='post'>
+					    					  <input class='delete' type='submit' name='delete' value='&times;'>
+					    					  <input type='text' name='cartProductID' value='$cartProductID[$i]'>
+					    				  </form>
+				    				  </td>";
+				    			echo "</tr>";
+				    		}
+					    ?>
+					</table>
+					<br/>
+					<br/>
+					<p><?php echo "Total: ".$cartTotalPrice."€"; ?></p>
+					<br/>
+				    <form method='post'>
+						<input class="standardButton" id="btnClear" type='submit' name='clear' value='Clear'>
+						<input class="standardButton" id="btnBuy" type='submit' name='buy' value='Buy'>
+					</form>
+				</div>
 		  	</div>
 		</div>
 	</div>
