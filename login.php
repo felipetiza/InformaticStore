@@ -4,19 +4,14 @@
     <title>Login</title>
     <link rel="stylesheet" href="css/resources.css">
     <link rel="stylesheet" href="css/login.css">
+    <script src="js/management.js"></script>
     <script src="js/author.js"></script>
-    <script>
-        function loadToast() {
-            var x = document.getElementById("toast")
-            x.className = "show";
-            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-        }
-    </script>
 </head>
 <body>
 
     <?php
         include_once "db_connection.php";
+        include_once "management.php";
 
         // If user is logged
         session_start();
@@ -44,10 +39,8 @@
                 if(isset($person)){
                     $_SESSION["iduser"] = $person;
                     header('Location: menu.php');
-                }else{
-                    echo "<div id='toast'>Invalid Login</div>";
-                    echo "<script>loadToast();</script>";
-                }
+                }else
+                    showToast("Invalid Login");
                 $query->close();
             }
         }

@@ -2,36 +2,12 @@
 <html>
 <head>
 	<title>Product Info</title>
+	<meta charset="utf-8">
 	<link rel="stylesheet" href="css/resources.css">
 	<link rel="stylesheet" href="css/product_info.css">
+	<script src="js/management.js"></script>
 	<script src="js/author.js"></script>
-	<meta charset="UTF-8">
 	<script>
-        function loadToast(){
-            var x = document.getElementById("toast")
-            x.className = "show";
-            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-        }
-
-        function loadModalWindow(showWithoutClick){
-        	var modal = document.getElementById('myModal');
-			var btn   = document.getElementsByClassName("myBtn");
-			var span  = document.getElementsByClassName("close")[0];
-
-			if(showWithoutClick)
-				btn[0].click();
-
-			btn[0].onclick = function() { modal.style.display = "block"; }
-			btn[1].onclick = function() { modal.style.display = "block"; }
-			span.onclick = function() {
-			    modal.style.display = "none";
-			}
-			window.onclick = function(event) {
-			    if (event.target == modal)
-			        modal.style.display = "none";
-			}
-        }
-
 		document.addEventListener("load", function(){
 			loadModalWindow(false);
 			// loadModalWindow(true);
@@ -68,7 +44,7 @@
 			$_SESSION["modalWindow"] = "false";
 		}
 
-		$listProductCategory = getProductCategory($connection);
+		$listProductCategory = getAllProductCategory($connection);
 
 		// User data from logged customer
 		$userData = getUserData($connection, $_SESSION['iduser']);
@@ -88,7 +64,7 @@
 
 		// Actions of shopping cart
         if(isset($_POST["add"])){
-        	if($_POST["amountToAdd"] > 0){
+        	if($productAmount > 0){
 	    		$productInserted = checkProductIsInserted($connection, $_GET["id"]);
 
 				if(!$productInserted)
@@ -98,10 +74,8 @@
 					riseAmountProductOfCart($connection, $productAmount, $_POST["amountToAdd"], $_SESSION["iduser"], $_GET["id"]);
 				}
 				refreshCart($connection);
-        	}else{
-        		echo "<div id='toast'>The product is out of stock</div>";
-                echo "<script>loadToast();</script>";
-        	}
+        	}else
+                showToast("The product is out of stock");
 		}
 		if(isset($_POST["delete"])){
 			deleteProductFromCart($connection, $_POST["cartProductID"]);
@@ -112,16 +86,18 @@
 			refreshCart($connection);
 		}
 		if(isset($_POST["buy"]) || isset($_POST["buyDirectly"])){
-			if(isset($_POST["buy"]))
-				makePurchase($connection, $_SESSION['iduser'], $cartProductsNumber, $cartTotalPrice);
-			else if(isset($_POST["buyDirectly"])){	// Products within cart + current product
-				$money = $cartTotalPrice + ($productPrice * $_POST["amountToAdd"]);
-				makePurchase($connection, $_SESSION['iduser'], $cartProductsNumber + 1, $money);
-			}
-			clearCart($connection);
-			refreshCart($connection);
-			echo "<div id='toast'>Purchase made with success</div>";
-            echo "<script>loadToast();</script>";
+			if($productAmount > 0){
+				if(isset($_POST["buy"]))
+					makePurchase($connection, $_SESSION['iduser'], $cartProductsNumber, $cartTotalPrice);
+				else if(isset($_POST["buyDirectly"])){	// Products within cart + current product
+					$money = $cartTotalPrice + ($productPrice * $_POST["amountToAdd"]);
+					makePurchase($connection, $_SESSION['iduser'], $cartProductsNumber + 1, $money);
+				}
+				clearCart($connection);
+				refreshCart($connection);
+                showToast("Purchase made with success");
+	        }else
+                showToast("The product is out of stock");
 		}
 	?>
 

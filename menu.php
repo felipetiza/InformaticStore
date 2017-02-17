@@ -2,34 +2,40 @@
 <html>
 <head>
 	<title>Menu</title>
+	<meta charset="utf-8">
 	<link rel="stylesheet" href="css/resources.css">
 	<link rel="stylesheet" href="css/menu.css">
+	<script src="js/management.js"></script>
 	<script src="js/author.js"></script>
-<!-- 	<script>
-		// Get productID of the product clicked and send it to product_info.php by POST
-		window.onload = function(){
-			var listProduct = document.querySelectorAll(".product");
+	<script>
+		// // Get productID of the product clicked and send it to product_info.php by POST
+		// window.onload = function(){
+		// 	var listProduct = document.querySelectorAll(".product");
 
-			for(i in listProduct){
-				listProduct[i].onclick = function() {
-					var productID = this.dataset.id;	// Get ID value - Attribute 'data-id' of product class
-					console.log(productID);
+		// 	for(i in listProduct){
+		// 		listProduct[i].onclick = function() {
+		// 			var productID = this.dataset.id;	// Get ID value - Attribute 'data-id' of product class
+		// 			console.log(productID);
 
-					// How to I send the productID by POST? I made a form and clicked it
-					// Impossible by AJAX. Don't let me change the screen. It just return me the result
-					var form = "<form action='product_info.php' method='post' id='changeScreen'><input id='press' type='submit' name='productID' value='"+productID+"'></form>";
-					var content = document.getElementById("wrapper").insertAdjacentHTML("afterend", form);
-					document.getElementById("changeScreen").style.display = 'none';
-					document.getElementById('press').click();
-				};
-			}
-		};
-	</script> -->
+		// 			// How to I send the productID by POST? I made a form and clicked it
+		// 			// Impossible by AJAX. Don't let me change the screen. It just return me the result
+		// 			var form = "<form action='product_info.php' method='post' id='changeScreen'><input id='press' type='submit' name='productID' value='"+productID+"'></form>";
+		// 			var content = document.getElementById("wrapper").insertAdjacentHTML("afterend", form);
+		// 			document.getElementById("changeScreen").style.display = 'none';
+		// 			document.getElementById('press').click();
+		// 		};
+		// 	}
+		// };
+		document.addEventListener("load", function(){
+			loadModalWindow(false);
+		}, true);
+	</script>
 </head>
 <body>
 
  	<?php
 		include_once "db_connection.php";
+		include_once "management.php";
 
 	    session_start();
 
@@ -43,85 +49,74 @@
 			header('Location: login.php');
 		}
 
-		// Get username from database
-		$username = "";
-        $getusername = "SELECT username
-                        FROM customer
-                        WHERE idcustomer = {$_SESSION['iduser']};
-                       ";
+		// Modal window of cart doesn't vanish when remove a product
+		if(!isset($_SESSION["modalWindow"]))
+			$_SESSION["modalWindow"] = "false";
 
-        if ($result = $connection->query($getusername)) {
-            if ($result->num_rows > 0)
-                $username = $result->fetch_object()->username;
-            else
-                echo "Impossible to get the username";
-        }else
-            echo "Wrong Query";
+		if($_SESSION["modalWindow"] == "true"){
+			echo "<script>document.addEventListener('load', function(){ loadModalWindow(true); }, true);</script>";
+			$_SESSION["modalWindow"] = "false";
+		}
 
+		$listProductCategory = getAllProductCategory($connection);
 
-        // -----------------------
-		// Get products data
-        // ----------------------
+		// User data from logged customer
+		$userData = getUserData($connection, $_SESSION['iduser']);
+		$username = $userData['username'];
 
-		// If I receive the category of a product I show it,
-		// else I show all the store products
-		$productID    = [];
-		$productName  = [];
-		$productPrice = [];
-		$productImage = [];
-
-        $getProducts = "";
+		// Product data from all product
+		$productsData = [[]];
 
         if(isset($_GET['categ']))
-            $getProducts = "SELECT * FROM product WHERE category = '{$_GET['categ']}';";
+            $productsData = getProductCategory($connection, $_GET['categ']);
         else
-            $getProducts = "SELECT * FROM product;";
+            $productsData = getAllProduct($connection);
 
-        if ($result = $connection->query($getProducts)) {
-            if ($result->num_rows > 0){
-            	while($product = $result->fetch_object()){
-            		array_push($productID, $product->idproduct);
-            		array_push($productName, $product->name);
-            		array_push($productPrice, $product->price);
-            		array_push($productImage, $product->urlimage);
-            	}
-            }else
-                echo "Impossible to get the products";
-        }else
-            echo "Wrong Query";
+		$productID    = $productsData['id'];
+		$productName  = $productsData['name'];
+		$productPrice = $productsData['price'];
+		$productImage = $productsData['urlimage'];
 
+		// Get from Shopping_Cart
+		refreshCart($connection);
 
-        // Get products category
-		$listProductCategory = [];
+		// Actions of shopping cart
+        if(isset($_POST["add"])){
+        	if($productAmount > 0){
+	    		$productInserted = checkProductIsInserted($connection, $_GET["id"]);
 
-        $getProducts = "SELECT DISTINCT category FROM product ORDER BY category ASC;";
-
-        if ($result = $connection->query($getProducts)) {
-            if ($result->num_rows > 0){
-            	while($product = $result->fetch_object())
-            		array_push($listProductCategory, $product->category);
-            }else
-                echo "Impossible to get the products category";
-        }else
-            echo "Wrong Query";
-
-
-		// Get amount products from shopping cart
-		$amount = 0;
-        $getusername = "SELECT idproduct
-                        FROM shopping_cart
-                        WHERE idcustomer = {$_SESSION['iduser']};
-                       ";
-
-        if ($result = $connection->query($getusername)) {
-            if ($result->num_rows > 0){
-                	while($result->fetch_object())
-                		$amount++;
-            }else
-                echo "Impossible to get the amount of products within shopping cart";
-        }else
-            echo "Wrong Query";
-
+				if(!$productInserted)
+					addToCart($connection, $_SESSION["iduser"], $_GET["id"], $_POST["amountToAdd"]);
+				else{
+					$productAmount = getAmountProductOfCart($connection, $_GET["id"]);
+					riseAmountProductOfCart($connection, $productAmount, $_POST["amountToAdd"], $_SESSION["iduser"], $_GET["id"]);
+				}
+				refreshCart($connection);
+        	}else
+                showToast("The product is out of stock");
+		}
+		if(isset($_POST["delete"])){
+			deleteProductFromCart($connection, $_POST["cartProductID"]);
+			refreshCart($connection);
+		}
+		if(isset($_POST["clear"])){
+			clearCart($connection);
+			refreshCart($connection);
+		}
+		if(isset($_POST["buy"]) || isset($_POST["buyDirectly"])){
+			if($productAmount > 0){
+				if(isset($_POST["buy"]))
+					makePurchase($connection, $_SESSION['iduser'], $cartProductsNumber, $cartTotalPrice);
+				else if(isset($_POST["buyDirectly"])){	// Products within cart + current product
+					$money = $cartTotalPrice + ($productPrice * $_POST["amountToAdd"]);
+					makePurchase($connection, $_SESSION['iduser'], $cartProductsNumber + 1, $money);
+				}
+				clearCart($connection);
+				refreshCart($connection);
+                showToast("Purchase made with success");
+	        }else
+                showToast("The product is out of stock");
+		}
 	?>
 
 	<div id="wrapper">
@@ -142,7 +137,7 @@
 	        </div>
 			<div id="title"><h1>Product Info</h1></div>
 			<div id="cart">
-				<label><?php echo $amount; ?></label><img class="myBtn" src="resources/img/cart.png">
+				<label><?php echo $cartProductsNumber; ?></label><img class="myBtn" src="resources/img/cart.png">
 			</div>
 		</div>
         <hr>
@@ -180,6 +175,47 @@
 	    			echo "</a>";
 				}
 			?>
+		</div>
+
+		<!-- Modal Window -->
+		<div id="myModal" class="modal">
+			<div class="modal-content">
+			    <span class="close">&times;</span>
+			    <p>(<?php echo $cartProductsNumber; ?>) Products in your shopping cart</p>
+					<table>
+					<tr>
+				  		<th>Product</th>
+				  		<th>Price</th>
+				  		<th>Units</th>
+				  		<th>Total</th>
+				  		<th></th>
+					</tr>
+ 				    <?php
+						for($i=0;$i<$cartProductsNumber;$i++){
+			    			echo "<tr>";
+			    			echo "<td><a href='product_info.php?id=$cartProductID[$i]'>$cartProductName[$i]</a></td>";
+			    			echo "<td>".$cartProductPrice[$i]."€</td>";
+			    			echo "<td>".$cartProductAmount[$i]."</td>";
+			    			echo "<td>".$cartProductPrice[$i] * $cartProductAmount[$i]."€</td>";
+			    			echo "<td>
+				    				  <form method='post'>
+				    					  <input class='delete' type='submit' name='delete' value='&times;'>
+				    					  <input type='text' name='cartProductID' value='$cartProductID[$i]'>
+				    				  </form>
+			    				  </td>";
+			    			echo "</tr>";
+			    		}
+				    ?>
+				</table>
+				<br/>
+				<br/>
+				<p><?php echo "Total: ".$cartTotalPrice."€"; ?></p>
+				<br/>
+			    <form method='post'>
+					<input class="standardButton" id="btnClear" type='submit' name='clear' value='Clear'>
+					<input class="standardButton" id="btnBuy" type='submit' name='buy' value='Buy'>
+				</form>
+		  	</div>
 		</div>
 	</div>
 </body>

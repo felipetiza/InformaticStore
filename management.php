@@ -1,5 +1,4 @@
 <?php
-
 	// Cart variables
 	$cartProductIDAndAmount = [[]];
 	$cartProductsNumber     = 0;
@@ -62,7 +61,50 @@
 	        echo "Wrong Query";
     }
 
-	function getProductCategory($connection){
+    function getAllProduct($connection){
+		$productData = [[]];
+		$i = 0;
+		$getProducts = "SELECT * FROM product;";
+
+        if ($result = $connection->query($getProducts)) {
+            if ($result->num_rows > 0){
+            	while($product = $result->fetch_object()){
+					$productData['id'][$i]       = $product->idproduct;
+					$productData['name'][$i]     = $product->name;
+					$productData['price'][$i]    = $product->price;
+					$productData['urlimage'][$i] = $product->urlimage;
+					$i++;
+            	}
+            }else
+                echo "Impossible to get the products";
+        }else
+            echo "Wrong Query";
+
+        return $productData;
+	}
+
+	function getProductCategory($connection, $categ){
+		$productData = [[]];
+		$i = 0;
+		$getProducts = "SELECT * FROM product WHERE category = '$categ';";
+
+        if ($result = $connection->query($getProducts)) {
+            if ($result->num_rows > 0){
+            	while($product = $result->fetch_object()){
+					$productData['id'][$i]       = $product->idproduct;
+					$productData['name'][$i]     = $product->name;
+					$productData['price'][$i]    = $product->price;
+					$productData['urlimage'][$i] = $product->urlimage;
+					$i++;
+            	}
+            }else
+                echo "Impossible to get the products by category";
+        }else
+            echo "Wrong Query";
+        return $productData;
+	}
+
+	function getAllProductCategory($connection){
 		$productCategory = [];
         $getProducts = "SELECT DISTINCT category FROM product ORDER BY category ASC;";
 
@@ -244,7 +286,10 @@
 			$cartTotalPrice += $cartProductPrice[$i] * $cartProductAmount[$i];
 	}
 
-
+	function showToast($message){
+		echo "<div id='toast'>$message</div>";
+        echo "<script>loadToast();</script>";
+	}
 
 
 
