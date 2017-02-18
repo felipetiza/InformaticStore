@@ -116,27 +116,10 @@ INSERT INTO product VALUES(NULL, 'Corsair Voyager GS 512GB USB 3.0', 'USB Flash 
 INSERT INTO provider VALUES(NULL, 'Colonial Avenue', 'Sound equipment');
 INSERT INTO provider VALUES(NULL, 'Industrial area the queens', 'Storage disks');
 
-INSERT INTO order2 VALUES(NULL, 3, NOW(), 4, 175.65);
+-- INSERT INTO order2 VALUES(NULL, 3, NOW(), 4, 175.65);
 
-INSERT INTO contain VALUES(1, 2, 4);
-INSERT INTO contain VALUES(1, 4, 1);
-INSERT INTO contain VALUES(1, 3, 2);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-- INSERT INTO contain VALUES(1, 2, 4);
+-- INSERT INTO contain VALUES(1, 4, 1);
+-- INSERT INTO contain VALUES(1, 3, 2);
 
 

@@ -145,16 +145,63 @@
     }
 
     function makePurchase($connection, $userID, $prodNumber, $prodTotalPrice){
+    	// Insert order
     	$date = date('Y-m-d');
-    	$getproduct = "INSERT INTO order2
-        			   VALUES(NULL, $userID, '$date', $prodNumber, $prodTotalPrice);
-                      ";
+    	$setPurchase = "INSERT INTO order2
+        			    VALUES(NULL, $userID, '$date', $prodNumber, $prodTotalPrice);
+                       ";
 
-        if ($result = $connection->query($getproduct)){
+        if ($result = $connection->query($setPurchase)){
             if (!$result)
                 echo "Can't make the purchase. Impossible insert within of the order.";
         }else
             echo "Wrong Query";
+
+        // Get the idorder of previous query
+        // Returns the next idorder to insert, so we subtract 1
+        $idorder;
+        $getOrderID = "SELECT AUTO_INCREMENT
+					   FROM information_schema.tables
+					   WHERE table_name = 'order2' AND
+					   		 table_schema = 'informaticstore';
+                      ";
+
+        if ($result = $connection->query($getOrderID)){
+            if ($result)
+            	$idorder = $result->fetch_object()->AUTO_INCREMENT - 1;
+            else
+                echo "Can't make the purchase. Impossible to get the idorder of the previous insertion.";
+        }else
+            echo "Wrong Query";
+
+        // Insert in 'contain' table
+        // ==================================
+        // - Set the idorder previous gotten
+        //
+        // Remove 		Relationship saved in table 'shopping_cart' (temporary)
+        // Create 		Relationship in table 'contain'
+
+        // Get relationship of product/amount from cart
+		$cartProductIDAndAmount = getProductIDFromCart($connection, $userID);
+		$cartProductID     = [];
+		$cartProductAmount = [];
+
+		foreach($cartProductIDAndAmount as $id=>$amount){
+			array_push($cartProductID, $id);
+			array_push($cartProductAmount, $amount);
+		}
+
+        for($i=0;$i<$prodNumber;$i++){
+	    	$setPurchase = "INSERT INTO contain
+	        			    VALUES($idorder, $cartProductID[$i], $cartProductAmount[$i]);
+	                       ";
+
+	        if ($result = $connection->query($setPurchase)){
+	            if (!$result)
+	                echo "Can't make the purchase. Impossible insert within of the contain table.";
+	        }else
+	            echo "Wrong Query";
+	    }
     }
 
     function getProductIDFromCart($connection, $userID){
