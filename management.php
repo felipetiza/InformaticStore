@@ -136,9 +136,7 @@
         $getProducts = "DELETE FROM shopping_cart;";
 
         if ($result = $connection->query($getProducts)) {
-            if ($result)
-            	$_SESSION["showCart"] = "true";
-            else
+            if (!$result)
                 echo "Impossible to clear the cart";
         }else
             echo "Wrong Query";
@@ -332,12 +330,10 @@
 		// Calculates the purchase price
 		for($i=0;$i<$cartProductsNumber;$i++)
 			$cartTotalPrice += $cartProductPrice[$i] * $cartProductAmount[$i];
+	}
 
-		// Modal window of cart doesn't vanish when remove a product
-		if($_SESSION["showCart"] == "true"){
-			echo "<script>document.addEventListener('load', function(){ loadModalWindow(true); }, true);</script>";
-			$_SESSION["showCart"] = "false";
-		}
+	function showCart(){
+		echo "<script>document.addEventListener('load', function(){ loadModalWindow(true); }, true);</script>";
 	}
 
 	function showToast($message){

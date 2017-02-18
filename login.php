@@ -38,7 +38,6 @@
 
                 if(isset($person)){
                     $_SESSION["iduser"]   = $person;
-                    $_SESSION["showCart"] = "false";
                     header('Location: menu.php');
                 }else
                     showToast("Invalid Login");

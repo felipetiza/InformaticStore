@@ -74,23 +74,23 @@
 		}
 		if(isset($_POST["clear"])){
 			clearCart($connection);
+			showCart();
 			refreshCart($connection);
 		}
 		if(isset($_POST["buy"]) || isset($_POST["buyDirectly"])){
 			if($productAmount > 0){
 				if(isset($_POST["buy"]))
 					makePurchase($connection, $_SESSION['iduser'], $cartProductsNumber, $cartTotalPrice);
-				else if(isset($_POST["buyDirectly"])){	// Products within cart + current product
-					$money = $cartTotalPrice + ($productPrice * $_POST["amountToAdd"]);
-					makePurchase($connection, $_SESSION['iduser'], $cartProductsNumber + 1, $money);
-				}
+				// else if(isset($_POST["buyDirectly"])){	// Products within cart + current product
+				// 	$money = $cartTotalPrice + ($productPrice * $_POST["amountToAdd"]);
+				// 	makePurchase($connection, $_SESSION['iduser'], $cartProductsNumber + 1, $money);
+				// }
 				clearCart($connection);
 				refreshCart($connection);
                 showToast("Purchase made with success");
 	        }else
                 showToast("The product is out of stock");
 		}
-
 		toggleDesignCart();
 	?>
 
@@ -177,7 +177,7 @@
 							<input type="number" name="amountToAdd" min="<?php echo $min; ?>" max="<?php echo $productAmount; ?>" value="<?php echo $min; ?>" >
 						</h3>
 						<input type="submit" name="add" value="Add to cart">
-						<input type="submit" name="buyDirectly" value="Buy">
+						<!-- <input type="submit" name="buyDirectly" value="Buy"> -->
 			        </form>
 				</div>
 			</div>
