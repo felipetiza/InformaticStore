@@ -49,15 +49,6 @@
 			header('Location: login.php');
 		}
 
-		// Modal window of cart doesn't vanish when remove a product
-		if(!isset($_SESSION["modalWindow"]))
-			$_SESSION["modalWindow"] = "false";
-
-		if($_SESSION["modalWindow"] == "true"){
-			echo "<script>document.addEventListener('load', function(){ loadModalWindow(true); }, true);</script>";
-			$_SESSION["modalWindow"] = "false";
-		}
-
 		$listProductCategory = getAllProductCategory($connection);
 
 		// User data from logged customer
@@ -77,47 +68,30 @@
 		$productPrice = $productsData['price'];
 		$productImage = $productsData['urlimage'];
 
-		// Get from Shopping_Cart
+		// Actions of shopping cart
 		refreshCart($connection);
 
-		// Actions of shopping cart
-        if(isset($_POST["add"])){
-        	if($productAmount > 0){
-	    		$productInserted = checkProductIsInserted($connection, $_GET["id"]);
-
-				if(!$productInserted)
-					addToCart($connection, $_SESSION["iduser"], $_GET["id"], $_POST["amountToAdd"]);
-				else{
-					$productAmount = getAmountProductOfCart($connection, $_GET["id"]);
-					riseAmountProductOfCart($connection, $productAmount, $_POST["amountToAdd"], $_SESSION["iduser"], $_GET["id"]);
-				}
-				refreshCart($connection);
-        	}else
-                showToast("The product is out of stock");
-		}
 		if(isset($_POST["delete"])){
 			deleteProductFromCart($connection, $_POST["cartProductID"]);
+			showCart();
 			refreshCart($connection);
 		}
 		if(isset($_POST["clear"])){
 			clearCart($connection);
+			showCart();
 			refreshCart($connection);
 		}
 		if(isset($_POST["buy"]) || isset($_POST["buyDirectly"])){
-			if($productAmount > 0){
-				if(isset($_POST["buy"]))
-					makePurchase($connection, $_SESSION['iduser'], $cartProductsNumber, $cartTotalPrice);
-				else if(isset($_POST["buyDirectly"])){	// Products within cart + current product
-					$money = $cartTotalPrice + ($productPrice * $_POST["amountToAdd"]);
-					makePurchase($connection, $_SESSION['iduser'], $cartProductsNumber + 1, $money);
-				}
-				clearCart($connection);
-				refreshCart($connection);
-                showToast("Purchase made with success");
-	        }else
-                showToast("The product is out of stock");
+			if(isset($_POST["buy"]))
+				makePurchase($connection, $_SESSION['iduser'], $cartProductsNumber, $cartTotalPrice);
+			// else if(isset($_POST["buyDirectly"])){	// Products within cart + current product
+			// 	$money = $cartTotalPrice + ($productPrice * $_POST["amountToAdd"]);
+			// 	makePurchase($connection, $_SESSION['iduser'], $cartProductsNumber + 1, $money);
+			// }
+			clearCart($connection);
+			refreshCart($connection);
+            showToast("Purchase made with success");
 		}
-
 		toggleDesignCart();
 	?>
 

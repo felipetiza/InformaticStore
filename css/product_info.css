@@ -40,11 +40,11 @@ body{
 	border-radius: 10px;
 }
 #basic #cart img{
-  width: 38px;
+  	width: 38px;
 	height: 36px;
 	float: right;
 	margin-top: -1px;
-  filter: brightness(125%);
+  	filter: brightness(125%);
 }
 hr{ color: #ffffff80; }
 #infobar{
@@ -74,10 +74,7 @@ hr{ color: #ffffff80; }
 	display: flex;
 	flex-direction: column;
 	padding: 5px;
-	/*! background: #E2ECEE; */
-	/* border-radius: 6px; */
 	margin: 5px 5px;
-	/*! justify-content: space-around; */
 }
 #content #row1{
   /*! border: 1px solid blue; */
@@ -159,11 +156,12 @@ hr{ color: #ffffff80; }
 	float: left;
 	border: none;
 	padding: 5px 0px;
-	width: 110px;
+	/* width: 110px; */
+	width: 245px;
 	border-radius: 7px;
 	font-weight: bold;
 	margin: 8px 10px;
-	background: #2a6581cc;
+	background: #6c96a2;
 	color: #dbe9f0;
 	transition: 150ms;
 	cursor: pointer;

@@ -9,6 +9,14 @@
 	$cartProductName        = [];
 	$cartProductPrice       = [];
 
+
+//  ██████╗██╗   ██╗███████╗████████╗ ██████╗ ███╗   ███╗███████╗██████╗
+// ██╔════╝██║   ██║██╔════╝╚══██╔══╝██╔═══██╗████╗ ████║██╔════╝██╔══██╗
+// ██║     ██║   ██║███████╗   ██║   ██║   ██║██╔████╔██║█████╗  ██████╔╝
+// ██║     ██║   ██║╚════██║   ██║   ██║   ██║██║╚██╔╝██║██╔══╝  ██╔══██╗
+// ╚██████╗╚██████╔╝███████║   ██║   ╚██████╔╝██║ ╚═╝ ██║███████╗██║  ██║
+//  ╚═════╝ ╚═════╝ ╚══════╝   ╚═╝    ╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝
+
 	function getUserData($connection, $userID){
 		$userData = [];
 		$getusername = "SELECT *
@@ -36,11 +44,19 @@
 	        echo "Wrong Query";
 	}
 
-	function getProductData($connection, $id){
+
+// ██████╗ ██████╗  ██████╗ ██████╗ ██╗   ██╗ ██████╗████████╗
+// ██╔══██╗██╔══██╗██╔═══██╗██╔══██╗██║   ██║██╔════╝╚══██╔══╝
+// ██████╔╝██████╔╝██║   ██║██║  ██║██║   ██║██║        ██║
+// ██╔═══╝ ██╔══██╗██║   ██║██║  ██║██║   ██║██║        ██║
+// ██║     ██║  ██║╚██████╔╝██████╔╝╚██████╔╝╚██████╗   ██║
+// ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝  ╚═════╝   ╚═╝
+
+	function getProductData($connection, $prodID){
 	    $productData = [];
 	    $getproduct = "SELECT *
 	                   FROM product
-	                   WHERE idproduct = $id;
+	                   WHERE idproduct = $prodID;
 	                  ";
 
 	    if ($result = $connection->query($getproduct)) {
@@ -60,6 +76,35 @@
 	    }else
 	        echo "Wrong Query";
     }
+
+	function getProductDataArray($connection, $prodID){
+		$productData = [[]];
+
+		for($i=0;$i<count($prodID);$i++){				// Orders
+			for($j=0;$j<count($prodID[$i]);$j++){		// Values
+		        $getProducts = "SELECT *
+		                        FROM product
+		                        WHERE idproduct = ".$prodID[$i][$j].";
+		                       ";
+
+		        if ($result = $connection->query($getProducts)) {
+		            if ($result->num_rows > 0){
+		            	$product = $result->fetch_object();
+
+						$productData['name'][$i][$j]        = $product->name;
+						$productData['category'][$i][$j]    = $product->category;
+						$productData['description'][$i][$j] = $product->description;
+						$productData['price'][$i][$j]       = $product->price;
+						$productData['amount'][$i][$j]      = $product->amount;
+						$productData['urlimage'][$i][$j]    = $product->urlimage;
+		            }else
+		                echo "Impossible to get the products";
+		        }else
+		            echo "Wrong Query";
+		    }
+		}
+	    return $productData;
+	}
 
     function getAllProduct($connection){
 		$productData = [[]];
@@ -119,6 +164,14 @@
             echo "Wrong Query";
 
 	}
+
+
+// ███████╗██╗  ██╗ ██████╗ ██████╗ ██████╗ ██╗███╗   ██╗ ██████╗      ██████╗ █████╗ ██████╗ ████████╗
+// ██╔════╝██║  ██║██╔═══██╗██╔══██╗██╔══██╗██║████╗  ██║██╔════╝     ██╔════╝██╔══██╗██╔══██╗╚══██╔══╝
+// ███████╗███████║██║   ██║██████╔╝██████╔╝██║██╔██╗ ██║██║  ███╗    ██║     ███████║██████╔╝   ██║
+// ╚════██║██╔══██║██║   ██║██╔═══╝ ██╔═══╝ ██║██║╚██╗██║██║   ██║    ██║     ██╔══██║██╔══██╗   ██║
+// ███████║██║  ██║╚██████╔╝██║     ██║     ██║██║ ╚████║╚██████╔╝    ╚██████╗██║  ██║██║  ██║   ██║
+// ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝     ╚═╝╚═╝  ╚═══╝ ╚═════╝      ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝
 
     function deleteProductFromCart($connection, $id){
         $getProducts = "DELETE FROM shopping_cart WHERE idproduct = $id;";
@@ -221,10 +274,10 @@
 		return $cartProductID;
     }
 
-	function getProductDataFromCart($connection, $productNumber, $prodID){
+	function getProductDataFromCart($connection, $prodID){
 		$cartProductData = [[]];
 
-		for($i=0;$i<$productNumber;$i++){
+		for($i=0;$i<count($prodID);$i++){
 	        $getProducts = "SELECT *
 	                        FROM product
 	                        WHERE idproduct = ".$prodID[$i].";
@@ -323,7 +376,7 @@
 		}
 
 		// (count($cartProductData) != 1)  --> It means that the cart isn't empty. '1' because is array 2 dimensions
-		$cartProductData  = getProductDataFromCart($connection, $cartProductsNumber, $cartProductID);
+		$cartProductData  = getProductDataFromCart($connection, $cartProductID);
 		$cartProductName  = (count($cartProductData) != 1) ? $cartProductData['name'] : [];
 		$cartProductPrice = (count($cartProductData) != 1) ? $cartProductData['price'] : [];
 
@@ -331,6 +384,73 @@
 		for($i=0;$i<$cartProductsNumber;$i++)
 			$cartTotalPrice += $cartProductPrice[$i] * $cartProductAmount[$i];
 	}
+
+
+//  ██████╗ ██████╗ ██████╗ ███████╗██████╗
+// ██╔═══██╗██╔══██╗██╔══██╗██╔════╝██╔══██╗
+// ██║   ██║██████╔╝██║  ██║█████╗  ██████╔╝
+// ██║   ██║██╔══██╗██║  ██║██╔══╝  ██╔══██╗
+// ╚██████╔╝██║  ██║██████╔╝███████╗██║  ██║
+//  ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝
+
+
+	function getOrderData($connection, $userID){
+	    $orderData = [[]];
+		$i = 0;
+	    $getOrder = "SELECT *
+	                 FROM order2
+	                 WHERE idcustomer = $userID;
+	                ";
+
+	    if ($result = $connection->query($getOrder)) {
+	        if ($result->num_rows > 0){
+	        	while($order = $result->fetch_object()){
+					$orderData['idOrder'][$i]        = $order->idorder;
+					$orderData['date'][$i]           = $order->dateorder;
+					$orderData['amountproducts'][$i] = $order->amountproducts;
+					$orderData['totalprice'][$i]     = $order->totalprice;
+					$i++;
+				}
+				return $orderData;
+	        }else
+	            echo "Impossible to get the order data";
+	    }else
+	        echo "Wrong Query";
+    }
+
+	function getOrderProductAndAmount($connection, $orderID){
+	    $orderProductAndAmount = [[[]]];	// idProduct - order - value ; $i = order |	$j = value
+
+	    for($i=0;$i<count($orderID);$i++){
+	 	    $j = 0;
+		    $getOrder = "SELECT *
+		                 FROM contain
+		                 WHERE idorder = ".$orderID[$i].";
+		                ";
+
+		    if ($result = $connection->query($getOrder)) {
+		        if ($result->num_rows > 0){
+		        	while($order = $result->fetch_object()){
+						$orderProductAndAmount['idProduct'][$i][$j] = $order->idproduct;
+						$orderProductAndAmount['amount'][$i][$j]    = $order->amount;
+						$j++;
+					}
+		        }else
+		            echo "Impossible to get the order data";
+		    }else
+		        echo "Wrong Query";
+		}
+		return $orderProductAndAmount;
+	}
+
+
+
+// ██████╗ ██╗   ██╗███╗   ██╗         ██╗███████╗
+// ██╔══██╗██║   ██║████╗  ██║         ██║██╔════╝
+// ██████╔╝██║   ██║██╔██╗ ██║         ██║███████╗
+// ██╔══██╗██║   ██║██║╚██╗██║    ██   ██║╚════██║
+// ██║  ██║╚██████╔╝██║ ╚████║    ╚█████╔╝███████║
+// ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝     ╚════╝ ╚══════╝
 
 	function showCart(){
 		echo "<script>document.addEventListener('load', function(){ loadModalWindow(true); }, true);</script>";
@@ -360,21 +480,4 @@
 			echo "</script>";
 		}
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ?>
