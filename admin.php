@@ -31,45 +31,6 @@
 		// User data from logged customer
 		$userData = getUserData($connection, $_SESSION['iduser']);
 		$username = $userData['username'];
-
-		// Product data from all product
-		$productsData = [[]];
-
-        if(isset($_GET['categ']))
-            $productsData = getProductCategory($connection, $_GET['categ']);
-        else
-            $productsData = getAllProduct($connection);
-
-		$productID    = $productsData['id'];
-		$productName  = $productsData['name'];
-		$productPrice = $productsData['price'];
-		$productImage = $productsData['urlimage'];
-
-		// Actions of shopping cart
-		refreshCart($connection);
-
-		if(isset($_POST["delete"])){
-			deleteProductFromCart($connection, $_POST["cartProductID"]);
-			showCart();
-			refreshCart($connection);
-		}
-		if(isset($_POST["clear"])){
-			clearCart($connection);
-			showCart();
-			refreshCart($connection);
-		}
-		if(isset($_POST["buy"]) || isset($_POST["buyDirectly"])){
-			if(isset($_POST["buy"]))
-				makePurchase($connection, $_SESSION['iduser'], $cartProductsNumber, $cartTotalPrice);
-			// else if(isset($_POST["buyDirectly"])){	// Products within cart + current product
-			// 	$money = $cartTotalPrice + ($productPrice * $_POST["amountToAdd"]);
-			// 	makePurchase($connection, $_SESSION['iduser'], $cartProductsNumber + 1, $money);
-			// }
-			clearCart($connection);
-			refreshCart($connection);
-            showToast("Purchase made with success");
-		}
-		toggleDesignCart();
 	?>
 
 	<div id="wrapper">
@@ -118,9 +79,9 @@
         <br>
 		<div id="content">
 			<div id="img">
-				<a href="admin_customer.php"><div><img src="resources/img/test/1.png"></div></a>
-				<a href="admin_product.php"><div><img src="resources/img/test/13.png"></div></a>
-				<a href="admin_order.php"><div><img src="resources/img/test/131.png"></div></a>
+				<a href="admin_customer.php"><div><img src="resources/img/admin_customer.png"></div></a>
+				<a href="admin_product.php"><div><img src="resources/img/admin_product.png"></div></a>
+				<a href="admin_order.php"><div><img src="resources/img/admin_order.png"></div></a>
 			</div>
 			<div id="text">
 				<div><p>Customer</p></div>

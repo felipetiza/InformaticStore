@@ -19,29 +19,55 @@
 
 	function getUserData($connection, $userID){
 		$userData = [];
-		$getusername = "SELECT *
+		$getCustomer = "SELECT *
 	                    FROM customer
 	                    WHERE idcustomer = $userID;
 	                   ";
 
-	    if ($result = $connection->query($getusername)) {
+	    if ($result = $connection->query($getCustomer)) {
 	        if ($result->num_rows > 0){
-	            $product = $result->fetch_object();
-
-				$userData['name']     = $product->name;
-				$userData['surname']  = $product->surname;
-				$userData['email']    = $product->email;
-				$userData['address']  = $product->address;
-				$userData['phone']    = $product->phone;
-				$userData['type']     = $product->type;
-				$userData['username'] = $product->username;
-				$userData['password'] = $product->password;
+	            $customer = $result->fetch_object();
+				$userData['name']     = $customer->name;
+				$userData['surname']  = $customer->surname;
+				$userData['email']    = $customer->email;
+				$userData['address']  = $customer->address;
+				$userData['phone']    = $customer->phone;
+				$userData['type']     = $customer->type;
+				$userData['username'] = $customer->username;
+				$userData['password'] = $customer->password;
 
 	        	return $userData;
 	        }else
 	            echo "Impossible to get the user data";
 	    }else
 	        echo "Wrong Query";
+	}
+
+	function getAllUser($connection){
+		$userData = [[]];
+		$i = 0;
+		$getCustomer = "SELECT * FROM customer;";
+
+        if ($result = $connection->query($getCustomer)){
+            if ($result->num_rows > 0){
+            	while($customer = $result->fetch_object()){
+					$userData['id'][$i]       = $customer->idcustomer;
+					$userData['name'][$i]     = $customer->name;
+					$userData['surname'][$i]  = $customer->surname;
+					$userData['email'][$i]    = $customer->email;
+					$userData['address'][$i]  = $customer->address;
+					$userData['phone'][$i]    = $customer->phone;
+					$userData['type'][$i]     = $customer->type;
+					$userData['username'][$i] = $customer->username;
+					$userData['password'][$i] = $customer->password;
+					$i++;
+            	}
+            }else
+                echo "Impossible to get the users";
+        }else
+            echo "Wrong Query";
+
+        return $userData;
 	}
 
 
