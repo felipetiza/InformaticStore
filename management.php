@@ -162,7 +162,6 @@
                 echo "Impossible to get the products category";
         }else
             echo "Wrong Query";
-
 	}
 
 

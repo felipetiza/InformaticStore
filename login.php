@@ -23,7 +23,7 @@
             $user = $_POST['user'];
             $pass = $_POST['pass'];
 
-            $login = "SELECT idcustomer
+            $login = "SELECT idcustomer, type
                       FROM customer
                       WHERE username = ? AND
                             password = ?;
@@ -33,12 +33,15 @@
 
                 $query->bind_param("ss", $user, $pass);
                 $query->execute();
-                $query->bind_result($person);
+                $query->bind_result($UserID, $Usertype);
                 $query->fetch();
 
-                if(isset($person)){
-                    $_SESSION["iduser"]   = $person;
-                    header('Location: menu.php');
+                if(isset($UserID)){
+                    $_SESSION["iduser"] = $UserID;
+                    if($Usertype == "Admin")
+                        header('Location: admin.php');
+                    else if($Usertype == "User")
+                        header('Location: menu.php');
                 }else
                     showToast("Invalid Login");
                 $query->close();
@@ -50,11 +53,11 @@
     <div id="wrapper">
         <form method="post">
             <div>
-                <img width="32" src="resources/img/user.png">
+                <img src="resources/img/user.png">
                 <input name="user" type="text" required>
             </div>
             <div>
-                <img width="32" src="resources/img/pass.png">
+                <img src="resources/img/pass.png">
                 <input name="pass" type="password" required>
             </div>
             <div>

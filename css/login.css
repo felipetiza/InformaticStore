@@ -24,6 +24,7 @@ a{
 }
 #wrapper img{
 	position: absolute;
+	width: 32px;
 	margin: 4px 13px;
 	filter: brightness(150%) saturate(85%);
 }
