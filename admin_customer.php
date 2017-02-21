@@ -7,6 +7,12 @@
 	<link rel="stylesheet" href="css/resources.css">
 	<script src="js/management.js"></script>
 	<script src="js/author.js"></script>
+	<script>
+		document.addEventListener("load", function(){
+			loadModalWindow(false);
+			// loadModalWindow(true);
+		}, true);
+    </script>
 </head>
 <body>
 
@@ -32,17 +38,18 @@
 		$userData = getUserData($connection, $_SESSION['iduser']);
 		$username = $userData['username'];
 
+		refreshUser($connection);
 
-		$usersData = getAllUser($connection);
-		$userID       = $usersData['id'];
-		$userName     = $usersData['name'];
-		$userSurname  = $usersData['surname'];
-		$userEmail    = $usersData['email'];
-		$userAddress  = $usersData['address'];
-		$userPhone    = $usersData['phone'];
-		$userType     = $usersData['type'];
-		$userUsername = $usersData['username'];
-		$userPassword = $usersData['password'];
+		if(isset($_POST["edit"])){
+			echo $_POST["userID"];
+			showEditScreen();
+
+		}
+		if(isset($_POST["delete"])){
+			deleteUser($connection, $_POST["userID"]);
+			refreshUser($connection);
+		}
+		error_log("Hola Mundo");
 	?>
 
 	<div id="wrapper">
@@ -63,7 +70,7 @@
 	        </div>
 			<div id="title"><h1>Customer</h1></div>
 			<div id="cart">
-				<label><?php echo $cartProductsNumber; ?></label><img class="myBtn" src="resources/img/cart.png">
+				<label><?php echo $cartProductsNumber; ?></label><img src="resources/img/cart.png">
 			</div>
 		</div>
         <hr>
@@ -91,7 +98,6 @@
         <!-- Level 3 -->
         <br>
 		<div id="content">
-
 			<table>
 				<tr>
 			  		<th>ID</th>
@@ -104,8 +110,9 @@
 			  		<th>Username</th>
 			  		<th>Password</th>
 			  		<th></th>
+			  		<th></th>
 				</tr>
-				    <?php
+				<?php
 					for($i=0;$i<count($userID);$i++){
 		    			echo "<tr>";
 		    			echo "<td>$userID[$i]</td>";
@@ -117,12 +124,32 @@
 		    			echo "<td>$userType[$i]</td>";
 		    			echo "<td>$userUsername[$i]</td>";
 		    			echo "<td>$userPassword[$i]</td>";
+		    			echo "<td>
+			    				  <form method='post'>
+			    					  <input type='submit' name='edit' class='myBtn' value='✎'>
+			    					  <input type='text' name='userID' value='$userID[$i]'>
+			    				  </form>
+		    				  </td>";
+		    			echo "<td>
+			    			  	  <form method='post'>
+			    					  <input type='submit' name='delete' class='myBtn' value='&times;'>
+			    					  <input type='text' name='userID' value='$userID[$i]'>
+			    				  </form>
+		    				  </td>";
 		    			echo "</tr>";
 		    		}
 			    ?>
 			</table>
-
 		</div>
+
+		<!-- Modal Window -->
+		<div id="myModal" class="modal">
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				<p>Hola Mundo</p>
+		  	</div>
+		</div>
+
 	</div>
 </body>
 </html>

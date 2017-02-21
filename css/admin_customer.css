@@ -75,46 +75,14 @@ hr{ color: #ffffff80; }
 	flex-flow: column wrap;
 	padding: 20px 0 30px 0px;
 }
-#content #img{
-	/*border: 1px solid red;*/
-	display: flex;
-	width: 100%;
-	height: 140px;
+table {
+    width: 520px;
+    text-align: left;
+    border-collapse: collapse;
+    border-radius: 6px;
+    margin: 0 auto;
 }
-#content #text{
-	/*border: 1px solid green;*/
-	display: flex;
-	width: 100%;
-}
-#content #img a{
-	/* border: 1px solid yellow; */
-	width: 33%;
-	display: flex;
-	transition: 150ms;
-}
-#content #img a div{
-	margin: 20px auto;
-}
-#content #img a div img{
-	height: 100px;
-}
-#content #img a:hover{
-  background: #0000ff25;
-	border-radius: 6px 6px 0px 0px;
-	transition: 250ms;
-}
-#content #text div{
-	/* border: 1px solid yellow; */
-	width: 33%;
-	display: flex;
-	font-weight: bold;
-	padding: 5px 0px;
-	background: #0000ff25;
-}
-#content #text div p:nth-child(1){
-	margin: 0 auto;
-	font-size: 25px;
-}
+
 
 
 

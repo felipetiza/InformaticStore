@@ -202,7 +202,8 @@ a::-moz-focus-inner {
     border: 1px solid #CED5D7;
     border-radius: 6px;
     background: #ffff;
-    box-shadow: 0px 5px 10px #B5C1C5, 0 0 0 10px #EEF5F7 inset;
+    box-shadow: 0px 5px 10px #B5C1C5,
+                0 0 0 10px #EEF5F7 inset;
 }
 #cartEmpty{
     display: flex;
@@ -266,9 +267,10 @@ table input[type="text"]{
 }
 table input[type="submit"]{
     text-decoration: none;
-    border: none;
     background: #ccc0;
     padding: 1px;
+    font-weight: bold;
+    border: none;
 }
 #btnClear{
     width: 70px;

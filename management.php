@@ -9,13 +9,25 @@
 	$cartProductName        = [];
 	$cartProductPrice       = [];
 
+	// User variables
+	$userID       = [];
+	$userName     = [];
+	$userSurname  = [];
+	$userEmail    = [];
+	$userAddress  = [];
+	$userPhone    = [];
+	$userType     = [];
+	$userUsername = [];
+	$userPassword = [];
 
-//  ██████╗██╗   ██╗███████╗████████╗ ██████╗ ███╗   ███╗███████╗██████╗
-// ██╔════╝██║   ██║██╔════╝╚══██╔══╝██╔═══██╗████╗ ████║██╔════╝██╔══██╗
-// ██║     ██║   ██║███████╗   ██║   ██║   ██║██╔████╔██║█████╗  ██████╔╝
-// ██║     ██║   ██║╚════██║   ██║   ██║   ██║██║╚██╔╝██║██╔══╝  ██╔══██╗
-// ╚██████╗╚██████╔╝███████║   ██║   ╚██████╔╝██║ ╚═╝ ██║███████╗██║  ██║
-//  ╚═════╝ ╚═════╝ ╚══════╝   ╚═╝    ╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝
+
+
+// ██╗   ██╗███████╗███████╗██████╗
+// ██║   ██║██╔════╝██╔════╝██╔══██╗
+// ██║   ██║███████╗█████╗  ██████╔╝
+// ██║   ██║╚════██║██╔══╝  ██╔══██╗
+// ╚██████╔╝███████║███████╗██║  ██║
+//  ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═╝
 
 	function getUserData($connection, $userID){
 		$userData = [];
@@ -38,7 +50,7 @@
 
 	        	return $userData;
 	        }else
-	            echo "Impossible to get the user data";
+	            echo "Impossible to get the user data <br><br>";
 	    }else
 	        echo "Wrong Query";
 	}
@@ -62,12 +74,44 @@
 					$userData['password'][$i] = $customer->password;
 					$i++;
             	}
+            	return $userData;
             }else
-                echo "Impossible to get the users";
+                echo "Impossible to get all the users";
         }else
             echo "Wrong Query";
+	}
 
-        return $userData;
+	function refreshUser($connection){
+		global $userID;
+		global $userName;
+		global $userSurname;
+		global $userEmail;
+		global $userAddress;
+		global $userPhone;
+		global $userType;
+		global $userUsername;
+		global $userPassword;
+
+		$usersData = getAllUser($connection);
+		$userID       = $usersData['id'];
+		$userName     = $usersData['name'];
+		$userSurname  = $usersData['surname'];
+		$userEmail    = $usersData['email'];
+		$userAddress  = $usersData['address'];
+		$userPhone    = $usersData['phone'];
+		$userType     = $usersData['type'];
+		$userUsername = $usersData['username'];
+		$userPassword = $usersData['password'];
+	}
+
+	function deleteUser($connection, $userID){
+        $deleteUser = "DELETE FROM customer WHERE idcustomer = $userID;";
+
+	    if ($result = $connection->query($deleteUser)) {
+            if (!$result)
+                echo "Impossible to delete the user";
+        }else
+            echo "Wrong Query";
 	}
 
 
@@ -202,9 +246,7 @@
         $getProducts = "DELETE FROM shopping_cart WHERE idproduct = $id;";
 
         if ($result = $connection->query($getProducts)) {
-            if ($result)
-            	$_SESSION["showCart"] = "true";
-            else
+            if (!$result)
                 echo "Impossible to delete the product";
         }else
             echo "Wrong Query";
@@ -478,6 +520,10 @@
 // ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝     ╚════╝ ╚══════╝
 
 	function showCart(){
+		echo "<script>document.addEventListener('load', function(){ loadModalWindow(true); }, true);</script>";
+	}
+
+	function showEditScreen(){
 		echo "<script>document.addEventListener('load', function(){ loadModalWindow(true); }, true);</script>";
 	}
 
