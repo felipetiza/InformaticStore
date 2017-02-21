@@ -39,6 +39,7 @@
 	    if ($result = $connection->query($getCustomer)) {
 	        if ($result->num_rows > 0){
 	            $customer = $result->fetch_object();
+				$userData['id']       = $customer->idcustomer;
 				$userData['name']     = $customer->name;
 				$userData['surname']  = $customer->surname;
 				$userData['email']    = $customer->email;

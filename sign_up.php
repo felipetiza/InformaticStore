@@ -3,6 +3,7 @@
 <head>
 	<title>Sign Up</title>
 	<link rel="stylesheet" href="css/sign_up.css">
+    <link rel="stylesheet" href="css/resources.css">
 </head>
 <body>
 
@@ -64,11 +65,9 @@
             	<input name="pass" type="password" maxlength="20" required>
         	</div>
             <div>
-                <input type="submit" value="Sign up">
+                <input type="submit" class="standardButton" value="Sign up">
             </div>
 		</form>
-
-
 	</div>
 
 </body>

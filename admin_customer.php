@@ -41,15 +41,23 @@
 		refreshUser($connection);
 
 		if(isset($_POST["edit"])){
-			echo $_POST["userID"];
 			showEditScreen();
-
+			$userData = getUserData($connection, $_POST["userID"]);
+			$userSelectedID       = $userData['id'];
+			$userSelectedName     = $userData['name'];
+			$userSelectedSurname  = $userData['surname'];
+			$userSelectedEmail    = $userData['email'];
+			$userSelectedAddress  = $userData['address'];
+			$userSelectedPhone    = $userData['phone'];
+			$userSelectedType     = $userData['type'];
+			$userSelectedUsername = $userData['username'];
+			$userSelectedPassword = $userData['password'];
 		}
 		if(isset($_POST["delete"])){
 			deleteUser($connection, $_POST["userID"]);
 			refreshUser($connection);
 		}
-		error_log("Hola Mundo");
+		showEditScreen();
 	?>
 
 	<div id="wrapper">
@@ -145,8 +153,54 @@
 		<!-- Modal Window -->
 		<div id="myModal" class="modal">
 			<div class="modal-content">
-				<span class="close">&times;</span>
-				<p>Hola Mundo</p>
+				<label class="close">&times;</label>
+		        <h1>Edit User</h1>
+		        <hr>
+		        <br>
+		        <div id="down">
+					<form method="post">
+						<div>
+			            	<span>ID</span>
+			            	<input type="text" name="name" maxlength="25" value="<?php echo $userSelectedID; ?>" required>
+			        	</div>
+						<div>
+			            	<span>Name</span>
+			            	<input type="text" name="name" maxlength="25" value="<?php echo $userSelectedName; ?>" required>
+			        	</div>
+			        	<div>
+			            	<span>Surname</span>
+			            	<input type="text" name="surname" maxlength="50" value="<?php echo $userSelectedSurname; ?>" required>
+			        	</div>
+			        	<div>
+			            	<span>Email</span>
+			            	<input type="email" name="email" maxlength="45" value="<?php echo $userSelectedEmail; ?>" required>
+			        	</div>
+			        	<div>
+			            	<span>Address</span>
+			            	<input type="text" name="address" maxlength="100" value="<?php echo $userSelectedAddress; ?>" required>
+			        	</div>
+			        	<div>
+			            	<span>Phone</span>
+			            	<input type="tel" name="phone" pattern="[0-9]{9}" value="<?php echo $userSelectedPhone; ?>" required>
+			        	</div>
+			        	<div>
+			            	<span>Type</span>
+			            	<input type="tel" name="phone" pattern="[0-9]{9}" value="<?php echo $userSelectedType; ?>" required>
+			        	</div>
+			        	<div>
+			            	<span>Username</span>
+			            	<input type="text" name="user" maxlength="40" value="<?php echo $userSelectedUsername; ?>" required>
+			        	</div>
+			        	<div>
+			            	<span>Password</span>
+			            	<input type="text" name="pass" maxlength="20" value="<?php echo $userSelectedPassword; ?>" required>
+			        	</div>
+			            <div>
+			                <input type="submit" class="standardButton" value="Edit">
+			            </div>
+					</form>
+		        </div>
+
 		  	</div>
 		</div>
 
