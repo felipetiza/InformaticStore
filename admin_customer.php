@@ -38,10 +38,15 @@
 		$userData = getUserData($connection, $_SESSION['iduser']);
 		$username = $userData['username'];
 
-		refreshUser($connection);
+		refreshUsers($connection);
 
-		if(isset($_POST["edit"])){
+		if(isset($_POST["tableDelete"])){
+			deleteUser($connection, $_POST["userID"]);
+			refreshUsers($connection);
+		}
+		if(isset($_POST["tableEdit"])){
 			showEditScreen();
+
 			$userData = getUserData($connection, $_POST["userID"]);
 			$userSelectedID       = $userData['id'];
 			$userSelectedName     = $userData['name'];
@@ -53,11 +58,12 @@
 			$userSelectedUsername = $userData['username'];
 			$userSelectedPassword = $userData['password'];
 		}
-		if(isset($_POST["delete"])){
-			deleteUser($connection, $_POST["userID"]);
-			refreshUser($connection);
+		if(isset($_POST["edit"])){
+			// Delete
+			// Insert
+			refreshUsers($connection);
 		}
-		showEditScreen();
+		// showEditScreen();
 	?>
 
 	<div id="wrapper">
@@ -134,13 +140,13 @@
 		    			echo "<td>$userPassword[$i]</td>";
 		    			echo "<td>
 			    				  <form method='post'>
-			    					  <input type='submit' name='edit' class='myBtn' value='✎'>
+			    					  <input type='submit' name='tableEdit' class='myBtn' value='✎'>
 			    					  <input type='text' name='userID' value='$userID[$i]'>
 			    				  </form>
 		    				  </td>";
 		    			echo "<td>
 			    			  	  <form method='post'>
-			    					  <input type='submit' name='delete' class='myBtn' value='&times;'>
+			    					  <input type='submit' name='tableDelete' class='myBtn' value='&times;'>
 			    					  <input type='text' name='userID' value='$userID[$i]'>
 			    				  </form>
 		    				  </td>";
@@ -196,7 +202,7 @@
 			            	<input type="text" name="pass" maxlength="20" value="<?php echo $userSelectedPassword; ?>" required>
 			        	</div>
 			            <div>
-			                <input type="submit" class="standardButton" value="Edit">
+			                <input type="submit" name="edit" class="standardButton" value="Edit">
 			            </div>
 					</form>
 		        </div>

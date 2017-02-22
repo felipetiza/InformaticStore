@@ -52,13 +52,13 @@ CREATE TABLE order2
     FOREIGN KEY(idcustomer) REFERENCES customer(idcustomer) ON DELETE CASCADE
 );
 
-CREATE TABLE provider
-(
-	idprovider		INT AUTO_INCREMENT NOT NULL,
-	location		VARCHAR(100),
-	material		VARCHAR(50),
-	PRIMARY KEY(idprovider)
-);
+-- CREATE TABLE provider
+-- (
+-- 	idprovider		INT AUTO_INCREMENT NOT NULL,
+-- 	location		VARCHAR(100),
+-- 	material		VARCHAR(50),
+-- 	PRIMARY KEY(idprovider)
+-- );
 
 CREATE TABLE shopping_cart
 (

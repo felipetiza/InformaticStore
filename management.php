@@ -82,7 +82,7 @@
             echo "Wrong Query";
 	}
 
-	function refreshUser($connection){
+	function refreshUsers($connection){
 		global $userID;
 		global $userName;
 		global $userSurname;

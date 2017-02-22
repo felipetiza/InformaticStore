@@ -15,8 +15,14 @@
 
         // If user is logged
         session_start();
-        if(isset($_SESSION["iduser"]))
+        if(isset($_SESSION["iduser"])){
             header('Location: menu.php');
+
+            if($_SESSION["userType"] == "Admin")
+                header('Location: admin.php');
+            else if($_SESSION["userType"] == "User")
+                header('Location: menu.php');
+        }
 
         // The user try to logging
         if (isset($_POST["user"])) {
@@ -33,14 +39,16 @@
 
                 $query->bind_param("ss", $user, $pass);
                 $query->execute();
-                $query->bind_result($UserID, $Usertype);
+                $query->bind_result($userID, $userType);
                 $query->fetch();
 
-                if(isset($UserID)){
-                    $_SESSION["iduser"] = $UserID;
-                    if($Usertype == "Admin")
+                if(isset($userID)){
+                    $_SESSION["iduser"]   = $userID;
+                    $_SESSION["userType"] = $userType;
+
+                    if($userType == "Admin")
                         header('Location: admin.php');
-                    else if($Usertype == "User")
+                    else if($userType == "User")
                         header('Location: menu.php');
                 }else
                     showToast("Invalid Login");
