@@ -47,7 +47,7 @@
 				$userData['phone']    = $customer->phone;
 				$userData['type']     = $customer->type;
 				$userData['username'] = $customer->username;
-				$userData['password'] = $customer->password;
+				$userData['pass'] = $customer->password;
 
 	        	return $userData;
 	        }else
@@ -111,6 +111,28 @@
 	    if ($result = $connection->query($deleteUser)) {
             if (!$result)
                 echo "Impossible to delete the user";
+        }else
+            echo "Wrong Query";
+	}
+
+	function insertUser($connection, $userData){
+		$id      = $userData['id'];
+		$name    = $userData['name'];
+		$surname = $userData['surname'];
+		$email   = $userData['email'];
+		$address = $userData['address'];
+		$phone   = $userData['phone'];
+		$type    = $userData['type'];
+		$user    = $userData['user'];
+		$pass    = $userData['pass'];
+
+        $insertUser = "INSERT INTO customer
+                       VALUES($id, '$name', '$surname', '$email', '$address', '$phone', '$type', '$user', '$pass');
+                      ";
+
+	    if ($result = $connection->query($insertUser)) {
+            if (!$result)
+                echo "Impossible to insert the user";
         }else
             echo "Wrong Query";
 	}

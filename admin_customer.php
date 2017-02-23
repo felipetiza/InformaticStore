@@ -48,19 +48,31 @@
 			showEditScreen();
 
 			$userData = getUserData($connection, $_POST["userID"]);
-			$userSelectedID       = $userData['id'];
-			$userSelectedName     = $userData['name'];
-			$userSelectedSurname  = $userData['surname'];
-			$userSelectedEmail    = $userData['email'];
-			$userSelectedAddress  = $userData['address'];
-			$userSelectedPhone    = $userData['phone'];
-			$userSelectedType     = $userData['type'];
-			$userSelectedUsername = $userData['username'];
-			$userSelectedPassword = $userData['password'];
+			$userSelectedID      = $userData['id'];
+			$userSelectedName    = $userData['name'];
+			$userSelectedSurname = $userData['surname'];
+			$userSelectedEmail   = $userData['email'];
+			$userSelectedAddress = $userData['address'];
+			$userSelectedPhone   = $userData['phone'];
+			$userSelectedType    = $userData['type'];
+			$userSelectedUser    = $userData['username'];
+			$userSelectedPass    = $userData['pass'];
 		}
-		if(isset($_POST["edit"])){
-			// Delete
-			// Insert
+		if(isset($_POST["buttonEdit"])){
+			deleteUser($connection, $_POST['editID']);
+
+			$userData = [];
+			$userData['id']      = $_POST['editID'];
+			$userData['name']    = $_POST['editName'];
+			$userData['surname'] = $_POST['editSurname'];
+			$userData['email']   = $_POST['editEmail'];
+			$userData['address'] = $_POST['editAddress'];
+			$userData['phone']   = $_POST['editPhone'];
+			$userData['type']    = $_POST['editType'];
+			$userData['user']    = $_POST['editUser'];
+			$userData['pass']    = $_POST['editPass'];
+			insertUser($connection, $userData);
+
 			refreshUsers($connection);
 		}
 		// showEditScreen();
@@ -167,46 +179,45 @@
 					<form method="post">
 						<div>
 			            	<span>ID</span>
-			            	<input type="text" name="name" maxlength="25" value="<?php echo $userSelectedID; ?>" required>
+			            	<input type="text" name="editID" value="<?php echo $userSelectedID; ?>" required>
 			        	</div>
 						<div>
 			            	<span>Name</span>
-			            	<input type="text" name="name" maxlength="25" value="<?php echo $userSelectedName; ?>" required>
+			            	<input type="text" name="editName" maxlength="25" value="<?php echo $userSelectedName; ?>" required>
 			        	</div>
 			        	<div>
 			            	<span>Surname</span>
-			            	<input type="text" name="surname" maxlength="50" value="<?php echo $userSelectedSurname; ?>" required>
+			            	<input type="text" name="editSurname" maxlength="50" value="<?php echo $userSelectedSurname; ?>" required>
 			        	</div>
 			        	<div>
 			            	<span>Email</span>
-			            	<input type="email" name="email" maxlength="45" value="<?php echo $userSelectedEmail; ?>" required>
+			            	<input type="email" name="editEmail" maxlength="45" value="<?php echo $userSelectedEmail; ?>" required>
 			        	</div>
 			        	<div>
 			            	<span>Address</span>
-			            	<input type="text" name="address" maxlength="100" value="<?php echo $userSelectedAddress; ?>" required>
+			            	<input type="text" name="editAddress" maxlength="100" value="<?php echo $userSelectedAddress; ?>" required>
 			        	</div>
 			        	<div>
 			            	<span>Phone</span>
-			            	<input type="tel" name="phone" pattern="[0-9]{9}" value="<?php echo $userSelectedPhone; ?>" required>
+			            	<input type="tel" name="editPhone" pattern="[0-9]{9}" value="<?php echo $userSelectedPhone; ?>" required>
 			        	</div>
 			        	<div>
 			            	<span>Type</span>
-			            	<input type="tel" name="phone" pattern="[0-9]{9}" value="<?php echo $userSelectedType; ?>" required>
+			            	<input type="tel" name="editType" value="<?php echo $userSelectedType; ?>" required>
 			        	</div>
 			        	<div>
 			            	<span>Username</span>
-			            	<input type="text" name="user" maxlength="40" value="<?php echo $userSelectedUsername; ?>" required>
+			            	<input type="text" name="editUser" maxlength="40" value="<?php echo $userSelectedUser; ?>" required>
 			        	</div>
 			        	<div>
 			            	<span>Password</span>
-			            	<input type="text" name="pass" maxlength="20" value="<?php echo $userSelectedPassword; ?>" required>
+			            	<input type="text" name="editPass" maxlength="20" value="<?php echo $userSelectedPass; ?>" required>
 			        	</div>
 			            <div>
-			                <input type="submit" name="edit" class="standardButton" value="Edit">
+			                <input type="submit" name="buttonEdit" class="standardButton" value="Edit">
 			            </div>
 					</form>
 		        </div>
-
 		  	</div>
 		</div>
 
