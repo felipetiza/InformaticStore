@@ -1,4 +1,7 @@
 <?php
+	const MAIN_PAGE = "../informaticstore";
+
+
 	// Cart variables
 	$cartProductIDAndAmount = [[]];
 	$cartProductsNumber     = 0;
@@ -453,7 +456,7 @@
 		global $cartProductPrice;
 
         // Get client's products from shopping cart
-		$cartProductIDAndAmount = getProductIDFromCart($connection, $_SESSION['iduser']);
+		$cartProductIDAndAmount = getProductIDFromCart($connection, $_SESSION['userID']);
 		$cartProductsNumber     = count($cartProductIDAndAmount);
 		$cartTotalPrice         = 0;
         // Get products data of client
@@ -465,7 +468,7 @@
 			array_push($cartProductAmount, $amount);
 		}
 
-		// (count($cartProductData) != 1)  --> It means that the cart isn't empty. '1' because is array 2 dimensions
+		// != 1 -> The cart isn't empty. '1' because is array 2 dimensions
 		$cartProductData  = getProductDataFromCart($connection, $cartProductID);
 		$cartProductName  = (count($cartProductData) != 1) ? $cartProductData['name'] : [];
 		$cartProductPrice = (count($cartProductData) != 1) ? $cartProductData['price'] : [];
@@ -502,8 +505,9 @@
 					$i++;
 				}
 				return $orderData;
-	        }else
-	            echo "Impossible to get the order data";
+	        }else{
+	            // echo "Impossible to get the order data";
+	        }
 	    }else
 	        echo "Wrong Query";
     }
@@ -548,10 +552,10 @@
 		if(isset($_SESSION["userID"])){
             if($_SESSION["userType"] != $pageBelongs){
             	session_destroy();
-				header('Location: login.php');
+				header('Location: '.MAIN_PAGE);
             }
 		}else
-			header('Location: login.php');
+			header('Location: '.MAIN_PAGE);
 	}
 
 	// Return you to the first page

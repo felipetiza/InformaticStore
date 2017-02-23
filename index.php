@@ -68,7 +68,7 @@
                       ";
             if ($result = $connection->query($insert)) {
                 sleep(5);
-                header('Location: login.php');
+                header('Location: '.MAIN_PAGE);
             }else
                 echo "Wrong Query";
         }

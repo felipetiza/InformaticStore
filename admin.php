@@ -20,13 +20,13 @@
 	    // If user clicked on unlogin button
 		if(isset($_POST["unlogin"])){
 			session_destroy();
-			header('Location: login.php');
+			header("Location: ".MAIN_PAGE);
 		}
 
 		$listProductCategory = getAllProductCategory($connection);
 
 		// User data from logged customer
-		$userData = getUserData($connection, $_SESSION['iduser']);
+		$userData = getUserData($connection, $_SESSION['userID']);
 		$username = $userData['username'];
 	?>
 

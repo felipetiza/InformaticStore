@@ -26,29 +26,30 @@
 	    // If user clicked on unlogin button
 		if(isset($_POST["unlogin"])){
 			session_destroy();
-			header('Location: login.php');
+			header('Location: '.MAIN_PAGE);
 		}
 
 		$listProductCategory = getAllProductCategory($connection);
 
 		// User data from logged customer
-		$userData = getUserData($connection, $_SESSION['iduser']);
+		$userData = getUserData($connection, $_SESSION['userID']);
 		$username = $userData['username'];
 
 		// Order data from all orders
-		$ordersData = getOrderData($connection, $_SESSION["iduser"]);
+		$ordersData = getOrderData($connection, $_SESSION["userID"]);
 		$orderID         = $ordersData['idOrder'];
 		$orderDate       = $ordersData['date'];
 		$orderAmountProd = $ordersData['amountproducts'];
 		$orderPrice      = $ordersData['totalprice'];
 
+		// != 1  -> The array isn't empty. '1' because array is 2 dimensions
 		$orderProductAndAmount = getOrderProductAndAmount($connection, $orderID);	// Return 3 dimensions
-		$orderProduct = $orderProductAndAmount['idProduct'];
-		$orderAmount  = $orderProductAndAmount['amount'];
+		$orderProduct = (count($orderProductAndAmount) != 1) ? $orderProductAndAmount['idProduct'] : [];
+		$orderAmount  = (count($orderProductAndAmount) != 1) ? $orderProductAndAmount['amount'] : [];
 
 		$productData = getProductDataArray($connection, $orderProduct);				// Return 3 dimensions
-		$productName   = $productData['name'];
-		$productPrice  = $productData['price'];
+		$productName  = (count($productData) != 1) ? $productData['name'] : [];
+		$productPrice = (count($productData) != 1) ? $productData['price'] : [];
 
 		/*
 		$productName[0][0]				// Order 0 - Prod 1
@@ -75,10 +76,10 @@
 		}
 		if(isset($_POST["buy"]) || isset($_POST["buyDirectly"])){
 			if(isset($_POST["buy"]))
-				makePurchase($connection, $_SESSION['iduser'], $cartProductsNumber, $cartTotalPrice);
+				makePurchase($connection, $_SESSION['userID'], $cartProductsNumber, $cartTotalPrice);
 			// else if(isset($_POST["buyDirectly"])){	// Products within cart + current product
 			// 	$money = $cartTotalPrice + ($productPrice * $_POST["amountToAdd"]);
-			// 	makePurchase($connection, $_SESSION['iduser'], $cartProductsNumber + 1, $money);
+			// 	makePurchase($connection, $_SESSION['userID'], $cartProductsNumber + 1, $money);
 			// }
 			clearCart($connection);
 			refreshCart($connection);

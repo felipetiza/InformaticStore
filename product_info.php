@@ -30,13 +30,13 @@
 	    // If user clicked on unlogin button
 		if(isset($_POST["unlogin"])){
 			session_destroy();
-			header('Location: login.php');
+			header('Location: '.MAIN_PAGE);
 		}
 
 		$listProductCategory = getAllProductCategory($connection);
 
 		// User data from logged customer
-		$userData = getUserData($connection, $_SESSION['iduser']);
+		$userData = getUserData($connection, $_SESSION['userID']);
 		$username = $userData['username'];
 
 		// Product data from current product
@@ -56,10 +56,10 @@
 	    		$productInserted = checkProductIsInserted($connection, $_GET["id"]);
 
 				if(!$productInserted)
-					addToCart($connection, $_SESSION["iduser"], $_GET["id"], $_POST["amountToAdd"]);
+					addToCart($connection, $_SESSION["userID"], $_GET["id"], $_POST["amountToAdd"]);
 				else{
 					$productAmount = getAmountProductOfCart($connection, $_GET["id"]);
-					riseAmountProductOfCart($connection, $productAmount, $_POST["amountToAdd"], $_SESSION["iduser"], $_GET["id"]);
+					riseAmountProductOfCart($connection, $productAmount, $_POST["amountToAdd"], $_SESSION["userID"], $_GET["id"]);
 				}
 				refreshCart($connection);
         	}else
@@ -77,10 +77,10 @@
 		}
 		if(isset($_POST["buy"]) || isset($_POST["buyDirectly"])){
 			if(isset($_POST["buy"]))
-				makePurchase($connection, $_SESSION['iduser'], $cartProductsNumber, $cartTotalPrice);
+				makePurchase($connection, $_SESSION['userID'], $cartProductsNumber, $cartTotalPrice);
 			// else if(isset($_POST["buyDirectly"])){	// Products within cart + current product
 			// 	$money = $cartTotalPrice + ($productPrice * $_POST["amountToAdd"]);
-			// 	makePurchase($connection, $_SESSION['iduser'], $cartProductsNumber + 1, $money);
+			// 	makePurchase($connection, $_SESSION['userID'], $cartProductsNumber + 1, $money);
 			// }
 			clearCart($connection);
 			refreshCart($connection);
