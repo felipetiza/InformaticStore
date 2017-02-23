@@ -10,9 +10,8 @@
 	<script>
 		document.addEventListener("load", function(){
 			loadModalWindow(false);
-			// loadModalWindow(true);
 		}, true);
-    </script>
+	</script>
 </head>
 <body>
 

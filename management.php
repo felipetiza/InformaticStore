@@ -545,7 +545,7 @@
 
 	// Check if user is logged and access only allowed pages
 	function checkAccesOption($pageBelongs){
-		if(isset($_SESSION["iduser"])){
+		if(isset($_SESSION["userID"])){
             if($_SESSION["userType"] != $pageBelongs){
             	session_destroy();
 				header('Location: login.php');
@@ -556,7 +556,7 @@
 
 	// Return you to the first page
 	function checkAccesOptionOnLogin(){
-		if(isset($_SESSION["iduser"])){
+		if(isset($_SESSION["userID"])){
             if($_SESSION["userType"] == "Admin")
                 header('Location: admin.php');
             else if($_SESSION["userType"] == "User")

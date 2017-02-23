@@ -3,9 +3,7 @@ body{
 	width: 500px;
 	margin: 70px auto;
 }
-a{
-	text-decoration: underline;
-}
+a{ text-decoration: underline; }
 #logo{
   	width: 350px;
 	margin: auto 80px;
@@ -20,7 +18,8 @@ a{
 	padding: 45px 45px 20px;
 	margin: 0px auto;
 	background-color: white;
-	box-shadow: 0px 5px 10px #B5C1C5, 0 0 0 10px #EEF5F7 inset;
+	box-shadow: 0px 5px 10px #B5C1C5,
+	0 0 0 10px #EEF5F7 inset;
 }
 #wrapper img{
 	position: absolute;
@@ -28,22 +27,52 @@ a{
 	margin: 4px 13px;
 	filter: brightness(150%) saturate(85%);
 }
-div{
+#wrapper div{
 	margin-bottom: 10px;
 }
-input[type='text'],
-input[type='password']{
+#wrapper input[type='text'],
+#wrapper input[type='password']{
 	padding: 7px 22px;
 	margin: 3px 72px;
 }
-input[type='submit']{
+#wrapper input[type='submit']{
     margin: 15px 0px;
     padding: 8px 126px;
     font-weight: bold;
 }
 
-
-
-
-
+.modal-content #down{
+	width: 100%;
+	/*! border: 1px solid red; */
+}
+.modal-content form{
+	margin: 0 auto;
+	width: 325px;
+}
+.modal-content span{
+	width: 100px;
+	display: inline-block;
+}
+.modal-content input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"]{
+	margin-top: 5px;
+}
+.modal-content h1{
+	font-size: 18px;
+	margin-top: 3px;
+}
+.modal-content hr{
+	margin-top: -5px;
+}
+.modal-content input[type='submit']{
+	width: 150px;
+	height: 32px;
+	font-weight: bold;
+	/*! margin: 15px 75px; */
+	margin-left: 75px;
+	margin-top: 25px;
+	margin-bottom: 10px;
+}
 
