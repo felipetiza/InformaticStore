@@ -18,7 +18,7 @@
 	// $user     = 'informatic';
 	// $pass     = 'store';
 
-    $connection = new mysqli($host, $user, $pass, $database);
+    $connection = new mysqli($host, $user, $password, $database);
     $connection->set_charset("utf8");
 
     if ($connection->connect_errno) {
