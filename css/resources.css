@@ -27,19 +27,24 @@ a::-moz-focus-inner {
 hr{ color: #ffffff80; }
 
 /* ----------------------------------------------- */
-/* Cajas de texto
+/* Textbox
 /* ----------------------------------------------- */
 
 input[type='text'],
 input[type='password'],
 input[type='tel'],
 input[type='email']{
+    border: 1px solid #CED5D7;
+    box-shadow: 0 0 0 1px #EEF5F7;
+    border-radius: 6px;
+}
+.modal input[type='text'],
+.modal input[type='password'],
+.modal input[type='tel'],
+.modal input[type='email']{
     padding: 1px 10px;
     width: 180px;
     height: 25px;
-    border: 1px solid #CED5D7;
-    box-shadow:0 0 0 1px #EEF5F7;
-    border-radius: 6px;
 }
 input[type='text']:focus,
 input[type='password']:focus,
@@ -259,6 +264,12 @@ table {
     text-align: left;
     border-collapse: collapse;
     border-radius: 6px;
+    transition: 250ms;
+}
+tr:hover{
+    background: #0000ff15;
+    border-radius: 6px;
+    transition: 250ms;
 }
 tr{
     background: #fff;

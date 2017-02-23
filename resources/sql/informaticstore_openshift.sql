@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS `informaticstore`;
+-- DROP DATABASE IF EXISTS `informaticstore`;
 CREATE DATABASE IF NOT EXISTS `informaticstore`;
 USE `informaticstore`;
 
@@ -8,9 +8,9 @@ USE `informaticstore`;
 -- set storage_engine = PBXT;
 -- set storage_engine = Maria;
 
-CREATE USER IF NOT EXISTS 'informatic'@'localhost' IDENTIFIED BY 'store';
-GRANT ALL PRIVILEGES ON informaticstore.* TO 'informatic'@'localhost';
-FLUSH PRIVILEGES;
+-- CREATE USER IF NOT EXISTS 'informatic'@'localhost' IDENTIFIED BY 'store';
+-- GRANT ALL PRIVILEGES ON informaticstore.* TO 'informatic'@'localhost';
+-- FLUSH PRIVILEGES;
 
 
 -- Tables's creation
@@ -82,13 +82,13 @@ CREATE TABLE contain
 
 
 -- Insertion within of the tables
-INSERT INTO customer VALUES(NULL, 'John', 'Adam', 'john22@gmail.com','Street','6765432', 'Admin', 'admin', '1234');
-INSERT INTO customer VALUES(NULL, 'Alfred', 'Smith', 'alfred@gmail.com','Street','6765432', 'User', 'user', '1234');
-INSERT INTO customer VALUES(NULL, 'Brenda', 'Cranston', 'brenda22@gmail.com','Street','6765432', 'User', 'brenda22', '5678');
-INSERT INTO customer VALUES(NULL, 'Jeremy', 'Griffin', 'jeremy@gmail.com','Street','6765432', 'User', 'jere', 'bird');
-INSERT INTO customer VALUES(NULL, 'Rupert', 'Smith', 'rupert@gmail.com','Street','6765432', 'User', 'rupert14', 'god');
-INSERT INTO customer VALUES(NULL, 'Wilson', 'Morrison', 'wilson@gmail.com','Street','6765432', 'User', 'wilson41', 'myself');
-INSERT INTO customer VALUES(NULL, 'Howard', 'Albertson', 'howard@gmail.com','Street','6765432', 'User', 'howii', 'howii');
+INSERT INTO customer VALUES(NULL, 'John', 'Adam', 'john22@gmail.com','Street','645713299', 'Admin', 'admin', '1234');
+INSERT INTO customer VALUES(NULL, 'Alfred', 'Smith', 'alfred@gmail.com','Street','627395740', 'User', 'user', '1234');
+INSERT INTO customer VALUES(NULL, 'Brenda', 'Cranston', 'brenda22@gmail.com','Street','649368492', 'User', 'brenda22', '5678');
+INSERT INTO customer VALUES(NULL, 'Jeremy', 'Griffin', 'jeremy@gmail.com','Street','684926482', 'User', 'jere', 'bird');
+INSERT INTO customer VALUES(NULL, 'Rupert', 'Smith', 'rupert@gmail.com','Street','676543236', 'User', 'rupert14', 'god');
+INSERT INTO customer VALUES(NULL, 'Wilson', 'Morrison', 'wilson@gmail.com','Street','603825374', 'User', 'wilson41', 'myself');
+INSERT INTO customer VALUES(NULL, 'Howard', 'Albertson', 'howard@gmail.com','Street','605638611', 'User', 'howii', 'howii');
 
 INSERT INTO product VALUES(NULL, 'Logitech Wireless Mouse M280', 'Mouses', 'Logitech® Wireless Mouse M280 is the perfect combination of functionality, aesthetics and comfort: a unique asymmetrical shape that fits the hand, a wide wheel that improves movement and a smooth rubber surface with a nice texture especially to the touch. Logitech´s advanced optical tracking delivers precise, consistent tracking. Thanks to the design to save energy, the mouse batteries can be up to 18 months, and the mouse automatically goes into sleep when not in use. In addition, the wireless wireless receiver virtually disappears into the computer´s USB port and provides a practical and reliable wireless connection.\n\nCharacteristics:\n\n-  Comfortable shape for the right hand\n- Battery life up to 18 months\n- Logitech® Enhanced Advanced Optical Sensor\n- Nano "connect and forget" type receiver', 12.5, 14, 'resources/img/product/mouse1.jpg');
 INSERT INTO product VALUES(NULL, 'NGS Popcorn USB Keyboard', 'Keyboards', 'Practical keyboard with USB connection. Equipped with 20 multimedia keys, Internet and other functions of daily use, they facilitate and accelerate the access to the different applications of the computer and its habitual functions.\n\nCharacteristics:\n\n- Device Interface: USB\n- Recommended Use: Workshop\n- Keyboard language: English\n- Connectivity technology: Wired\n- Use with: Universal\n- Keyboard Format: Standard\n- Keyboard Style: Right\n- Shortcut keys: Yes\n- Windows keys: Yes\n- Rest Dolls: No\n- Keypad: Yes', 17.30, 9, 'resources/img/product/keyboard1.jpg');
@@ -113,8 +113,8 @@ INSERT INTO product VALUES(NULL, 'NGS Ice 2400DPI Gray Mouse', 'Mouses', 'It is 
 INSERT INTO product VALUES(NULL, 'Trust Vigor 2.1 Subwoofer Speaker Set', 'Speakers', 'Introducing the Vigor 2.1 Subwoofer Speaker Set from Trust, a powerful subwoofer 2.1 speaker set to listen to audio from PCs, tablets, phones or other audio devices.\n\nCharacteristics:\n\n- RMS 50 W, maximum power 100 W\n- Rugged design, subwoofer and wood satellites\n- High quality sound with low penetrants\n- Comfortable wired control for easy volume control with headphones and line-in jacks\n- Volume control and subwoofer bass sounds\n- For use with PCs, tablets, TV, DVD, CD, MP3 or other audio devices', 69.95, 10, 'resources/img/product/speakers3.jpg');
 INSERT INTO product VALUES(NULL, 'Corsair Voyager GS 512GB USB 3.0', 'USB Flash Drives', 'Introducing Corsair´s Voyager GS 512GB USB 3.0 flash drive, a high-performance, high-performance USB 3.0 flash drive in an elegant, rugged case. It takes full advantage of the high-speed USB 3.0 interface and offers full USB 2.0 compatibility for older systems. And the zinc alloy body with aluminum accents make it a USB drive from which you´ll want to brag.\n\nCharacteristics:\n\n- Optimized for performance\n-  USB 3.0 speed and compatibility with USB 2.0\n- The top-level performance is combined with a top-level design', 219, 12, 'resources/img/product/pendrive3.jpg');
 
-INSERT INTO provider VALUES(NULL, 'Colonial Avenue', 'Sound equipment');
-INSERT INTO provider VALUES(NULL, 'Industrial area the queens', 'Storage disks');
+-- INSERT INTO provider VALUES(NULL, 'Colonial Avenue', 'Sound equipment');
+-- INSERT INTO provider VALUES(NULL, 'Industrial area the queens', 'Storage disks');
 
 -- INSERT INTO order2 VALUES(NULL, 3, NOW(), 4, 175.65);
 

@@ -2,8 +2,8 @@
 <html>
 <head>
     <title>Login</title>
-    <link rel="stylesheet" href="css/resources.css">
     <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/resources.css">
     <script src="js/management.js"></script>
     <script src="js/author.js"></script>
 </head>
@@ -13,16 +13,8 @@
         include_once "db_connection.php";
         include_once "management.php";
 
-        // If user is logged
         session_start();
-        if(isset($_SESSION["iduser"])){
-            header('Location: menu.php');
-
-            if($_SESSION["userType"] == "Admin")
-                header('Location: admin.php');
-            else if($_SESSION["userType"] == "User")
-                header('Location: menu.php');
-        }
+        checkAccesOptionOnLogin();
 
         // The user try to logging
         if (isset($_POST["user"])) {

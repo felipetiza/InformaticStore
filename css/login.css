@@ -34,15 +34,7 @@ div{
 input[type='text'],
 input[type='password']{
 	padding: 7px 22px;
-	border: 1px solid #CED5D7;
-	box-shadow:0 0 0 3px #EEF5F7;
 	margin: 3px 72px;
-	border-radius: 7px;
-}
-input[type='text']:focus,
-input[type='password']:focus{
-	outline: none;
-	box-shadow:0 0 0 3px #dde9ec;
 }
 input[type='submit']{
     margin: 15px 0px;

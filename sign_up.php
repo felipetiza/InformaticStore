@@ -9,6 +9,9 @@
 
     <?php
         include_once "db_connection.php";
+        include_once "management.php";
+
+        // checkAccesOption("null");
 
         if (isset($_POST["user"])) {
             $name    = $_POST['name'];

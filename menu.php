@@ -3,8 +3,8 @@
 <head>
 	<title>Menu</title>
 	<meta charset="utf-8">
-	<link rel="stylesheet" href="css/resources.css">
 	<link rel="stylesheet" href="css/menu.css">
+	<link rel="stylesheet" href="css/resources.css">
 	<script src="js/management.js"></script>
 	<script src="js/author.js"></script>
 	<script>
@@ -38,10 +38,7 @@
 		include_once "management.php";
 
 	    session_start();
-
-		// If user is not logged
-		if(!isset($_SESSION["iduser"]))
-			header('Location: login.php');
+		checkAccesOption("User");
 
 	    // If user clicked on unlogin button
 		if(isset($_POST["unlogin"])){

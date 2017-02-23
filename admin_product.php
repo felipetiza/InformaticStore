@@ -15,10 +15,7 @@
 		include_once "management.php";
 
 	    session_start();
-
-		// If user is not logged
-		if(!isset($_SESSION["iduser"]))
-			header('Location: login.php');
+	    checkAccesOption("Admin");
 
 	    // If user clicked on unlogin button
 		if(isset($_POST["unlogin"])){

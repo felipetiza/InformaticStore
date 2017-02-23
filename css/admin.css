@@ -26,7 +26,7 @@ body{
 	width: 33%;
 }
 #basic #user p{
-  margin-top: 18px;
+  	margin-top: 18px;
 }
 #basic #title h1{
 	font-size: 18px;
@@ -99,7 +99,7 @@ hr{ color: #ffffff80; }
 	height: 100px;
 }
 #content #img a:hover{
-  background: #0000ff25;
+  	background: #0000ff25;
 	border-radius: 6px 6px 0px 0px;
 	transition: 250ms;
 }
