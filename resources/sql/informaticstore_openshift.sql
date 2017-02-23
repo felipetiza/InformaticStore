@@ -113,8 +113,8 @@ INSERT INTO product VALUES(NULL, 'NGS Ice 2400DPI Gray Mouse', 'Mouses', 'It is 
 INSERT INTO product VALUES(NULL, 'Trust Vigor 2.1 Subwoofer Speaker Set', 'Speakers', 'Introducing the Vigor 2.1 Subwoofer Speaker Set from Trust, a powerful subwoofer 2.1 speaker set to listen to audio from PCs, tablets, phones or other audio devices.\n\nCharacteristics:\n\n- RMS 50 W, maximum power 100 W\n- Rugged design, subwoofer and wood satellites\n- High quality sound with low penetrants\n- Comfortable wired control for easy volume control with headphones and line-in jacks\n- Volume control and subwoofer bass sounds\n- For use with PCs, tablets, TV, DVD, CD, MP3 or other audio devices', 69.95, 10, 'resources/img/product/speakers3.jpg');
 INSERT INTO product VALUES(NULL, 'Corsair Voyager GS 512GB USB 3.0', 'USB Flash Drives', 'Introducing Corsair´s Voyager GS 512GB USB 3.0 flash drive, a high-performance, high-performance USB 3.0 flash drive in an elegant, rugged case. It takes full advantage of the high-speed USB 3.0 interface and offers full USB 2.0 compatibility for older systems. And the zinc alloy body with aluminum accents make it a USB drive from which you´ll want to brag.\n\nCharacteristics:\n\n- Optimized for performance\n-  USB 3.0 speed and compatibility with USB 2.0\n- The top-level performance is combined with a top-level design', 219, 12, 'resources/img/product/pendrive3.jpg');
 
--- INSERT INTO provider VALUES(NULL, 'Colonial Avenue', 'Sound equipment');
--- INSERT INTO provider VALUES(NULL, 'Industrial area the queens', 'Storage disks');
+INSERT INTO provider VALUES(NULL, 'Colonial Avenue', 'Sound equipment');
+INSERT INTO provider VALUES(NULL, 'Industrial area the queens', 'Storage disks');
 
 -- INSERT INTO order2 VALUES(NULL, 3, NOW(), 4, 175.65);
 
