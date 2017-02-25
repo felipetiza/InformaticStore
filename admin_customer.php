@@ -77,11 +77,23 @@
 
 			refreshUsers($connection);
 		}
-		if(isset($_POST["buttonAdd"])){
+		if(isset($_POST["buttonAdd1"])){
 			loadModalWindow("modalWindowAdd");
+		}
+		if(isset($_POST["buttonAdd"])){
+			$userData = [];
+			$userData['id']      = 'NULL';
+			$userData['name']    = $_POST['addName'];
+			$userData['surname'] = $_POST['addSurname'];
+			$userData['email']   = $_POST['addEmail'];
+			$userData['address'] = $_POST['addAddress'];
+			$userData['phone']   = $_POST['addPhone'];
+			$userData['type']    = $_POST['addType'];
+			$userData['user']    = $_POST['addUser'];
+			$userData['pass']    = $_POST['addPass'];
+			insertUser($connection, $userData);
 
-
-
+			refreshUsers($connection);
 		}
 	?>
 
@@ -133,7 +145,7 @@
 		<div id="content">
 			<div id="up">
 				<form method='post'>
-					<input type='submit' name='buttonAdd' class="flatButton" value='&#10133; Add User'>
+					<input type='submit' name='buttonAdd1' class="flatButton" value='&#10133; Add User'>
 				</form>
 				<label><?php echo count($userID); ?> Customer(s)</label>
 			</div>
@@ -238,7 +250,48 @@
 		<div id="modalWindowAdd" class="modal">
 			<div class="modal-content">
 				<label class="close">&times;</label>
-				<h1>Add User</h1>
+		        <h1>Add User</h1>
+		        <hr>
+		        <br>
+		        <div id="down">
+					<form method="post">
+						<div>
+			            	<span>Name</span>
+			            	<input type="text" name="addName" maxlength="25" required>
+			        	</div>
+			        	<div>
+			            	<span>Surname</span>
+			            	<input type="text" name="addSurname" maxlength="50" required>
+			        	</div>
+			        	<div>
+			            	<span>Email</span>
+			            	<input type="email" name="addEmail" maxlength="45" required>
+			        	</div>
+			        	<div>
+			            	<span>Address</span>
+			            	<input type="text" name="addAddress" maxlength="100" required>
+			        	</div>
+			        	<div>
+			            	<span>Phone</span>
+			            	<input type="tel" name="addPhone" pattern="[0-9]{9}" required>
+			        	</div>
+			        	<div>
+			            	<span>Type</span>
+			            	<input type="tel" name="addType" required>
+			        	</div>
+			        	<div>
+			            	<span>Username</span>
+			            	<input type="text" name="addUser" maxlength="40" required>
+			        	</div>
+			        	<div>
+			            	<span>Password</span>
+			            	<input type="text" name="addPass" maxlength="20" required>
+			        	</div>
+			            <div>
+			                <input type="submit" name="buttonAdd" class="standardButton" value="Add">
+			            </div>
+					</form>
+		        </div>
 			</div>
 		</div>
 
