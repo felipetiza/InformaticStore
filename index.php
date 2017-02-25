@@ -8,8 +8,10 @@
     <script src="js/author.js"></script>
     <script>
         document.addEventListener("load", function(){
-            loadModalWindow(false);
-            // loadModalWindow(true);
+            // Open sign_up screen
+            document.getElementById("openModalWindow").onclick = function() {
+                loadModalWindow('modalWindowSignUp');
+            };
         }, true);
     </script>
 </head>
@@ -73,7 +75,6 @@
                 echo "Wrong Query";
         }
 
-        // showEditScreen();
     ?>
 
     <img id="logo" src="resources/img/logo.png">
@@ -89,13 +90,13 @@
             </div>
             <div>
                 <input type="submit" name="buttonLogIn" class="standardButton"  value="Log In">
+            <div>Don't have an account? <a id="openModalWindow">Sign Up</a></div>
             </div>
-            <div class='myBtn'>Don't have an account? <a class='myBtn'>Sign Up</a></div>
         </form>
     </div>
 
     <!-- Modal Window -->
-    <div id="myModal" class="modal">
+    <div id="modalWindowSignUp" class="modal">
         <div class="modal-content">
             <label class="close">&times;</label>
             <h1>Sign Up</h1>

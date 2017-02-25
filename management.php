@@ -568,12 +568,14 @@
 		}
 	}
 
-	function showCart(){
-		echo "<script>document.addEventListener('load', function(){ loadModalWindow(true); }, true);</script>";
-	}
-
-	function showEditScreen(){
-		echo "<script>document.addEventListener('load', function(){ loadModalWindow(true); }, true);</script>";
+	function loadModalWindow($modalWindow){
+		echo "
+		      <script>
+				  document.addEventListener('load', function(){
+				  	  loadModalWindow('$modalWindow');
+				  }, true);
+			  </script>
+			 ";
 	}
 
 	function showToast($message){

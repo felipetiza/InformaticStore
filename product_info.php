@@ -9,9 +9,14 @@
 	<script src="js/author.js"></script>
 	<script>
 		document.addEventListener("load", function(){
-			loadModalWindow(false);
-			// loadModalWindow(true);
-		}, true);
+            // Open shopping cart screen
+            document.getElementById("openModalWindow1").onclick = function() {
+                loadModalWindow('modalWindowCart');
+            };
+            document.getElementById("openModalWindow2").onclick = function() {
+                loadModalWindow('modalWindowCart');
+            };
+        }, true);
     </script>
 </head>
 <body>
@@ -107,7 +112,7 @@
 	        </div>
 			<div id="title"><h1>Product Info</h1></div>
 			<div id="cart">
-				<label><?php echo $cartProductsNumber; ?></label><img class="myBtn" src="resources/img/cart.png">
+				<label><?php echo $cartProductsNumber; ?></label><img id="openModalWindow1" src="resources/img/cart.png">
 			</div>
 		</div>
         <hr>
@@ -126,7 +131,7 @@
 	        	<div id="btnUser" class="dropdown">
 			        <button class="dropbtnUser"><?php echo $username; ?></button>
 			        <div class="dropdown-content-user">
-			        	<a class="myBtn">Shopping Cart</a>
+			        	<a id="openModalWindow2">Shopping Cart</a>
 			        	<a href="order.php">Orders</a>
 						<form method="post"><input type="submit" name="unlogin" value="Logout"></form>
 			        </div>
@@ -182,7 +187,7 @@
 		</div>
 
 		<!-- Modal Window -->
-		<div id="myModal" class="modal">
+		<div id="modalWindowCart" class="modal">
 			<div class="modal-content">
 				<p id="cartEmpty">The cart is empty</p>
 				<div id="inner">

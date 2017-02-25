@@ -9,8 +9,14 @@
 	<script src="js/author.js"></script>
 	<script>
 		document.addEventListener("load", function(){
-			loadModalWindow(false);
-		}, true);
+            // Open shopping cart screen
+            document.getElementById("openModalWindowEdit").onclick = function() {
+                loadModalWindow('modalWindowEdit');
+            };
+            document.getElementById("openModalWindowAdd").onclick = function() {
+                loadModalWindow('modalWindowAdd');
+            };
+        }, true);
 	</script>
 </head>
 <body>
@@ -41,7 +47,7 @@
 			refreshUsers($connection);
 		}
 		if(isset($_POST["tableEdit"])){
-			showEditScreen();
+			loadModalWindow("modalWindowEdit");
 
 			$userData = getUserData($connection, $_POST["userID"]);
 			$userSelectedID      = $userData['id'];
@@ -71,7 +77,12 @@
 
 			refreshUsers($connection);
 		}
-		// showEditScreen();
+		if(isset($_POST["buttonAdd"])){
+			loadModalWindow("modalWindowAdd");
+
+
+
+		}
 	?>
 
 	<div id="wrapper">
@@ -109,7 +120,7 @@
 	        	<div id="btnUser" class="dropdown">
 			        <button class="dropbtnUser"><?php echo $username; ?></button>
 			        <div class="dropdown-content-user">
-			        	<a class="myBtn">Shopping Cart</a>
+			        	<a>Shopping Cart</a>
 			        	<a href="order.php">Orders</a>
 						<form method="post"><input type="submit" name="unlogin" value="Logout"></form>
 			        </div>
@@ -120,6 +131,13 @@
         <!-- Level 3 -->
         <br>
 		<div id="content">
+			<div id="up">
+				<form method='post'>
+					<input type='submit' name='buttonAdd' class="flatButton" value='&#10133; Add User'>
+				</form>
+				<label><?php echo count($userID); ?> Customer(s)</label>
+			</div>
+			<br/>
 			<table>
 				<tr>
 			  		<th>ID</th>
@@ -148,13 +166,13 @@
 		    			echo "<td>".$userPassword[$i]."</td>";
 		    			echo "<td>
 			    				  <form method='post'>
-			    					  <input type='submit' name='tableEdit' class='myBtn' value='✎'>
+			    					  <input type='submit' name='tableEdit' value='✎'>
 			    					  <input type='text' name='userID' value='$userID[$i]'>
 			    				  </form>
 		    				  </td>";
 		    			echo "<td>
 			    			  	  <form method='post'>
-			    					  <input type='submit' name='tableDelete' class='myBtn' value='&times;'>
+			    					  <input type='submit' name='tableDelete' value='&times;'>
 			    					  <input type='text' name='userID' value='$userID[$i]'>
 			    				  </form>
 		    				  </td>";
@@ -165,7 +183,7 @@
 		</div>
 
 		<!-- Modal Window -->
-		<div id="myModal" class="modal">
+		<div id="modalWindowEdit" class="modal">
 			<div class="modal-content">
 				<label class="close">&times;</label>
 		        <h1>Edit User</h1>
@@ -215,6 +233,13 @@
 					</form>
 		        </div>
 		  	</div>
+		</div>
+
+		<div id="modalWindowAdd" class="modal">
+			<div class="modal-content">
+				<label class="close">&times;</label>
+				<h1>Add User</h1>
+			</div>
 		</div>
 
 	</div>

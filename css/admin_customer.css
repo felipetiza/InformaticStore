@@ -74,12 +74,25 @@ body{
 	flex-flow: column wrap;
 	padding: 20px 0 30px 0px;
 }
-table {
+#content table {
     width: 520px;
     text-align: left;
     border-collapse: collapse;
     border-radius: 6px;
     margin: 0 auto;
+}
+#content #up{
+  /*! border: 1px solid red; */
+	width: 100%;
+	margin-top: -10px;
+  	padding-bottom: 15px;
+}
+#content #up form{
+  	float: left;
+}
+#content #up label{
+  	float: right;
+	margin-top: 8px;
 }
 .modal {
     display: none;
