@@ -51,7 +51,7 @@
 		$productID    = $productsData['id'];
 		$productName  = $productsData['name'];
 		$productPrice = $productsData['price'];
-		$productImage = $productsData['urlimage'];
+		$productImage = $productsData['urlImage'];
 
 		// Actions of shopping cart
 		refreshCart($connection);

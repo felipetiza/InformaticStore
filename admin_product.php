@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Admin</title>
+	<title>Product</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="css/admin_product.css">
 	<link rel="stylesheet" href="css/resources.css">
@@ -28,6 +28,8 @@
 		// User data from logged customer
 		$userData = getUserData($connection, $_SESSION['userID']);
 		$username = $userData['username'];
+
+		refreshProducts($connection);
 	?>
 
 	<div id="wrapper">
@@ -76,10 +78,61 @@
         <!-- Level 3 -->
         <br>
 		<div id="content">
-
-
-
+			<div id="up">
+				<form method='post'>
+					<input type='submit' name='buttonAdd1' class="flatButton" value='&#10133; Add Product'>
+				</form>
+				<label><?php echo count($productID); ?> Product(s)</label>
+			</div>
+			<br/>
+			<table>
+				<tr>
+			  		<th>ID</th>
+			  		<th>Name</th>
+			  		<th>Category</th>
+			  		<th>Description</th>
+			  		<th>Price</th>
+			  		<th>Amount</th>
+			  		<th>urlImage</th>
+			  		<th></th>
+			  		<th></th>
+				</tr>
+				<?php
+					for($i=0;$i<count($productID);$i++){
+		    			echo "<tr>";
+		    			echo "<td>$productID[$i]</td>";
+		    			echo "<td>";
+		    					shortenStrings($productName[$i], 25);
+		    			echo "</td>";
+		    			echo "<td>$productCategory[$i]</td>";
+		    			echo "<td>";
+		    					shortenStrings($productDescript[$i], 20);
+		    			echo "</td>";
+		    			echo "<td>$productPrice[$i]</td>";
+		    			echo "<td>$productAmount[$i]</td>";
+		    			echo "<td>";
+								shortenStrings($productImg[$i], 20);
+		    			echo "</td>";
+		    			echo "<td>
+			    				  <form method='post'>
+			    					  <input type='submit' name='tableEdit' value='✎'>
+			    					  <input type='text' name='userID' value='$productID[$i]'>
+			    				  </form>
+		    				  </td>";
+		    			echo "<td>
+			    			  	  <form method='post'>
+			    					  <input type='submit' name='tableDelete' value='&times;'>
+			    					  <input type='text' name='userID' value='$productID[$i]'>
+			    				  </form>
+		    				  </td>";
+		    			echo "</tr>";
+		    		}
+			    ?>
+			</table>
 		</div>
+
+
+
 	</div>
 </body>
 </html>

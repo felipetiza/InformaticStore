@@ -1,23 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Admin</title>
+	<title>Customer</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="css/admin_customer.css">
 	<link rel="stylesheet" href="css/resources.css">
 	<script src="js/management.js"></script>
 	<script src="js/author.js"></script>
-	<script>
-		document.addEventListener("load", function(){
-            // Open shopping cart screen
-            document.getElementById("openModalWindowEdit").onclick = function() {
-                loadModalWindow('modalWindowEdit');
-            };
-            document.getElementById("openModalWindowAdd").onclick = function() {
-                loadModalWindow('modalWindowAdd');
-            };
-        }, true);
-	</script>
 </head>
 <body>
 

@@ -23,6 +23,15 @@
 	$userUsername = [];
 	$userPassword = [];
 
+	// Product variables
+	$productID       = [];
+	$productName     = [];
+	$productCategory = [];
+	$productDescript = [];
+	$productPrice    = [];
+	$productAmount   = [];
+	$productImg      = [];
+
 
 
 // ██╗   ██╗███████╗███████╗██████╗
@@ -192,7 +201,7 @@
 						$productData['description'][$i][$j] = $product->description;
 						$productData['price'][$i][$j]       = $product->price;
 						$productData['amount'][$i][$j]      = $product->amount;
-						$productData['urlimage'][$i][$j]    = $product->urlimage;
+						$productData['urlImage'][$i][$j]    = $product->urlimage;
 		            }else
 		                echo "Impossible to get the products";
 		        }else
@@ -210,10 +219,13 @@
         if ($result = $connection->query($getProducts)) {
             if ($result->num_rows > 0){
             	while($product = $result->fetch_object()){
-					$productData['id'][$i]       = $product->idproduct;
-					$productData['name'][$i]     = $product->name;
-					$productData['price'][$i]    = $product->price;
-					$productData['urlimage'][$i] = $product->urlimage;
+					$productData['id'][$i]          = $product->idproduct;
+					$productData['name'][$i]        = $product->name;
+					$productData['category'][$i]    = $product->category;
+					$productData['description'][$i] = $product->description;
+					$productData['price'][$i]       = $product->price;
+					$productData['amount'][$i]      = $product->amount;
+					$productData['urlImage'][$i]    = $product->urlimage;
 					$i++;
             	}
             }else
@@ -222,6 +234,25 @@
             echo "Wrong Query";
 
         return $productData;
+	}
+
+	function refreshProducts($connection){
+		global $productID;
+		global $productName;
+		global $productCategory;
+		global $productDescript;
+		global $productPrice;
+		global $productAmount;
+		global $productImg;
+
+		$productsData    = getAllProduct($connection);
+		$productID       = $productsData['id'];
+		$productName     = $productsData['name'];
+		$productCategory = $productsData['category'];
+		$productDescript = $productsData['description'];
+		$productPrice    = $productsData['price'];
+		$productAmount   = $productsData['amount'];
+		$productImg      = $productsData['urlImage'];
 	}
 
 	function getProductCategory($connection, $categ){
@@ -601,5 +632,12 @@
 			echo "}, true);";
 			echo "</script>";
 		}
+	}
+
+	function shortenStrings($string, $maxNumberCharacter){
+		if(strlen($string) >= $maxNumberCharacter)
+			echo substr($string, 0, $maxNumberCharacter)."...";
+		else
+			echo $string;
 	}
 ?>
