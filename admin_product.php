@@ -30,6 +30,11 @@
 		$username = $userData['username'];
 
 		refreshProducts($connection);
+
+		if(isset($_POST["buttonDelete"])){
+			deleteProduct($connection, $_POST["productID"]);
+			refreshProducts($connection);
+		}
 	?>
 
 	<div id="wrapper">
@@ -50,7 +55,7 @@
 	        </div>
 			<div id="title"><h1>Product</h1></div>
 			<div id="cart">
-				<label><?php echo $cartProductsNumber; ?></label><img class="myBtn" src="resources/img/cart.png">
+				<label><?php echo $cartProductsNumber; ?></label><img src="resources/img/cart.png">
 			</div>
 		</div>
         <hr>
@@ -67,7 +72,7 @@
 	        	<div id="btnUser" class="dropdown">
 			        <button class="dropbtnUser"><?php echo $username; ?></button>
 			        <div class="dropdown-content-user">
-			        	<a class="myBtn">Shopping Cart</a>
+			        	<a>Shopping Cart</a>
 			        	<a href="order.php">Orders</a>
 						<form method="post"><input type="submit" name="unlogin" value="Logout"></form>
 			        </div>
@@ -80,7 +85,7 @@
 		<div id="content">
 			<div id="up">
 				<form method='post'>
-					<input type='submit' name='buttonAdd1' class="flatButton" value='&#10133; Add Product'>
+					<input type='submit' name='openModalAdd' class="flatButton" value='&#10133; Add Product'>
 				</form>
 				<label><?php echo count($productID); ?> Product(s)</label>
 			</div>
@@ -102,7 +107,7 @@
 		    			echo "<tr>";
 		    			echo "<td>$productID[$i]</td>";
 		    			echo "<td>";
-		    					shortenStrings($productName[$i], 25);
+		    					shortenStrings($productName[$i], 42);
 		    			echo "</td>";
 		    			echo "<td>$productCategory[$i]</td>";
 		    			echo "<td>";
@@ -111,18 +116,18 @@
 		    			echo "<td>$productPrice[$i]</td>";
 		    			echo "<td>$productAmount[$i]</td>";
 		    			echo "<td>";
-								shortenStrings($productImg[$i], 20);
+								shortenStrings($productImg[$i], 15);
 		    			echo "</td>";
 		    			echo "<td>
 			    				  <form method='post'>
-			    					  <input type='submit' name='tableEdit' value='✎'>
-			    					  <input type='text' name='userID' value='$productID[$i]'>
+			    					  <input type='submit' name='openModalEdit' value='✎'>
+			    					  <input type='text' name='productID' value='$productID[$i]'>
 			    				  </form>
 		    				  </td>";
 		    			echo "<td>
 			    			  	  <form method='post'>
-			    					  <input type='submit' name='tableDelete' value='&times;'>
-			    					  <input type='text' name='userID' value='$productID[$i]'>
+			    					  <input type='submit' name='buttonDelete' value='&times;'>
+			    					  <input type='text' name='productID' value='$productID[$i]'>
 			    				  </form>
 		    				  </td>";
 		    			echo "</tr>";

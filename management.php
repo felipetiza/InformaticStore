@@ -173,7 +173,7 @@
 				$productData['description'] = $product->description;
 				$productData['price']       = $product->price;
 				$productData['amount']      = $product->amount;
-				$productData['urlimage']    = $product->urlimage;
+				$productData['urlImage']    = $product->urlimage;
 
 				return $productData;
 	        }else
@@ -287,6 +287,16 @@
             	return $productCategory;
             }else
                 echo "Impossible to get the products category";
+        }else
+            echo "Wrong Query";
+	}
+
+	function deleteProduct($connection, $productID){
+        $deleteProduct = "DELETE FROM product WHERE idproduct = $productID;";
+
+	    if ($result = $connection->query($deleteProduct)) {
+            if (!$result)
+                echo "Impossible to delete the product";
         }else
             echo "Wrong Query";
 	}

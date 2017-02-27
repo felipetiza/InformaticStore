@@ -77,7 +77,7 @@ hr{ color: #ffffff80; }
 	width: 100%;
 }
 #content table {
-    width: 100%;
+    /* width: 100%; */
     text-align: left;
     border-collapse: collapse;
     border-radius: 6px;

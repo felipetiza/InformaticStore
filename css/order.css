@@ -140,5 +140,7 @@ hr{ color: #ffffff80; }
     margin: 0 auto;
     outline: none;
 }
-
+table{
+	width: 520px;
+}
 

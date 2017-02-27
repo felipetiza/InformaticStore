@@ -31,11 +31,11 @@
 
 		refreshUsers($connection);
 
-		if(isset($_POST["tableDelete"])){
+		if(isset($_POST["buttonDelete"])){
 			deleteUser($connection, $_POST["userID"]);
 			refreshUsers($connection);
 		}
-		if(isset($_POST["tableEdit"])){
+		if(isset($_POST["openModalEdit"])){
 			loadModalWindow("modalWindowEdit");
 
 			$userData = getUserData($connection, $_POST["userID"]);
@@ -66,7 +66,7 @@
 
 			refreshUsers($connection);
 		}
-		if(isset($_POST["buttonAdd1"])){
+		if(isset($_POST["openModalAdd"])){
 			loadModalWindow("modalWindowAdd");
 		}
 		if(isset($_POST["buttonAdd"])){
@@ -134,7 +134,7 @@
 		<div id="content">
 			<div id="up">
 				<form method='post'>
-					<input type='submit' name='buttonAdd1' class="flatButton" value='&#10133; Add User'>
+					<input type='submit' name='openModalAdd' class="flatButton" value='&#10133; Add User'>
 				</form>
 				<label><?php echo count($userID); ?> Customer(s)</label>
 			</div>
@@ -167,13 +167,13 @@
 		    			echo "<td>".$userPassword[$i]."</td>";
 		    			echo "<td>
 			    				  <form method='post'>
-			    					  <input type='submit' name='tableEdit' value='✎'>
+			    					  <input type='submit' name='openModalEdit' value='✎'>
 			    					  <input type='text' name='userID' value='$userID[$i]'>
 			    				  </form>
 		    				  </td>";
 		    			echo "<td>
 			    			  	  <form method='post'>
-			    					  <input type='submit' name='tableDelete' value='&times;'>
+			    					  <input type='submit' name='buttonDelete' value='&times;'>
 			    					  <input type='text' name='userID' value='$userID[$i]'>
 			    				  </form>
 		    				  </td>";

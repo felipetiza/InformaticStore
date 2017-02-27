@@ -260,7 +260,6 @@ input[type='email']:focus{
     transition: 150ms;
 }
 table {
-    width: 520px;
     text-align: left;
     border-collapse: collapse;
     border-radius: 6px;

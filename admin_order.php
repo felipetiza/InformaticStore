@@ -48,7 +48,7 @@
 	        </div>
 			<div id="title"><h1>Order</h1></div>
 			<div id="cart">
-				<label><?php echo $cartProductsNumber; ?></label><img class="myBtn" src="resources/img/cart.png">
+				<label><?php echo $cartProductsNumber; ?></label><img src="resources/img/cart.png">
 			</div>
 		</div>
         <hr>
@@ -65,7 +65,7 @@
 	        	<div id="btnUser" class="dropdown">
 			        <button class="dropbtnUser"><?php echo $username; ?></button>
 			        <div class="dropdown-content-user">
-			        	<a class="myBtn">Shopping Cart</a>
+			        	<a>Shopping Cart</a>
 			        	<a href="order.php">Orders</a>
 						<form method="post"><input type="submit" name="unlogin" value="Logout"></form>
 			        </div>
