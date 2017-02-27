@@ -62,6 +62,51 @@
 
 			refreshProducts($connection);
 		}
+		if(isset($_POST["openModalAdd"])){
+			loadModalWindow("modalWindowAdd");
+		}
+		if(isset($_POST["buttonAdd"])){
+
+	        $valid = true;
+	        $tmp_file = $_FILES['addImg']['tmp_name'];
+	        $target_dir = "resources/img/product/";
+	        $target_file = strtolower($target_dir . basename($_FILES['addImg']['name']));
+
+	        if (file_exists($target_file)) {
+	            echo "Sorry, file already exists.";
+	            $valid = false;
+	        }
+
+	        if($_FILES['addImg']['size'] > (2048000)) {
+	            $valid = false;
+		        echo 'Oops!  Your file\'s size is to large.';
+	        }
+
+	        $file_extension = pathinfo($target_file, PATHINFO_EXTENSION);
+	        if ($file_extension != "jpg" &&
+	            $file_extension != "jpeg" &&
+	            $file_extension != "png" &&
+	            $file_extension != "gif") {
+	            $valid = false;
+	            echo "Only JPG, JPEG, PNG & GIF files are allowed";
+	        }
+
+	        if ($valid) {
+	            move_uploaded_file($tmp_file, $target_file);
+
+				$productData = [];
+				$productData['id']          = 'NULL';
+				$productData['name']        = $_POST['addName'];
+				$productData['category']    = $_POST['addCategory'];
+				$productData['description'] = $_POST['addDescript'];
+				$productData['price']       = $_POST['addPrice'];
+				$productData['amount']      = $_POST['addAmount'];
+				$productData['urlImage']    = $target_file;
+				insertProduct($connection, $productData);
+
+				refreshProducts($connection);
+			}
+		}
 	?>
 
 	<div id="wrapper">
@@ -206,6 +251,46 @@
 					</form>
 		        </div>
 		  	</div>
+		</div>
+
+		<div id="modalWindowAdd" class="modal">
+			<div class="modal-content">
+				<label class="close">&times;</label>
+		        <h1>Add Product</h1>
+		        <hr>
+		        <br>
+		        <div id="down">
+					<form method="post" enctype="multipart/form-data">
+						<div>
+			            	<span>Name</span>
+			            	<input type="text" name="addName" maxlength="80" required>
+			        	</div>
+			        	<div>
+			            	<span>Category</span>
+			            	<input type="text" name="addCategory" maxlength="50" required>
+			        	</div>
+			        	<div>
+			            	<span>Description</span>
+			            	<input type="text" name="addDescript" maxlength="2000" required>
+			        	</div>
+			        	<div>
+			            	<span>Price</span>
+			            	<input type="text" name="addPrice" maxlength="10" required>
+			        	</div>
+			        	<div>
+			            	<span>Amount</span>
+			            	<input type="text" name="addAmount" required>
+			        	</div>
+			        	<div>
+			            	<span id="textImage">Image</span>
+			            	<input type="file" name="addImg" class="flatButton">
+			        	</div>
+			            <div>
+			                <input type="submit" name="buttonAdd" class="standardButton" value="Add">
+			            </div>
+					</form>
+		        </div>
+			</div>
 		</div>
 
 	</div>

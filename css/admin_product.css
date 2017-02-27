@@ -124,7 +124,7 @@ hr{ color: #ffffff80; }
 }
 .modal-content form{
 	margin: 0 auto;
-	width: 325px;
+	width: 375px;
 }
 .modal-content span{
 	width: 100px;
@@ -132,7 +132,8 @@ hr{ color: #ffffff80; }
 }
 .modal-content input[type="text"],
 input[type="email"],
-input[type="tel"]{
+input[type="tel"],
+input[type="file"]{
 	margin-top: 5px;
 }
 .modal-content h1{
@@ -151,3 +152,7 @@ input[type="tel"]{
 	margin-top: 25px;
 	margin-bottom: 10px;
 }
+.modal input[type='file']{
+	padding: 5px 12px !important;
+}
+
