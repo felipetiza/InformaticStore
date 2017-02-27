@@ -59,7 +59,7 @@
 				$userData['phone']    = $customer->phone;
 				$userData['type']     = $customer->type;
 				$userData['username'] = $customer->username;
-				$userData['pass'] = $customer->password;
+				$userData['pass']     = $customer->password;
 
 	        	return $userData;
 	        }else
@@ -168,6 +168,7 @@
 	        if ($result->num_rows > 0){
 	        	$product = $result->fetch_object();
 
+				$productData['id']          = $product->idproduct;
 				$productData['name']        = $product->name;
 				$productData['category']    = $product->category;
 				$productData['description'] = $product->description;
@@ -300,6 +301,27 @@
         }else
             echo "Wrong Query";
 	}
+
+	function insertProduct($connection, $productData){
+		$id       = $productData['id'];
+		$name     = $productData['name'];
+		$category = $productData['category'];
+		$descript = $productData['description'];
+		$price    = $productData['price'];
+		$amount   = $productData['amount'];
+		$urlImage = $productData['urlImage'];
+
+        $insertUser = "INSERT INTO product
+                       VALUES($id, '$name', '$category', '$descript', '$price', '$amount', '$urlImage');
+                      ";
+
+	    if ($result = $connection->query($insertUser)) {
+            if (!$result)
+                echo "Impossible to insert the product";
+        }else
+            echo "Wrong Query";
+	}
+
 
 
 // ███████╗██╗  ██╗ ██████╗ ██████╗ ██████╗ ██╗███╗   ██╗ ██████╗      ██████╗ █████╗ ██████╗ ████████╗

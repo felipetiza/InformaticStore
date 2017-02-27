@@ -35,6 +35,33 @@
 			deleteProduct($connection, $_POST["productID"]);
 			refreshProducts($connection);
 		}
+		if(isset($_POST["openModalEdit"])){
+			loadModalWindow("modalWindowEdit");
+
+			$productData = getProductData($connection, $_POST["productID"]);
+			$productSelectedID    = $productData['id'];
+			$prodSelectedName     = $productData['name'];
+			$prodSelectedCategory = $productData['category'];
+			$prodSelectedDescript = $productData['description'];
+			$prodSelectedPrice    = $productData['price'];
+			$prodSelectedAmount   = $productData['amount'];
+			$prodSelectedImg      = $productData['urlImage'];
+		}
+		if(isset($_POST["buttonEdit"])){
+			deleteProduct($connection, $_POST["editID"]);
+
+			$productData = [];
+			$productData['id']          = $_POST['editID'];
+			$productData['name']        = $_POST['editName'];
+			$productData['category']    = $_POST['editCategory'];
+			$productData['description'] = $_POST['editDescript'];
+			$productData['price']       = $_POST['editPrice'];
+			$productData['amount']      = $_POST['editAmount'];
+			$productData['urlImage']    = $_POST['editImg'];
+			insertProduct($connection, $productData);
+
+			refreshProducts($connection);
+		}
 	?>
 
 	<div id="wrapper">
@@ -136,7 +163,50 @@
 			</table>
 		</div>
 
-
+		<!-- Modal Window -->
+		<div id="modalWindowEdit" class="modal">
+			<div class="modal-content">
+				<label class="close">&times;</label>
+		        <h1>Edit User</h1>
+		        <hr>
+		        <br>
+		        <div id="down">
+					<form method="post">
+						<div>
+			            	<span>ID</span>
+			            	<input type="text" name="editID" value="<?php echo $productSelectedID; ?>" required>
+			        	</div>
+						<div>
+			            	<span>Name</span>
+			            	<input type="text" name="editName" maxlength="80" value="<?php echo $prodSelectedName; ?>" required>
+			        	</div>
+			        	<div>
+			            	<span>Category</span>
+			            	<input type="text" name="editCategory" maxlength="50" value="<?php echo $prodSelectedCategory; ?>" required>
+			        	</div>
+			        	<div>
+			            	<span>Description</span>
+			            	<input type="text" name="editDescript" maxlength="2000" value="<?php echo $prodSelectedDescript; ?>" required>
+			        	</div>
+			        	<div>
+			            	<span>Price</span>
+			            	<input type="text" name="editPrice" maxlength="10" value="<?php echo $prodSelectedPrice; ?>" required>
+			        	</div>
+			        	<div>
+			            	<span>Amount</span>
+			            	<input type="text" name="editAmount" value="<?php echo $prodSelectedAmount; ?>" required>
+			        	</div>
+			        	<div>
+			            	<span>urlImage</span>
+			            	<input type="text" name="editImg" maxlength="200" value="<?php echo $prodSelectedImg; ?>" required>
+			        	</div>
+			            <div>
+			                <input type="submit" name="buttonEdit" class="standardButton" value="Edit">
+			            </div>
+					</form>
+		        </div>
+		  	</div>
+		</div>
 
 	</div>
 </body>
