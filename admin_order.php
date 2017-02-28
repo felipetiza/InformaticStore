@@ -35,6 +35,29 @@
 			deleteOrder($connection, $_POST["orderID"]);
 			refreshOrders($connection);
 		}
+		if(isset($_POST["openModalEdit"])){
+			loadModalWindow("modalWindowEdit");
+
+			$orderData = getOrderData2($connection, $_POST["orderID"]);
+			$orderSelectedOrderID    = $orderData['orderID'];
+			$orderSelectedCustomerID = $orderData['customerID'];
+			$orderSelectedDate       = $orderData['date'];
+			$orderSelectedAmountProd = $orderData['amountProducts'];
+			$orderSelectedPrice      = $orderData['price'];
+		}
+		if(isset($_POST["buttonEdit"])){
+			deleteOrder($connection, $_POST["editOrderID"]);
+
+			$orderData = [];
+			$orderData['orderID']        = $_POST['editOrderID'];
+			$orderData['customerID']     = $_POST['editCustomerID'];
+			$orderData['date']           = $_POST['editDate'];
+			$orderData['amountProducts'] = $_POST['editAmountProd'];
+			$orderData['price']          = $_POST['editPrice'];
+			insertOrder($connection, $orderData);
+
+			refreshOrders($connection);
+		}
 	?>
 
 	<div id="wrapper">
@@ -124,6 +147,43 @@
 		    		}
 			    ?>
 			</table>
+		</div>
+
+		<!-- Modal Window -->
+		<div id="modalWindowEdit" class="modal">
+			<div class="modal-content">
+				<label class="close">&times;</label>
+		        <h1>Edit Order</h1>
+		        <hr>
+		        <br>
+		        <div id="down">
+					<form method="post">
+						<div>
+			            	<span>Order ID</span>
+			            	<input type="text" name="editOrderID" value="<?php echo $orderSelectedOrderID; ?>" required>
+			        	</div>
+						<div>
+			            	<span>Customer ID</span>
+			            	<input type="text" name="editCustomerID" maxlength="80" value="<?php echo $orderSelectedCustomerID; ?>" required>
+			        	</div>
+			        	<div>
+			            	<span>Date</span>
+			            	<input type="text" name="editDate" maxlength="50" value="<?php echo $orderSelectedDate; ?>" required>
+			        	</div>
+			        	<div>
+			            	<span>Amount Products</span>
+			            	<input type="text" name="editAmountProd" maxlength="2000" value="<?php echo $orderSelectedAmountProd; ?>" required>
+			        	</div>
+			        	<div>
+			            	<span>Total Price</span>
+			            	<input type="text" name="editPrice" maxlength="10" value="<?php echo $orderSelectedPrice; ?>" required>
+			        	</div>
+			            <div>
+			                <input type="submit" name="buttonEdit" class="standardButton" value="Edit">
+			            </div>
+					</form>
+		        </div>
+		  	</div>
 		</div>
 
 

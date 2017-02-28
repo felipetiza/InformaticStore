@@ -582,6 +582,29 @@
 	        echo "Wrong Query";
     }
 
+    function getOrderData2($connection, $orderID){
+	    $orderData = [];
+	    $getOrder = "SELECT *
+	                 FROM order2
+	                 WHERE idorder = $orderID;
+	                ";
+
+	    if ($result = $connection->query($getOrder)) {
+	        if ($result->num_rows > 0){
+	        	$order = $result->fetch_object();
+				$orderData['orderID']        = $order->idorder;
+				$orderData['customerID']     = $order->idcustomer;
+				$orderData['date']           = $order->dateorder;
+				$orderData['amountProducts'] = $order->amountproducts;
+				$orderData['price']          = $order->totalprice;
+				return $orderData;
+	        }else{
+	            // echo "Impossible to get the order data";
+	        }
+	    }else
+	        echo "Wrong Query";
+    }
+
     function getAllOrders($connection){
 		$orderData = [[]];
 		$i = 0;
@@ -654,6 +677,25 @@
         }else
             echo "Wrong Query";
 	}
+
+	function insertOrder($connection, $orderData){
+		$orderID        = $orderData['orderID'];
+		$customerID     = $orderData['customerID'];
+		$date           = $orderData['date'];
+		$amountProducts = $orderData['amountProducts'];
+		$price          = $orderData['price'];
+
+        $insertOrder = "INSERT INTO order2
+                        VALUES($orderID, $customerID, '$date', $amountProducts, $price);
+                       ";
+
+	    if ($result = $connection->query($insertOrder)) {
+            if (!$result)
+                echo "Impossible to insert the order";
+        }else
+            echo "Wrong Query";
+	}
+
 
 
 // ██████╗ ██╗   ██╗███╗   ██╗         ██╗███████╗

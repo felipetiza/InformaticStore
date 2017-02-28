@@ -39,7 +39,7 @@
 			loadModalWindow("modalWindowEdit");
 
 			$productData = getProductData($connection, $_POST["productID"]);
-			$productSelectedID    = $productData['id'];
+			$prodSelectedID       = $productData['id'];
 			$prodSelectedName     = $productData['name'];
 			$prodSelectedCategory = $productData['category'];
 			$prodSelectedDescript = $productData['description'];
@@ -220,7 +220,7 @@
 					<form method="post">
 						<div>
 			            	<span>ID</span>
-			            	<input type="text" name="editID" value="<?php echo $productSelectedID; ?>" required>
+			            	<input type="text" name="editID" value="<?php echo $prodSelectedID; ?>" required>
 			        	</div>
 						<div>
 			            	<span>Name</span>
