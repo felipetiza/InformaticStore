@@ -28,6 +28,8 @@
 		// User data from logged customer
 		$userData = getUserData($connection, $_SESSION['userID']);
 		$username = $userData['username'];
+
+		refreshOrders($connection);
 	?>
 
 	<div id="wrapper">
@@ -76,10 +78,51 @@
         <!-- Level 3 -->
         <br>
 		<div id="content">
-
-
-
+			<div id="up">
+				<form method='post'>
+					<input type='submit' name='openModalAdd' class="flatButton" value='&#10133; Add Order'>
+				</form>
+				<label><?php echo count($orderOrderID); ?> Order(s)</label>
+			</div>
+			<br/>
+			<table>
+				<tr>
+			  		<th>ID Order</th>
+			  		<th>ID Customer</th>
+			  		<th>Date</th>
+			  		<th>Products</th>
+			  		<th>Price (€)</th>
+			  		<th></th>
+			  		<th></th>
+				</tr>
+				<?php
+					for($i=0;$i<count($orderOrderID);$i++){
+		    			echo "<tr>";
+		    			echo "<td>$orderOrderID[$i]</td>";
+		    			echo "<td>$orderCustomerID[$i]</td>";
+		    			echo "<td>$orderDate[$i]</td>";
+		    			echo "<td>$orderAmount[$i]</td>";
+		    			echo "<td>$orderPrice[$i]</td>";
+		    			echo "<td>
+			    				  <form method='post'>
+			    					  <input type='submit' name='openModalEdit' value='✎'>
+			    					  <input type='text' name='productID' value='$orderOrderID[$i]'>
+			    				  </form>
+		    				  </td>";
+		    			echo "<td>
+			    			  	  <form method='post'>
+			    					  <input type='submit' name='buttonDelete' value='&times;'>
+			    					  <input type='text' name='productID' value='$orderOrderID[$i]'>
+			    				  </form>
+		    				  </td>";
+		    			echo "</tr>";
+		    		}
+			    ?>
+			</table>
 		</div>
+
+
+
 	</div>
 </body>
 </html>

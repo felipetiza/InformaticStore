@@ -32,6 +32,13 @@
 	$productAmount   = [];
 	$productImg      = [];
 
+	// Order variables
+	$orderOrderID    = [];
+	$orderCustomerID = [];
+	$orderDate       = [];
+	$orderAmount     = [];
+	$orderPrice      = [];
+
 
 
 // ██╗   ██╗███████╗███████╗██████╗
@@ -267,7 +274,7 @@
 					$productData['id'][$i]       = $product->idproduct;
 					$productData['name'][$i]     = $product->name;
 					$productData['price'][$i]    = $product->price;
-					$productData['urlimage'][$i] = $product->urlimage;
+					$productData['urlImage'][$i] = $product->urlimage;
 					$i++;
             	}
             }else
@@ -575,6 +582,29 @@
 	        echo "Wrong Query";
     }
 
+    function getAllOrders($connection){
+		$orderData = [[]];
+		$i = 0;
+		$getOrders = "SELECT * FROM order2;";
+
+        if ($result = $connection->query($getOrders)) {
+            if ($result->num_rows > 0){
+            	while($product = $result->fetch_object()){
+					$orderData['orderID'][$i]    = $product->idorder;
+					$orderData['customerID'][$i] = $product->idcustomer;
+					$orderData['date'][$i]       = $product->dateorder;
+					$orderData['amount'][$i]     = $product->amountproducts;
+					$orderData['price'][$i]      = $product->totalprice;
+					$i++;
+            	}
+            }else
+                echo "Impossible to get the orders";
+        }else
+            echo "Wrong Query";
+
+        return $orderData;
+	}
+
 	function getOrderProductAndAmount($connection, $orderID){
 	    $orderProductAndAmount = [[[]]];	// idProduct - order - value ; $i = order |	$j = value
 
@@ -600,6 +630,20 @@
 		return $orderProductAndAmount;
 	}
 
+	function refreshOrders($connection){
+		global $orderOrderID;
+		global $orderCustomerID;
+		global $orderDate;
+		global $orderAmount;
+		global $orderPrice;
+
+		$ordersData = getAllOrders($connection);
+		$orderOrderID    = $ordersData['orderID'];
+		$orderCustomerID = $ordersData['customerID'];
+		$orderDate       = $ordersData['date'];
+		$orderAmount     = $ordersData['amount'];
+		$orderPrice      = $ordersData['price'];
+	}
 
 
 // ██████╗ ██╗   ██╗███╗   ██╗         ██╗███████╗
@@ -672,4 +716,30 @@
 		else
 			echo $string;
 	}
+
+	// function uploadImg(){
+	// 	$valid       = true;
+	// 	$tmp_file    = $_FILES['addImg']['tmp_name'];
+	// 	$target_dir  = "resources/img/product/";
+	// 	$target_file = strtolower($target_dir . basename($_FILES['addImg']['name']));
+
+ //        if (file_exists($target_file)) {
+ //            echo "Sorry, file already exists.";
+ //            $valid = false;
+ //        }
+
+ //        if($_FILES['addImg']['size'] > (2048000)) {
+ //            $valid = false;
+	//         echo 'Oops!  Your file\'s size is to large.';
+ //        }
+
+ //        $file_extension = pathinfo($target_file, PATHINFO_EXTENSION);
+ //        if ($file_extension != "jpg" &&
+ //            $file_extension != "jpeg" &&
+ //            $file_extension != "png" &&
+ //            $file_extension != "gif") {
+ //            $valid = false;
+ //            echo "Only JPG, JPEG, PNG & GIF files are allowed";
+ //        }
+	// }
 ?>

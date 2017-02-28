@@ -67,10 +67,11 @@
 		}
 		if(isset($_POST["buttonAdd"])){
 
-	        $valid = true;
-	        $tmp_file = $_FILES['addImg']['tmp_name'];
-	        $target_dir = "resources/img/product/";
-	        $target_file = strtolower($target_dir . basename($_FILES['addImg']['name']));
+			// Upload img
+			$valid       = true;
+			$tmp_file    = $_FILES['addImg']['tmp_name'];
+			$target_dir  = "resources/img/product/";
+			$target_file = strtolower($target_dir . basename($_FILES['addImg']['name']));
 
 	        if (file_exists($target_file)) {
 	            echo "Sorry, file already exists.";
