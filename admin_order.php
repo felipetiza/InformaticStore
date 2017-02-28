@@ -30,6 +30,11 @@
 		$username = $userData['username'];
 
 		refreshOrders($connection);
+
+		if(isset($_POST["buttonDelete"])){
+			deleteOrder($connection, $_POST["orderID"]);
+			refreshOrders($connection);
+		}
 	?>
 
 	<div id="wrapper">
@@ -106,13 +111,13 @@
 		    			echo "<td>
 			    				  <form method='post'>
 			    					  <input type='submit' name='openModalEdit' value='✎'>
-			    					  <input type='text' name='productID' value='$orderOrderID[$i]'>
+			    					  <input type='text' name='orderID' value='$orderOrderID[$i]'>
 			    				  </form>
 		    				  </td>";
 		    			echo "<td>
 			    			  	  <form method='post'>
 			    					  <input type='submit' name='buttonDelete' value='&times;'>
-			    					  <input type='text' name='productID' value='$orderOrderID[$i]'>
+			    					  <input type='text' name='orderID' value='$orderOrderID[$i]'>
 			    				  </form>
 		    				  </td>";
 		    			echo "</tr>";

@@ -645,6 +645,16 @@
 		$orderPrice      = $ordersData['price'];
 	}
 
+	function deleteOrder($connection, $orderID){
+        $deleteOrder = "DELETE FROM order2 WHERE idorder = $orderID;";
+
+	    if ($result = $connection->query($deleteOrder)) {
+            if (!$result)
+                echo "Impossible to delete the order";
+        }else
+            echo "Wrong Query";
+	}
+
 
 // ██████╗ ██╗   ██╗███╗   ██╗         ██╗███████╗
 // ██╔══██╗██║   ██║████╗  ██║         ██║██╔════╝
