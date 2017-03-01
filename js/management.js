@@ -4,9 +4,9 @@ function loadToast(){
     setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
 }
 
-function loadModalWindow(modalWindow){
+function loadModalWindow(modalWindow, buttonClose){
 	var modal = document.getElementById(modalWindow);
-	var span  = document.getElementsByClassName("close")[0];
+	var span  = document.getElementById(buttonClose);
 
 	modal.style.display = "block";
 	span.onclick = function() {

@@ -36,7 +36,7 @@
 			refreshOrders($connection);
 		}
 		if(isset($_POST["openModalEdit"])){
-			loadModalWindow("modalWindowEdit");
+			loadModalWindow("modalWindowEdit", "closeModalEdit");
 
 			$orderData = getOrderData2($connection, $_POST["orderID"]);
 			$orderSelectedOrderID    = $orderData['orderID'];
@@ -152,7 +152,7 @@
 		<!-- Modal Window -->
 		<div id="modalWindowEdit" class="modal">
 			<div class="modal-content">
-				<label class="close">&times;</label>
+				<label id="closeModalEdit" class="close">&times;</label>
 		        <h1>Edit Order</h1>
 		        <hr>
 		        <br>

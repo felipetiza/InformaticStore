@@ -727,11 +727,11 @@
 		}
 	}
 
-	function loadModalWindow($modalWindow){
+	function loadModalWindow($modalWindow, $buttonClose){
 		echo "
 		      <script>
 				  document.addEventListener('load', function(){
-				  	  loadModalWindow('$modalWindow');
+				  	  loadModalWindow('$modalWindow', '$buttonClose');
 				  }, true);
 			  </script>
 			 ";

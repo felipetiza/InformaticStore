@@ -12,10 +12,10 @@
 			loadAccordion();
             // Open shopping cart screen
             document.getElementById("openModalWindow1").onclick = function() {
-                loadModalWindow('modalWindowCart');
+                loadModalWindow('modalWindowCart', 'closeModalCart');
             };
             document.getElementById("openModalWindow2").onclick = function() {
-                loadModalWindow('modalWindowCart');
+                loadModalWindow('modalWindowCart', 'closeModalCart');
             };
 		}, true);
 	</script>
@@ -210,7 +210,7 @@
 			<div class="modal-content">
 				<p id="cartEmpty">The cart is empty</p>
 				<div id="inner">
-				    <span class="close">&times;</span>
+				    <span id="closeModalCart" class="close">&times;</span>
 				    <p>(<?php echo $cartProductsNumber; ?>) Products in your shopping cart</p>
 						<table>
 						<tr>

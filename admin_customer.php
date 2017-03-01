@@ -36,7 +36,7 @@
 			refreshUsers($connection);
 		}
 		if(isset($_POST["openModalEdit"])){
-			loadModalWindow("modalWindowEdit");
+			loadModalWindow("modalWindowEdit", "closeModalEdit");
 
 			$userData = getUserData($connection, $_POST["userID"]);
 			$userSelectedID      = $userData['id'];
@@ -47,7 +47,8 @@
 			$userSelectedPhone   = $userData['phone'];
 			$userSelectedType    = $userData['type'];
 			$userSelectedUser    = $userData['username'];
-			$userSelectedPass    = $userData['pass'];
+			// $userSelectedPass    = $userData['pass'];
+			$userSelectedPass    = "";
 		}
 		if(isset($_POST["buttonEdit"])){
 			deleteUser($connection, $_POST['editID']);
@@ -67,7 +68,7 @@
 			refreshUsers($connection);
 		}
 		if(isset($_POST["openModalAdd"])){
-			loadModalWindow("modalWindowAdd");
+			loadModalWindow("modalWindowAdd", "closeModalAdd");
 		}
 		if(isset($_POST["buttonAdd"])){
 			$userData = [];
@@ -186,7 +187,7 @@
 		<!-- Modal Window -->
 		<div id="modalWindowEdit" class="modal">
 			<div class="modal-content">
-				<label class="close">&times;</label>
+				<label id="closeModalEdit" class="close">&times;</label>
 		        <h1>Edit User</h1>
 		        <hr>
 		        <br>
@@ -226,7 +227,7 @@
 			        	</div>
 			        	<div>
 			            	<span>Password</span>
-			            	<input type="text" name="editPass" maxlength="20" value="<?php echo $userSelectedPass; ?>" required>
+			            	<input type="text" name="editPass" maxlength="20" value="<?php echo $userSelectedPass; ?>" placeholder="New password" required>
 			        	</div>
 			            <div>
 			                <input type="submit" name="buttonEdit" class="standardButton" value="Edit">
@@ -238,7 +239,7 @@
 
 		<div id="modalWindowAdd" class="modal">
 			<div class="modal-content">
-				<label class="close">&times;</label>
+				<label id="closeModalAdd" class="close">&times;</label>
 		        <h1>Add User</h1>
 		        <hr>
 		        <br>

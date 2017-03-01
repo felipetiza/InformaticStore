@@ -36,7 +36,7 @@
 			refreshProducts($connection);
 		}
 		if(isset($_POST["openModalEdit"])){
-			loadModalWindow("modalWindowEdit");
+			loadModalWindow("modalWindowEdit", "closeModalEdit");
 
 			$productData = getProductData($connection, $_POST["productID"]);
 			$prodSelectedID       = $productData['id'];
@@ -63,7 +63,7 @@
 			refreshProducts($connection);
 		}
 		if(isset($_POST["openModalAdd"])){
-			loadModalWindow("modalWindowAdd");
+			loadModalWindow("modalWindowAdd", "closeModalAdd");
 		}
 		if(isset($_POST["buttonAdd"])){
 
@@ -212,7 +212,7 @@
 		<!-- Modal Window -->
 		<div id="modalWindowEdit" class="modal">
 			<div class="modal-content">
-				<label class="close">&times;</label>
+				<label id="closeModalEdit" class="close">&times;</label>
 		        <h1>Edit User</h1>
 		        <hr>
 		        <br>
@@ -256,7 +256,7 @@
 
 		<div id="modalWindowAdd" class="modal">
 			<div class="modal-content">
-				<label class="close">&times;</label>
+				<label id="closeModalAdd" class="close">&times;</label>
 		        <h1>Add Product</h1>
 		        <hr>
 		        <br>
