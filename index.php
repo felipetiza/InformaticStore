@@ -26,13 +26,15 @@
 
         if (isset($_POST["buttonLogIn"])) {
             $user = $_POST['user'];
-            $pass = $_POST['pass'];
+            $pass = sha1($_POST['pass']);
 
             $login = "SELECT idcustomer, type
                       FROM customer
                       WHERE username = ? AND
                             password = ?;
                      ";
+
+            echo $user." ".$pass;
 
             if ($query = $connection->prepare($login)) {
 

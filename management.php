@@ -143,7 +143,7 @@
 		$phone   = $userData['phone'];
 		$type    = $userData['type'];
 		$user    = $userData['user'];
-		$pass    = $userData['pass'];
+		$pass    = sha1($userData['pass']);
 
         $insertUser = "INSERT INTO customer
                        VALUES($id, '$name', '$surname', '$email', '$address', '$phone', '$type', '$user', '$pass');

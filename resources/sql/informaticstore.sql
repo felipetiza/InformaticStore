@@ -81,14 +81,14 @@ CREATE TABLE contain
 );
 
 
--- Insertion within of the tables
-INSERT INTO customer VALUES(NULL, 'John', 'Adam', 'john22@gmail.com','Street','645713299', 'Admin', 'admin', '1234');
-INSERT INTO customer VALUES(NULL, 'Alfred', 'Smith', 'alfred@gmail.com','Street','627395740', 'User', 'user', '1234');
-INSERT INTO customer VALUES(NULL, 'Brenda', 'Cranston', 'brenda22@gmail.com','Street','649368492', 'User', 'brenda22', '5678');
-INSERT INTO customer VALUES(NULL, 'Jeremy', 'Griffin', 'jeremy@gmail.com','Street','684926482', 'User', 'jere', 'bird');
-INSERT INTO customer VALUES(NULL, 'Rupert', 'Smith', 'rupert@gmail.com','Street','676543236', 'User', 'rupert14', 'god');
-INSERT INTO customer VALUES(NULL, 'Wilson', 'Morrison', 'wilson@gmail.com','Street','603825374', 'User', 'wilson41', 'myself');
-INSERT INTO customer VALUES(NULL, 'Howard', 'Albertson', 'howard@gmail.com','Street','605638611', 'User', 'howii', 'howii');
+-- Insertion within of the tables. Encrypted passwords with sha1 algorithm
+INSERT INTO customer VALUES(NULL, 'John', 'Adam', 'john22@gmail.com','Street','645713299', 'Admin', 'admin', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220');				-- 1234
+INSERT INTO customer VALUES(NULL, 'Alfred', 'Smith', 'alfred@gmail.com','Street','627395740', 'User', 'user', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220');				-- 1234
+INSERT INTO customer VALUES(NULL, 'Brenda', 'Cranston', 'brenda22@gmail.com','Street','649368492', 'User', 'brenda22', '2abd55e001c524cb2cf6300a89ca6366848a77d5');		-- 5678
+INSERT INTO customer VALUES(NULL, 'Jeremy', 'Griffin', 'jeremy@gmail.com','Street','684926482', 'User', 'jere', 'cd92815bf6273acbaf834b9faed277c722068291');			-- bird
+INSERT INTO customer VALUES(NULL, 'Rupert', 'Smith', 'rupert@gmail.com','Street','676543236', 'User', 'rupert14', '21298df8a3277357ee55b01df9530b535cf08ec1');			-- god
+INSERT INTO customer VALUES(NULL, 'Wilson', 'Morrison', 'wilson@gmail.com','Street','603825374', 'User', 'wilson41', 'e9ba3d3a5fcb656b3ac7d8b8abca955fe7ff3b88');		-- myself
+INSERT INTO customer VALUES(NULL, 'Howard', 'Albertson', 'howard@gmail.com','Street','605638611', 'User', 'howii', '72d4475db500cd009b6e5b083226367f41c31831');			-- howii
 
 INSERT INTO product VALUES(NULL, 'Logitech Wireless Mouse M280', 'Mouses', 'Logitech® Wireless Mouse M280 is the perfect combination of functionality, aesthetics and comfort: a unique asymmetrical shape that fits the hand, a wide wheel that improves movement and a smooth rubber surface with a nice texture especially to the touch. Logitech´s advanced optical tracking delivers precise, consistent tracking. Thanks to the design to save energy, the mouse batteries can be up to 18 months, and the mouse automatically goes into sleep when not in use. In addition, the wireless wireless receiver virtually disappears into the computer´s USB port and provides a practical and reliable wireless connection.\n\nCharacteristics:\n\n-  Comfortable shape for the right hand\n- Battery life up to 18 months\n- Logitech® Enhanced Advanced Optical Sensor\n- Nano "connect and forget" type receiver', 12.5, 14, 'resources/img/product/mouse1.jpg');
 INSERT INTO product VALUES(NULL, 'NGS Popcorn USB Keyboard', 'Keyboards', 'Practical keyboard with USB connection. Equipped with 20 multimedia keys, Internet and other functions of daily use, they facilitate and accelerate the access to the different applications of the computer and its habitual functions.\n\nCharacteristics:\n\n- Device Interface: USB\n- Recommended Use: Workshop\n- Keyboard language: English\n- Connectivity technology: Wired\n- Use with: Universal\n- Keyboard Format: Standard\n- Keyboard Style: Right\n- Shortcut keys: Yes\n- Windows keys: Yes\n- Rest Dolls: No\n- Keypad: Yes', 17.30, 9, 'resources/img/product/keyboard1.jpg');
