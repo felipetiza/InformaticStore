@@ -41,33 +41,7 @@
 		$userData = getUserData($connection, $_SESSION['userID']);
 		$username = $userData['username'];
 
-		// Order data from all orders
-		$ordersData = getOrderData($connection, $_SESSION["userID"]);
-		$orderID         = $ordersData['idOrder'];
-		$orderDate       = $ordersData['date'];
-		$orderAmountProd = $ordersData['amountproducts'];
-		$orderPrice      = $ordersData['totalprice'];
-
-		// != 1  -> The array isn't empty. '1' because array is 2 dimensions
-		$orderProductAndAmount = getOrderProductAndAmount($connection, $orderID);	// Return 3 dimensions
-		$orderProduct = (count($orderProductAndAmount) != 1) ? $orderProductAndAmount['idProduct'] : [];
-		$orderAmount  = (count($orderProductAndAmount) != 1) ? $orderProductAndAmount['amount'] : [];
-
-		$productData = getProductDataArray($connection, $orderProduct);				// Return 3 dimensions
-		$productName  = (count($productData) != 1) ? $productData['name'] : [];
-		$productPrice = (count($productData) != 1) ? $productData['price'] : [];
-
-		/*
-		$productName[0][0]				// Order 0 - Prod 1
-		$productName[1][0]				// Order 1 - Prod 1
-		$productName[1][1]				// Order 1 - Prod 2
-		$productName[1][2]				// Order 1 - Prod 3
-
-		echo count($productName);		// 2 Orders
-
-		echo count($productName[0]);	// Order 1 - 1 Prod
-		echo count($productName[1]);	// Order 2 - 3 Prod
-		*/
+		refreshOrdersOfAClient($connection, $_SESSION["userID"]);
 
 		// Actions of shopping cart
 		refreshCart($connection);
@@ -89,6 +63,7 @@
 			// }
 			clearCart($connection);
 			refreshCart($connection);
+			refreshOrdersOfAClient($connection, $_SESSION["userID"]);
             showToast("Purchase made with success");
 		}
 
@@ -169,7 +144,7 @@
 				for($i=0;$i<count($orderDate);$i++){					// Orders
 					echo "<button class='accordion'>";
 					echo "<div id='left'>";
-					echo "<p id='idorder'>Nº: <strong>$orderID[$i]</strong></p><p id='number'>| <strong>$orderAmountProd[$i]</strong> Product(s)</p>";
+					echo "<p id='idorder'>Nº: <strong>$orderOrderID[$i]</strong></p><p id='number'>| <strong>$orderAmountProd[$i]</strong> Product(s)</p>";
 					echo "</div>";
 					echo "<div id='right'>";
 					echo "<p id='date'>Performed the: <strong>$orderDate[$i]</strong></p>";

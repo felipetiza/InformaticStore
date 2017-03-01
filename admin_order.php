@@ -38,7 +38,7 @@
 		if(isset($_POST["openModalEdit"])){
 			loadModalWindow("modalWindowEdit", "closeModalEdit");
 
-			$orderData = getOrderData2($connection, $_POST["orderID"]);
+			$orderData = getOrderData($connection, $_POST["orderID"]);
 			$orderSelectedOrderID    = $orderData['orderID'];
 			$orderSelectedCustomerID = $orderData['customerID'];
 			$orderSelectedDate       = $orderData['date'];

@@ -1,7 +1,6 @@
 <?php
 	const MAIN_PAGE = "../informaticstore";
 
-
 	// Cart variables
 	$cartProductIDAndAmount = [[]];
 	$cartProductsNumber     = 0;
@@ -36,8 +35,13 @@
 	$orderOrderID    = [];
 	$orderCustomerID = [];
 	$orderDate       = [];
-	$orderAmount     = [];
+	$orderAmountProd = [];
 	$orderPrice      = [];
+	$orderProduct    = [[]];
+	$orderAmount     = [[]];
+	$productName     = [[]];
+	$productPrice    = [[]];
+
 
 
 
@@ -557,32 +561,7 @@
 //  ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝
 
 
-	function getOrderData($connection, $userID){
-	    $orderData = [[]];
-		$i = 0;
-	    $getOrder = "SELECT *
-	                 FROM order2
-	                 WHERE idcustomer = $userID;
-	                ";
-
-	    if ($result = $connection->query($getOrder)) {
-	        if ($result->num_rows > 0){
-	        	while($order = $result->fetch_object()){
-					$orderData['idOrder'][$i]        = $order->idorder;
-					$orderData['date'][$i]           = $order->dateorder;
-					$orderData['amountproducts'][$i] = $order->amountproducts;
-					$orderData['totalprice'][$i]     = $order->totalprice;
-					$i++;
-				}
-				return $orderData;
-	        }else{
-	            // echo "Impossible to get the order data";
-	        }
-	    }else
-	        echo "Wrong Query";
-    }
-
-    function getOrderData2($connection, $orderID){
+    function getOrderData($connection, $orderID){
 	    $orderData = [];
 	    $getOrder = "SELECT *
 	                 FROM order2
@@ -597,6 +576,32 @@
 				$orderData['date']           = $order->dateorder;
 				$orderData['amountProducts'] = $order->amountproducts;
 				$orderData['price']          = $order->totalprice;
+				return $orderData;
+	        }else{
+	            // echo "Impossible to get the order data";
+	        }
+	    }else
+	        echo "Wrong Query";
+    }
+
+	function getOrderDataOfAClient($connection, $userID){
+	    $orderData = [[]];
+		$i = 0;
+	    $getOrder = "SELECT *
+	                 FROM order2
+	                 WHERE idcustomer = $userID;
+	                ";
+
+	    if ($result = $connection->query($getOrder)) {
+	        if ($result->num_rows > 0){
+	        	while($order = $result->fetch_object()){
+					$orderData['orderID'][$i]    = $order->idorder;
+					$orderData['customerID'][$i] = $order->idcustomer;
+					$orderData['date'][$i]       = $order->dateorder;
+					$orderData['amount'][$i]     = $order->amountproducts;
+					$orderData['price'][$i]      = $order->totalprice;
+					$i++;
+				}
 				return $orderData;
 	        }else{
 	            // echo "Impossible to get the order data";
@@ -666,6 +671,46 @@
 		$orderDate       = $ordersData['date'];
 		$orderAmount     = $ordersData['amount'];
 		$orderPrice      = $ordersData['price'];
+	}
+
+	function refreshOrdersOfAClient($connection, $userID){
+		global $orderOrderID;
+		global $orderCustomerID;
+		global $orderDate;
+		global $orderAmountProd;
+		global $orderPrice;
+		global $orderProduct;
+		global $orderAmount;
+		global $productName;
+		global $productPrice;
+
+		$ordersData = getOrderDataOfAClient($connection, $userID);
+		$orderOrderID    = $ordersData['orderID'];
+		$orderCustomerID = $ordersData['customerID'];
+		$orderDate       = $ordersData['date'];
+		$orderAmountProd = $ordersData['amount'];
+		$orderPrice      = $ordersData['price'];
+
+		// != 1  -> The array isn't empty. '1' because array is 2 dimensions
+		$orderProductAndAmount = getOrderProductAndAmount($connection, $orderOrderID);	// Return 3 dimensions
+		$orderProduct = (count($orderProductAndAmount) != 1) ? $orderProductAndAmount['idProduct'] : [];
+		$orderAmount  = (count($orderProductAndAmount) != 1) ? $orderProductAndAmount['amount'] : [];
+
+		$productData = getProductDataArray($connection, $orderProduct);				// Return 3 dimensions
+		$productName  = (count($productData) != 1) ? $productData['name'] : [];
+		$productPrice = (count($productData) != 1) ? $productData['price'] : [];
+
+		/*
+		$productName[0][0]				// Order 0 - Prod 1
+		$productName[1][0]				// Order 1 - Prod 1
+		$productName[1][1]				// Order 1 - Prod 2
+		$productName[1][2]				// Order 1 - Prod 3
+
+		echo count($productName);		// 2 Orders
+
+		echo count($productName[0]);	// Order 1 - 1 Prod
+		echo count($productName[1]);	// Order 2 - 3 Prod
+		*/
 	}
 
 	function deleteOrder($connection, $orderID){
