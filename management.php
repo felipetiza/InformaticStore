@@ -257,14 +257,14 @@
 		global $productAmount;
 		global $productImg;
 
-		$productsData    = getAllProduct($connection);
-		$productID       = $productsData['id'];
-		$productName     = $productsData['name'];
-		$productCategory = $productsData['category'];
-		$productDescript = $productsData['description'];
-		$productPrice    = $productsData['price'];
-		$productAmount   = $productsData['amount'];
-		$productImg      = $productsData['urlImage'];
+		// != 1  -> The array isn't empty. '1' because array is 2 dimensions
+		$productID       = (count($productsData) != 1) ? $productsData['id'] : [];
+		$productName     = (count($productsData) != 1) ? $productsData['name'] : [];
+		$productCategory = (count($productsData) != 1) ? $productsData['category'] : [];
+		$productDescript = (count($productsData) != 1) ? $productsData['description'] : [];
+		$productPrice    = (count($productsData) != 1) ? $productsData['price'] : [];
+		$productAmount   = (count($productsData) != 1) ? $productsData['amount'] : [];
+		$productImg      = (count($productsData) != 1) ? $productsData['urlImage'] : [];
 	}
 
 	function getProductCategory($connection, $categ){
@@ -625,8 +625,9 @@
 					$orderData['price'][$i]      = $product->totalprice;
 					$i++;
             	}
-            }else
-                echo "Impossible to get the orders";
+            }else{
+                // echo "Impossible to get the orders";
+            }
         }else
             echo "Wrong Query";
 
@@ -666,11 +667,13 @@
 		global $orderPrice;
 
 		$ordersData = getAllOrders($connection);
-		$orderOrderID    = $ordersData['orderID'];
-		$orderCustomerID = $ordersData['customerID'];
-		$orderDate       = $ordersData['date'];
-		$orderAmount     = $ordersData['amount'];
-		$orderPrice      = $ordersData['price'];
+
+		// != 1  -> The array isn't empty. '1' because array is 2 dimensions
+		$orderOrderID    = (count($ordersData) != 1) ? $ordersData['orderID'] : [];
+		$orderCustomerID = (count($ordersData) != 1) ? $ordersData['customerID'] : [];
+		$orderDate       = (count($ordersData) != 1) ? $ordersData['date'] : [];
+		$orderAmount     = (count($ordersData) != 1) ? $ordersData['amount'] : [];
+		$orderPrice      = (count($ordersData) != 1) ? $ordersData['price'] : [];
 	}
 
 	function refreshOrdersOfAClient($connection, $userID){
