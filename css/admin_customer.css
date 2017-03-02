@@ -130,7 +130,8 @@ body{
 }
 .modal-content input[type="text"],
 input[type="email"],
-input[type="tel"]{
+input[type="tel"],
+input[type="radio"]{
 	margin-top: 5px;
 }
 .modal-content h1{
@@ -149,3 +150,48 @@ input[type="tel"]{
 	margin-top: 25px;
 	margin-bottom: 10px;
 }
+#radioBox{
+  display: flex;
+	flex-direction: column;
+	padding: 10px 0px;
+}
+#radioBox span{
+  margin-top: 7px;
+}
+#labelLeft{
+	margin-top: -25px;
+	margin-left: 110px;
+}
+#labelRight{
+	margin-left: 110px;
+}
+#radioLeft{
+	margin-left: 26px;
+
+}
+#radioRight{
+	margin-left: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

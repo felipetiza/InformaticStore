@@ -47,7 +47,6 @@
 			$userSelectedPhone   = $userData['phone'];
 			$userSelectedType    = $userData['type'];
 			$userSelectedUser    = $userData['username'];
-			// $userSelectedPass    = $userData['pass'];
 			$userSelectedPass    = "";
 		}
 		if(isset($_POST["buttonEdit"])){
@@ -217,10 +216,10 @@
 			            	<span>Phone</span>
 			            	<input type="tel" name="editPhone" pattern="[0-9]{9}" value="<?php echo $userSelectedPhone; ?>" required>
 			        	</div>
-			        	<div>
+<!-- 			        	<div>
 			            	<span>Type</span>
 			            	<input type="tel" name="editType" value="<?php echo $userSelectedType; ?>" required>
-			        	</div>
+			        	</div> -->
 			        	<div>
 			            	<span>Username</span>
 			            	<input type="text" name="editUser" maxlength="40" value="<?php echo $userSelectedUser; ?>" required>
@@ -229,6 +228,28 @@
 			            	<span>Password</span>
 			            	<input type="text" name="editPass" maxlength="20" value="<?php echo $userSelectedPass; ?>" placeholder="New password" required>
 			        	</div>
+
+ 			        	<?php
+				        	echo "<div id='radioBox'>";
+				        	echo "<span>Type</span>";
+
+				        	if($userSelectedType == "User"){
+				            	echo "<label id='labelLeft'>User
+				            			  <input id='radioLeft' type='radio' name='addType' value='User' checked>
+				            		  </label>";
+				            	echo "<label id='labelRight'>Admin
+				            			  <input id='radioRight' type='radio' name='addType' value='Admin'>
+				            		  </label>";
+				        	}else if($userSelectedType == "Admin"){
+				        		echo "<label id='labelLeft'>User
+				            			  <input id='radioLeft' type='radio' name='addType' value='User'>
+				            		  </label>";
+				            	echo "<label id='labelRight'>Admin
+				            			  <input id='radioRight' type='radio' name='addType' value='Admin' checked>
+				            		  </label>";
+				        	}
+				        	echo "</div>";
+						?>
 			            <div>
 			                <input type="submit" name="buttonEdit" class="standardButton" value="Edit">
 			            </div>
@@ -266,16 +287,21 @@
 			            	<input type="tel" name="addPhone" pattern="[0-9]{9}" required>
 			        	</div>
 			        	<div>
-			            	<span>Type</span>
-			            	<input type="tel" name="addType" required>
-			        	</div>
-			        	<div>
 			            	<span>Username</span>
 			            	<input type="text" name="addUser" maxlength="40" required>
 			        	</div>
 			        	<div>
 			            	<span>Password</span>
 			            	<input type="text" name="addPass" maxlength="20" required>
+			        	</div>
+			        	<div id="radioBox">
+			            	<span>Type</span>
+			            	<label id="labelLeft">User
+			            		<input id="radioLeft" type="radio" name="addType" value="User" checked>
+			            	</label>
+  							<label id="labelRight">Admin
+  								<input id="radioRight" type="radio" name="addType" value="Admin">
+			        		</label>
 			        	</div>
 			            <div>
 			                <input type="submit" name="buttonAdd" class="standardButton" value="Add">

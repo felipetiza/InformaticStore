@@ -10,6 +10,7 @@
 }
 button,
 input[type="submit"],
+input[type="radio"],
 a{
     outline: none !important;
     outline-style: none !important;
@@ -19,6 +20,9 @@ button::-moz-focus-inner {
     border: 0;
 }
 input[type="submit"]::-moz-focus-inner{
+    border: 0;
+}
+input[type="radio"]::-moz-focus-inner{
     border: 0;
 }
 a::-moz-focus-inner {
