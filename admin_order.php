@@ -45,6 +45,13 @@
 			$orderSelectedDate       = $orderData['date'];
 			$orderSelectedAmountProd = $orderData['amountProducts'];
 			$orderSelectedPrice      = $orderData['price'];
+
+			// != 1  -> The array isn't empty. '1' because array is 2 dimensions
+			$orderProductAndAmount = getOrderProductAndAmount($connection, $_POST["orderID"]);	// Return 3 dimensions
+			$orderProduct    = (count($orderProductAndAmount) != 1) ? $orderProductAndAmount['idProduct'] : [];
+			$orderAmountProd = (count($orderProductAndAmount) != 1) ? $orderProductAndAmount['amount'] : [];
+
+
 		}
 		if(isset($_POST["buttonEdit"])){
 			deleteOrder($connection, $_POST["editOrderID"]);
@@ -171,14 +178,14 @@
 			            	<span>Date</span>
 			            	<input type="text" name="editDate" maxlength="50" value="<?php echo $orderSelectedDate; ?>" required>
 			        	</div>
-			        	<div>
-			            	<span>Amount Products</span>
-			            	<input type="text" name="editAmountProd" maxlength="2000" value="<?php echo $orderSelectedAmountProd; ?>" required>
-			        	</div>
-			        	<div>
-			            	<span>Total Price</span>
-			            	<input type="text" name="editPrice" maxlength="10" value="<?php echo $orderSelectedPrice; ?>" required>
-			        	</div>
+
+						<?php
+							for($i=0;$i<count($orderProduct);$i++){
+								for($j=0;$j<count($orderProduct[$i]);$j++){
+									echo $orderProduct[$i][$j]. " > ".$orderAmountProd[$i][$j]."<br>";
+								}
+							}
+						?>
 			            <div>
 			                <input type="submit" name="buttonEdit" class="standardButton" value="Edit">
 			            </div>

@@ -82,8 +82,18 @@
 			refreshCart($connection);
 		}
 		if(isset($_POST["buy"]) || isset($_POST["buyDirectly"])){
-			if(isset($_POST["buy"]))
-				makePurchase($connection, $_SESSION['userID'], $cartProductsNumber, $cartTotalPrice);
+			if(isset($_POST["buy"])){
+				$orderData = [];
+				$orderData['orderID']        = "";						// Within the function, the order ID is generated
+				$orderData['customerID']     = $_SESSION['userID'];
+				$orderData['date']           = "";						// Within the function, the current date is saved
+				$orderData['amountProducts'] = $cartProductsNumber;
+				$orderData['price']          = $cartTotalPrice;
+				insertOrder($connection, $orderData);
+
+				$orderID_previousInserted = getLastAutoIncrementGenerated($connection, "order2", "informaticstore");
+				insertContain($connection, $_SESSION['userID'], $orderID_previousInserted, $cartProductsNumber);
+			}
 			// else if(isset($_POST["buyDirectly"])){	// Products within cart + current product
 			// 	$money = $cartTotalPrice + ($productPrice * $_POST["amountToAdd"]);
 			// 	makePurchase($connection, $_SESSION['userID'], $cartProductsNumber + 1, $money);

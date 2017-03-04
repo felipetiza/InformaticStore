@@ -364,40 +364,25 @@
             echo "Wrong Query";
     }
 
-    function makePurchase($connection, $userID, $prodNumber, $prodTotalPrice){
-    	// Insert order
-    	$date = date('Y-m-d');
-    	$setPurchase = "INSERT INTO order2
-        			    VALUES(NULL, $userID, '$date', $prodNumber, $prodTotalPrice);
+	function insertOrder($connection, $orderData){
+		$orderID        = (strlen($orderData['orderID']) == 0) ? NULL : $orderData['orderID'];
+		$customerID     = $orderData['customerID'];
+		$date           = (strlen($orderData['date']) == 0) ? date('Y-m-d') : $orderData['date'];
+		$amountProducts = $orderData['amountProducts'];
+		$price          = $orderData['price'];
+
+        $insertOrder = "INSERT INTO order2
+                        VALUES('$orderID', $customerID, '$date', $amountProducts, $price);
                        ";
 
-        if ($result = $connection->query($setPurchase)){
+	    if ($result = $connection->query($insertOrder)) {
             if (!$result)
-                echo "Can't make the purchase. Impossible insert within of the order.";
+                echo "Impossible insert within of the order.";
         }else
             echo "Wrong Query";
+	}
 
-        // Get the idorder of previous query
-        // Returns the next idorder to insert, so we subtract 1
-        $idorder;
-        $getOrderID = "SELECT AUTO_INCREMENT
-					   FROM information_schema.tables
-					   WHERE table_name = 'order2' AND
-					   		 table_schema = 'informaticstore';
-                      ";
-
-        if ($result = $connection->query($getOrderID)){
-            if ($result)
-            	$idorder = $result->fetch_object()->AUTO_INCREMENT - 1;
-            else
-                echo "Can't make the purchase. Impossible to get the idorder of the previous insertion.";
-        }else
-            echo "Wrong Query";
-
-        // Insert in 'contain' table
-        // ==================================
-        // - Set the idorder previous gotten
-        //
+	function insertContain($connection, $userID, $idorder, $prodNumber){
         // Remove 		Relationship saved in table 'shopping_cart' (temporary)
         // Create 		Relationship in table 'contain'
 
@@ -418,11 +403,32 @@
 
 	        if ($result = $connection->query($setPurchase)){
 	            if (!$result)
-	                echo "Can't make the purchase. Impossible insert within of the contain table.";
+	                echo "Impossible insert within of the contain table.";
 	        }else
 	            echo "Wrong Query";
 	    }
-    }
+	}
+
+	function getLastAutoIncrementGenerated($connection, $table, $databaseName){
+	    // Get the idorder of previous query
+        // Returns the next idorder to insert, so we subtract 1
+        $idorder;
+        $getOrderID = "SELECT AUTO_INCREMENT
+					   FROM information_schema.tables
+					   WHERE table_name = '$table' AND
+					   		 table_schema = '$databaseName';
+                      ";
+
+        if ($result = $connection->query($getOrderID)){
+            if ($result)
+            	$idorder = $result->fetch_object()->AUTO_INCREMENT - 1;
+            else
+                echo "Impossible to get the orderID of the previous insertion.";
+        }else
+            echo "Wrong Query";
+
+        return $idorder;
+	}
 
     function getProductIDFromCart($connection, $userID){
         $cartProductID = [];	// Asociative array
@@ -639,7 +645,7 @@
 	function getOrderProductAndAmount($connection, $orderID){
 	    $orderProductAndAmount = [[[]]];	// idProduct - order - value ; $i = order |	$j = value
 
-	    for($i=0;$i<count($orderID);$i++){
+	    for($i=0;$i<count($orderID);$i++){	// A order can have a few rows in the database
 	 	    $j = 0;
 		    $getOrder = "SELECT *
 		                 FROM contain
@@ -728,23 +734,23 @@
             echo "Wrong Query";
 	}
 
-	function insertOrder($connection, $orderData){
-		$orderID        = $orderData['orderID'];
-		$customerID     = $orderData['customerID'];
-		$date           = $orderData['date'];
-		$amountProducts = $orderData['amountProducts'];
-		$price          = $orderData['price'];
+	// function insertOrder($connection, $orderData){
+	// 	$orderID        = $orderData['orderID'];
+	// 	$customerID     = $orderData['customerID'];
+	// 	$date           = $orderData['date'];
+	// 	$amountProducts = $orderData['amountProducts'];
+	// 	$price          = $orderData['price'];
 
-        $insertOrder = "INSERT INTO order2
-                        VALUES($orderID, $customerID, '$date', $amountProducts, $price);
-                       ";
+ //        $insertOrder = "INSERT INTO order2
+ //                        VALUES($orderID, $customerID, '$date', $amountProducts, $price);
+ //                       ";
 
-	    if ($result = $connection->query($insertOrder)) {
-            if (!$result)
-                echo "Impossible to insert the order";
-        }else
-            echo "Wrong Query";
-	}
+	//     if ($result = $connection->query($insertOrder)) {
+ //            if (!$result)
+ //                echo "Impossible to insert the order";
+ //        }else
+ //            echo "Wrong Query";
+	// }
 
 
 
