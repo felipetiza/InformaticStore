@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>Login</title>
+    <meta charset="utf-8">
+    <link rel="icon" href="resources/img/favicon.ico">
     <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="css/resources.css">
     <script src="js/management.js"></script>
@@ -10,7 +12,7 @@
         document.addEventListener("load", function(){
             // Open sign_up screen
             document.getElementById("openModalWindow").onclick = function() {
-                loadModalWindow('modalWindowSignUp');
+                loadModalWindow('modalWindowSignUp', 'closeModalSignUp');
             };
         }, true);
     </script>
@@ -100,7 +102,7 @@
     <!-- Modal Window -->
     <div id="modalWindowSignUp" class="modal">
         <div class="modal-content">
-            <label class="close">&times;</label>
+            <label id="closeModalSignUp" class="close">&times;</label>
             <h1>Sign Up</h1>
             <hr>
             <br>

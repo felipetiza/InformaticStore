@@ -3,6 +3,7 @@
 <head>
 	<title>Customer</title>
 	<meta charset="utf-8">
+	<link rel="icon" href="resources/img/favicon.ico">
 	<link rel="stylesheet" href="css/admin_customer.css">
 	<link rel="stylesheet" href="css/resources.css">
 	<script src="js/management.js"></script>

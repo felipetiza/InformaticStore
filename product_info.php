@@ -3,6 +3,7 @@
 <head>
 	<title>Product Info</title>
 	<meta charset="utf-8">
+	<link rel="icon" href="resources/img/favicon.ico">
 	<link rel="stylesheet" href="css/product_info.css">
 	<link rel="stylesheet" href="css/resources.css">
 	<script src="js/management.js"></script>

@@ -258,6 +258,7 @@
 		global $productAmount;
 		global $productImg;
 
+		$productsData = getAllProduct($connection);
 		// != 1  -> The array isn't empty. '1' because array is 2 dimensions
 		$productID       = (count($productsData) != 1) ? $productsData['id'] : [];
 		$productName     = (count($productsData) != 1) ? $productsData['name'] : [];
