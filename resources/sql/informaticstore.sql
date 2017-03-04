@@ -122,4 +122,3 @@ INSERT INTO product VALUES(NULL, 'Corsair Voyager GS 512GB USB 3.0', 'USB Flash 
 -- INSERT INTO contain VALUES(1, 4, 1);
 -- INSERT INTO contain VALUES(1, 3, 2);
 
-

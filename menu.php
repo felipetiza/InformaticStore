@@ -107,7 +107,15 @@
         <div id="infobar">
 	        <div id="left">
 		        <div id="path">
-		        	<label>Your computer store and online technology.</label>
+		            <?php
+		            	if(!isset($_GET['categ']))
+		        			echo "<label>Your computer store and online technology.</label>";
+		            	else{
+		            		$categ = $_GET['categ'];
+			        		echo "<a href='menu.php'>Home</a> > ";
+			        		echo "<a href='menu.php?categ=$categ'>".$categ."</a>";
+		            	}
+		            ?>
 		        </div>
 	        </div>
 	        <div id="right">
