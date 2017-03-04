@@ -147,7 +147,8 @@
 		$phone   = $userData['phone'];
 		$type    = $userData['type'];
 		$user    = $userData['user'];
-		$pass    = sha1($userData['pass']);
+		// If password is encoded with sha1 algorithm
+		$pass = (strlen($userData['pass']) >= 40) ? $userData['pass'] : sha1($userData['pass']);
 
         $insertUser = "INSERT INTO customer
                        VALUES($id, '$name', '$surname', '$email', '$address', '$phone', '$type', '$user', '$pass');

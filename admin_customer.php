@@ -47,11 +47,9 @@
 			$userSelectedPhone   = $userData['phone'];
 			$userSelectedType    = $userData['type'];
 			$userSelectedUser    = $userData['username'];
-			$userSelectedPass    = "";
+			$userSelectedPass    = "";	// No show pass because sha1 can't be decoded
 		}
 		if(isset($_POST["buttonEdit"])){
-			deleteUser($connection, $_POST['editID']);
-
 			$userData = [];
 			$userData['id']      = $_POST['editID'];
 			$userData['name']    = $_POST['editName'];
@@ -61,7 +59,15 @@
 			$userData['phone']   = $_POST['editPhone'];
 			$userData['type']    = $_POST['editType'];
 			$userData['user']    = $_POST['editUser'];
-			$userData['pass']    = $_POST['editPass'];
+
+			// Store the original pass. In edit screen, If password isn't put, it saved
+			// the previous, else it stored the new one
+			$userDataRecover = getUserData($connection, $_POST["editID"]);
+			$passwordSaved = $userDataRecover['pass'];
+
+			$userData['pass'] = (strlen($_POST['editPass']) == 0) ? $passwordSaved : $_POST['editPass'];
+
+			deleteUser($connection, $_POST['editID']);
 			insertUser($connection, $userData);
 
 			refreshUsers($connection);
@@ -226,7 +232,7 @@
 			        	</div>
 			        	<div>
 			            	<span>Password</span>
-			            	<input type="text" name="editPass" maxlength="20" value="<?php echo $userSelectedPass; ?>" placeholder="New password" required>
+			            	<input type="text" name="editPass" maxlength="20" value="<?php echo $userSelectedPass; ?>" placeholder="New password">
 			        	</div>
 
  			        	<?php
@@ -235,17 +241,17 @@
 
 				        	if($userSelectedType == "User"){
 				            	echo "<label id='labelLeft'>User
-				            			  <input id='radioLeft' type='radio' name='addType' value='User' checked>
+				            			  <input id='radioLeft' type='radio' name='editType' value='User' checked>
 				            		  </label>";
 				            	echo "<label id='labelRight'>Admin
-				            			  <input id='radioRight' type='radio' name='addType' value='Admin'>
+				            			  <input id='radioRight' type='radio' name='editType' value='Admin'>
 				            		  </label>";
 				        	}else if($userSelectedType == "Admin"){
 				        		echo "<label id='labelLeft'>User
-				            			  <input id='radioLeft' type='radio' name='addType' value='User'>
+				            			  <input id='radioLeft' type='radio' name='editType' value='User'>
 				            		  </label>";
 				            	echo "<label id='labelRight'>Admin
-				            			  <input id='radioRight' type='radio' name='addType' value='Admin' checked>
+				            			  <input id='radioRight' type='radio' name='editType' value='Admin' checked>
 				            		  </label>";
 				        	}
 				        	echo "</div>";
