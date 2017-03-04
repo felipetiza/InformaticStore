@@ -20,10 +20,10 @@
 <body>
 
     <?php
-        include_once "db_connection.php";
         include_once "management.php";
 
         session_start();
+        databaseConnection();
         checkAccesOptionOnLogin();
 
         if (isset($_POST["buttonLogIn"])) {
@@ -35,8 +35,6 @@
                       WHERE username = ? AND
                             password = ?;
                      ";
-
-            echo $user." ".$pass;
 
             if ($query = $connection->prepare($login)) {
 

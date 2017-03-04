@@ -1,6 +1,8 @@
 <?php
 	const MAIN_PAGE = "../informaticstore";
 
+	$connection;
+
 	// Cart variables
 	$cartProductIDAndAmount = [[]];
 	$cartProductsNumber     = 0;
@@ -42,7 +44,30 @@
 	$productName     = [[]];
 	$productPrice    = [[]];
 
+	function databaseConnection(){
+		global $connection;
 
+	    if(isset($_ENV['OPENSHIFT_APP_NAME'])){
+	        $user     = $_ENV['OPENSHIFT_MYSQL_DB_USERNAME'];
+	        $host     = $_ENV['OPENSHIFT_MYSQL_DB_HOST'];
+	        $password = $_ENV['OPENSHIFT_MYSQL_DB_PASSWORD'];
+	        $database = "informaticstore";
+	    }else{
+	        $host     = "localhost";
+	        $user     = "informatic";
+	        $password = "store";
+	        $database = "informaticstore";
+	    }
+
+	    $connection = new mysqli($host, $user, $password, $database);
+	    $connection->set_charset("utf8");
+
+	    if ($connection->connect_errno) {
+	        printf("Connection failed: %s\n", $connection->connect_error);
+	        exit();
+	    }
+	    return $connection;
+	}
 
 
 // ██╗   ██╗███████╗███████╗██████╗
@@ -364,51 +389,6 @@
             echo "Wrong Query";
     }
 
-	function insertOrder($connection, $orderData){
-		$orderID        = (strlen($orderData['orderID']) == 0) ? NULL : $orderData['orderID'];
-		$customerID     = $orderData['customerID'];
-		$date           = (strlen($orderData['date']) == 0) ? date('Y-m-d') : $orderData['date'];
-		$amountProducts = $orderData['amountProducts'];
-		$price          = $orderData['price'];
-
-        $insertOrder = "INSERT INTO order2
-                        VALUES('$orderID', $customerID, '$date', $amountProducts, $price);
-                       ";
-
-	    if ($result = $connection->query($insertOrder)) {
-            if (!$result)
-                echo "Impossible insert within of the order.";
-        }else
-            echo "Wrong Query";
-	}
-
-	function insertContain($connection, $userID, $idorder, $prodNumber){
-        // Remove 		Relationship saved in table 'shopping_cart' (temporary)
-        // Create 		Relationship in table 'contain'
-
-        // Get relationship of product/amount from cart
-		$cartProductIDAndAmount = getProductIDFromCart($connection, $userID);
-		$cartProductID     = [];
-		$cartProductAmount = [];
-
-		foreach($cartProductIDAndAmount as $id=>$amount){
-			array_push($cartProductID, $id);
-			array_push($cartProductAmount, $amount);
-		}
-
-        for($i=0;$i<$prodNumber;$i++){
-	    	$setPurchase = "INSERT INTO contain
-	        			    VALUES($idorder, $cartProductID[$i], $cartProductAmount[$i]);
-	                       ";
-
-	        if ($result = $connection->query($setPurchase)){
-	            if (!$result)
-	                echo "Impossible insert within of the contain table.";
-	        }else
-	            echo "Wrong Query";
-	    }
-	}
-
 	function getLastAutoIncrementGenerated($connection, $table, $databaseName){
 	    // Get the idorder of previous query
         // Returns the next idorder to insert, so we subtract 1
@@ -434,6 +414,25 @@
         $cartProductID = [];	// Asociative array
         $getusername = "SELECT *
                         FROM shopping_cart
+                        WHERE idcustomer = $userID;
+                       ";
+
+        if ($result = $connection->query($getusername)) {
+            if ($result->num_rows > 0){
+                while($product = $result->fetch_object())
+					$cartProductID[$product->idproduct] = $product->amount;
+            }else{
+                // echo "The shopping cart is empty";
+            }
+        }else
+            echo "Wrong Query";
+		return $cartProductID;
+    }
+
+    function getProductIDFromContain($connection, $userID){
+        $cartProductID = [];	// Asociative array
+        $getusername = "SELECT *
+                        FROM contain
                         WHERE idcustomer = $userID;
                        ";
 
@@ -734,23 +733,77 @@
             echo "Wrong Query";
 	}
 
-	// function insertOrder($connection, $orderData){
-	// 	$orderID        = $orderData['orderID'];
-	// 	$customerID     = $orderData['customerID'];
-	// 	$date           = $orderData['date'];
-	// 	$amountProducts = $orderData['amountProducts'];
-	// 	$price          = $orderData['price'];
+	function insertOrder($connection, $orderData){
+		$orderID        = $orderData['orderID'];
+		$customerID     = $orderData['customerID'];
+		$date           = (strlen($orderData['date']) == 0) ? date('Y-m-d') : $orderData['date'];
+		$amountProducts = $orderData['amountProducts'];
+		$price          = $orderData['price'];
 
- //        $insertOrder = "INSERT INTO order2
- //                        VALUES($orderID, $customerID, '$date', $amountProducts, $price);
- //                       ";
+        $insertOrder = "INSERT INTO order2
+                        VALUES($orderID, $customerID, '$date', $amountProducts, $price);
+                       ";
 
-	//     if ($result = $connection->query($insertOrder)) {
- //            if (!$result)
- //                echo "Impossible to insert the order";
- //        }else
- //            echo "Wrong Query";
-	// }
+	    if ($result = $connection->query($insertOrder)) {
+            if (!$result)
+                echo "Impossible insert within of the order.";
+        }else
+            echo "Wrong Query";
+	}
+
+	function insertContain($connection, $userID, $idorder, $prodNumber){
+        // Remove 		Relationship saved in table 'shopping_cart' (temporary)
+        // Create 		Relationship in table 'contain'
+
+        // Get relationship of product/amount from cart
+		$cartProductIDAndAmount = getProductIDFromCart($connection, $userID);
+		$cartProductID     = [];
+		$cartProductAmount = [];
+
+		foreach($cartProductIDAndAmount as $id=>$amount){
+			array_push($cartProductID, $id);
+			array_push($cartProductAmount, $amount);
+		}
+
+        for($i=0;$i<$prodNumber;$i++){
+	    	$setPurchase = "INSERT INTO contain
+	        			    VALUES($idorder, $cartProductID[$i], $cartProductAmount[$i]);
+	                       ";
+
+	        if ($result = $connection->query($setPurchase)){
+	            if (!$result)
+	                echo "Impossible insert within of the contain table.";
+	        }else
+	            echo "Wrong Query";
+	    }
+	}
+
+	function insertContain2($connection, $userID, $idorder, $prodNumber){
+        // Remove 		Relationship saved in table 'shopping_cart' (temporary)
+        // Create 		Relationship in table 'contain'
+
+        // Get relationship of product/amount
+		// $cartProductIDAndAmount = getProductIDFromContain($connection, $userID);
+		// $cartProductID     = [];
+		// $cartProductAmount = [];
+
+		// foreach($cartProductIDAndAmount as $id=>$amount){
+		// 	array_push($cartProductID, $id);
+		// 	array_push($cartProductAmount, $amount);
+		// }
+
+        for($i=0;$i<$prodNumber;$i++){
+	    	$setPurchase = "INSERT INTO contain
+	        			    VALUES($idorder, $cartProductID[$i], $cartProductAmount[$i]);
+	                       ";
+
+	        if ($result = $connection->query($setPurchase)){
+	            if (!$result)
+	                echo "Impossible insert within of the contain table.";
+	        }else
+	            echo "Wrong Query";
+	    }
+	}
 
 
 

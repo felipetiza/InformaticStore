@@ -12,10 +12,10 @@
 <body>
 
  	<?php
-		include_once "db_connection.php";
 		include_once "management.php";
 
 	    session_start();
+	    databaseConnection();
 		checkAccesOption("Admin");
 
 	    // If user clicked on unlogin button

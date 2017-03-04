@@ -23,10 +23,10 @@
 <body>
 
  	<?php
-		include_once "db_connection.php";
 		include_once "management.php";
 
 	    session_start();
+	    databaseConnection();
 		checkAccesOption("User");
 
 	    // If user clicked on unlogin button
@@ -70,7 +70,7 @@
 		if(isset($_POST["buy"]) || isset($_POST["buyDirectly"])){
 			if(isset($_POST["buy"])){
 				$orderData = [];
-				$orderData['orderID']        = "";						// Within the function, the order ID is generated
+				$orderData['orderID']        = "NULL";
 				$orderData['customerID']     = $_SESSION['userID'];
 				$orderData['date']           = "";						// Within the function, the current date is saved
 				$orderData['amountProducts'] = $cartProductsNumber;

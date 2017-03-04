@@ -12,10 +12,10 @@
 <body>
 
  	<?php
-		include_once "db_connection.php";
 		include_once "management.php";
 
 	    session_start();
+	    databaseConnection();
 	    checkAccesOption("Admin");
 
 	    // If user clicked on unlogin button
@@ -47,15 +47,17 @@
 			$orderSelectedPrice      = $orderData['price'];
 
 			// != 1  -> The array isn't empty. '1' because array is 2 dimensions
-			$orderProductAndAmount = getOrderProductAndAmount($connection, $_POST["orderID"]);	// Return 3 dimensions
-			$orderProduct    = (count($orderProductAndAmount) != 1) ? $orderProductAndAmount['idProduct'] : [];
-			$orderAmountProd = (count($orderProductAndAmount) != 1) ? $orderProductAndAmount['amount'] : [];
+			// $orderProductAndAmount = getOrderProductAndAmount($connection, $_POST["orderID"]);	// Return 3 dimensions
+			// $orderProduct    = (count($orderProductAndAmount) != 1) ? $orderProductAndAmount['idProduct'] : [];
+			// $orderAmountProd = (count($orderProductAndAmount) != 1) ? $orderProductAndAmount['amount'] : [];
 
 
 		}
 		if(isset($_POST["buttonEdit"])){
+			// Remove 2 tables
 			deleteOrder($connection, $_POST["editOrderID"]);
 
+			// Insert within 2 tables
 			$orderData = [];
 			$orderData['orderID']        = $_POST['editOrderID'];
 			$orderData['customerID']     = $_POST['editCustomerID'];
@@ -63,6 +65,11 @@
 			$orderData['amountProducts'] = $_POST['editAmountProd'];
 			$orderData['price']          = $_POST['editPrice'];
 			insertOrder($connection, $orderData);
+
+			$orderID_previousInserted = getLastAutoIncrementGenerated($connection, "order2", "informaticstore");
+
+			// Pasarle la nueva relacion de productos-cantidad
+			insertContain2($connection, $_SESSION['userID'], $orderID_previousInserted, $orderData['amountProducts']);
 
 			refreshOrders($connection);
 		}
@@ -178,13 +185,20 @@
 			            	<span>Date</span>
 			            	<input type="text" name="editDate" maxlength="50" value="<?php echo $orderSelectedDate; ?>" required>
 			        	</div>
-
+			        	<div>
+			            	<span>Amount Products</span>
+			            	<input type="text" name="editAmountProd" maxlength="2000" value="<?php echo $orderSelectedAmountProd; ?>" required>
+			        	</div>
+			        	<div>
+			            	<span>Total Price</span>
+			            	<input type="text" name="editPrice" maxlength="10" value="<?php echo $orderSelectedPrice; ?>" required>
+			        	</div>
 						<?php
-							for($i=0;$i<count($orderProduct);$i++){
-								for($j=0;$j<count($orderProduct[$i]);$j++){
-									echo $orderProduct[$i][$j]. " > ".$orderAmountProd[$i][$j]."<br>";
-								}
-							}
+							// for($i=0;$i<count($orderProduct);$i++){
+							// 	for($j=0;$j<count($orderProduct[$i]);$j++){
+							// 		echo $orderProduct[$i][$j]. " > ".$orderAmountProd[$i][$j]."<br>";
+							// 	}
+							// }
 						?>
 			            <div>
 			                <input type="submit" name="buttonEdit" class="standardButton" value="Edit">
