@@ -53,16 +53,13 @@
 		}
 		if(isset($_POST["buttonEdit"])){
 
-			// =========================================================
-	        // Get products data and it's amount, belonging to an order
-			// =========================================================
+			// Get the product count of a order
+			$orderProdAndAmount = getOrderProductAndAmount($connection, $_POST["editOrderID"]);	// Return 2 dimensions
+			$orderProduct = (count($orderProdAndAmount) != 1) ? $orderProdAndAmount['idProduct'] : [];
+
+			// Get products data and it's amount, belonging to an order
 			$orderProductID     = [];
 			$orderProductAmount = [];
-
-			// Get the product count of a order
-			$orderProductAndAmount = getOrderProductAndAmount($connection, $_POST["editOrderID"]);	// Return 2 dimensions
-			$orderProduct = (count($orderProductAndAmount) != 1) ? $orderProductAndAmount['idProduct'] : [];
-
 			for($i=0;$i<count($orderProduct);$i++){
 				array_push($orderProductID, $_POST['editProducID_'.$i]);
 				array_push($orderProductAmount, $_POST['editAmount_'.$i]);
@@ -79,7 +76,7 @@
 			$orderData['amountProducts'] = $_POST['editAmountProd'];
 			$orderData['price']          = $_POST['editPrice'];
 			insertOrder($connection, $orderData);
-			insertContain2($connection, $_POST['editOrderID'], $orderProductID, $orderProductAmount);
+			insertContain($connection, $_POST['editOrderID'], $orderProductID, $orderProductAmount);
 
 			refreshOrders($connection);
 		}
@@ -201,7 +198,7 @@
 			        	</div>
 			        	<div>
 			            	<span>Price</span>
-			            	<input type="text" class="inputDisabled" name="editPrice" maxlength="50" value="<?php echo $orderSelectedPrice; ?>" tabindex="-1">
+			            	<input type="text" name="editPrice" maxlength="50" value="<?php echo $orderSelectedPrice; ?>">
 			        	</div>
 			        	<br/>
 			        	<div>

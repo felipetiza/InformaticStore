@@ -410,23 +410,27 @@
         return $idorder;
 	}
 
-    function getCartProductAndAmount($connection, $userID){
-        $cartProductID = [];	// Asociative array
-        $getusername = "SELECT *
-                        FROM shopping_cart
-                        WHERE idcustomer = $userID;
-                       ";
+	function getCartProductAndAmount($connection, $userID){
+        $cartProductAndAmount = [[]];
+        $i = 0;
+        $getCart = "SELECT *
+                    FROM shopping_cart
+                    WHERE idcustomer = $userID;
+                   ";
 
-        if ($result = $connection->query($getusername)) {
+        if ($result = $connection->query($getCart)) {
             if ($result->num_rows > 0){
-                while($product = $result->fetch_object())
-					$cartProductID[$product->idproduct] = $product->amount;
+                while($product = $result->fetch_object()){
+					$cartProductAndAmount['idProduct'][$i] = $product->idproduct;
+					$cartProductAndAmount['amount'][$i]    = $product->amount;
+					$i++;
+				}
             }else{
                 // echo "The shopping cart is empty";
             }
         }else
             echo "Wrong Query";
-		return $cartProductID;
+		return $cartProductAndAmount;
     }
 
     function getProductIDFromContain($connection, $userID){
@@ -538,22 +542,15 @@
 
         // Get client's products from shopping cart
 		$cartProductIDAndAmount = getCartProductAndAmount($connection, $_SESSION['userID']);
-		$cartProductsNumber     = count($cartProductIDAndAmount);
-		$cartTotalPrice         = 0;
+		$cartProductID     = (count($cartProductIDAndAmount) != 1) ? $cartProductIDAndAmount['idProduct']: [];
+		$cartProductAmount = (count($cartProductIDAndAmount) != 1) ? $cartProductIDAndAmount['amount'] : [];
 
-        // Get products data of client
-		$cartProductID     = [];
-		$cartProductAmount = [];
-
-		foreach($cartProductIDAndAmount as $id=>$amount){
-			array_push($cartProductID, $id);
-			array_push($cartProductAmount, $amount);
-		}
-
-		// != 1 -> The cart isn't empty. '1' because is array 2 dimensions
 		$cartProductData  = getProductDataFromCart($connection, $cartProductID);
 		$cartProductName  = (count($cartProductData) != 1) ? $cartProductData['name'] : [];
 		$cartProductPrice = (count($cartProductData) != 1) ? $cartProductData['price'] : [];
+
+		$cartProductsNumber = count($cartProductID);
+		$cartTotalPrice     = 0;
 
 		// Calculates the purchase price
 		for($i=0;$i<$cartProductsNumber;$i++)
