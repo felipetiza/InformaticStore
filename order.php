@@ -83,7 +83,6 @@
 			refreshOrdersOfAClient($connection, $_SESSION["userID"]);
             showToast("Purchase made with success");
 		}
-
 		toggleDesignCart();
 	?>
 
@@ -158,6 +157,10 @@
 		-->
 
 			<?php
+				if(count($orderDate) == 0){
+					echo "<p id='orderEmpty'>You do not have orders</p>";
+				}
+
 				for($i=0;$i<count($orderDate);$i++){					// Orders
 					echo "<button class='accordion'>";
 					echo "<div id='left'>";

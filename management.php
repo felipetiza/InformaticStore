@@ -722,14 +722,14 @@
 		$orderAmountProd = $ordersData['amount'];
 		$orderPrice      = $ordersData['price'];
 
-		// != 2  -> The array isn't empty. '2' because array is 3 dimensions
+		// != 1  -> The array isn't empty. '1' because array is 3 dimensions
 		$orderProductAndAmount = getOrderProductAndAmountFromArray($connection, $orderOrderID);	// Return 3 dimensions
-		$orderProduct = (count($orderProductAndAmount) != 2) ? $orderProductAndAmount['idProduct'] : [];
-		$orderAmount  = (count($orderProductAndAmount) != 2) ? $orderProductAndAmount['amount'] : [];
+		$orderProduct = (count($orderProductAndAmount) != 1) ? $orderProductAndAmount['idProduct'] : [];
+		$orderAmount  = (count($orderProductAndAmount) != 1) ? $orderProductAndAmount['amount'] : [];
 
 		$productData = getProductDataArray($connection, $orderProduct);							// Return 3 dimensions
-		$productName  = (count($productData) != 2) ? $productData['name'] : [];
-		$productPrice = (count($productData) != 2) ? $productData['price'] : [];
+		$productName  = (count($productData) != 1) ? $productData['name'] : [];
+		$productPrice = (count($productData) != 1) ? $productData['price'] : [];
 
 		/*
 		$productName[0][0]				// Order 0 - Prod 1
