@@ -123,7 +123,7 @@ hr{ color: #ffffff80; }
 }
 .modal-content form{
 	margin: 0 auto;
-	width: 375px;
+	width: 370px;
 }
 .modal-content span{
 	width: 100px;
@@ -164,7 +164,17 @@ input[type="file"]{
 .products{
 	margin-left: 105px;
 }
-
+#addProduct{
+	width: 10px;
+	padding: 0px 4px 2px 4px;
+    background:#E2ECEE;
+	border-radius: 56px;
+    cursor: pointer;
+	margin-left: -25px;
+	position: absolute;
+	margin-top: -4px;
+	font-size: 11px;
+}
 
 
 

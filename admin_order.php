@@ -8,6 +8,22 @@
 	<link rel="stylesheet" href="css/resources.css">
 	<script src="js/management.js"></script>
 	<script src="js/author.js"></script>
+	<script>
+		// When you click on the button + , a new field will be added to place the product data
+		window.onload = function(){
+			var cont = 1;	// The first product field (value 0) already is wrote
+			var buttonAddOrder = document.getElementById('addProduct');
+
+			buttonAddOrder.addEventListener("click", function(ev){
+
+				var newInput = "<div class='products'><input type='text' class='inputProd' name='addProducID_"+cont+"' required><input type='number' class='inputAmount' name='addAmount_"+cont+"' min='1' value='1' required></div>";
+
+				document.getElementById('putProducts').insertAdjacentHTML("beforeend", newInput);
+				cont++;
+				// console.log(newInput);
+			},false);
+		};
+	</script>
 </head>
 <body>
 
@@ -57,7 +73,7 @@
 			$orderProdAndAmount = getOrderProductAndAmount($connection, $_POST["editOrderID"]);	// Return 2 dimensions
 			$orderProduct = (count($orderProdAndAmount) != 1) ? $orderProdAndAmount['idProduct'] : [];
 
-			// Get products data and it's amount, belonging to an order
+			// Get relationship of product/amount from modalWindowEdit
 			$orderProductID     = [];
 			$orderProductAmount = [];
 			for($i=0;$i<count($orderProduct);$i++){
@@ -77,6 +93,40 @@
 			$orderData['price']          = $_POST['editPrice'];
 			insertOrder($connection, $orderData);
 			insertContain($connection, $_POST['editOrderID'], $orderProductID, $orderProductAmount);
+
+			refreshOrders($connection);
+		}
+		if(isset($_POST["openModalAdd"])){
+			loadModalWindow("modalWindowAdd", "closeModalAdd");
+		}
+		if(isset($_POST["buttonAdd"])){
+			// Get relationship of product/amount from modalWindowAdd
+			// ------------------------------------------------------
+
+			// Default 5.
+			// 2 are of 1 product (input text and number)
+			// 3 are of the fields (customerID, price, buttonAdd)
+			$numberTotal = count($_POST);
+			$numberProductToInsert = ($numberTotal - 3) / 2;
+
+			$orderData = [];
+			$orderData['orderID']        = "NULL";
+			$orderData['customerID']     = $_POST['addCustomerID'];
+			$orderData['date']           = "";
+			$orderData['amountProducts'] = $numberProductToInsert;
+			$orderData['price']          = $_POST['addPrice'];
+			insertOrder($connection, $orderData);
+
+			$orderID_previousInserted = getLastAutoIncrementGenerated($connection, "order2", "informaticstore");
+
+			$orderProductID     = [];
+			$orderProductAmount = [];
+			for($i=0;$i<$numberProductToInsert;$i++){
+				array_push($orderProductID, $_POST['addProducID_'.$i]);
+				array_push($orderProductAmount, $_POST['addAmount_'.$i]);
+			}
+
+			insertContain($connection, $orderID_previousInserted, $orderProductID, $orderProductAmount);
 
 			refreshOrders($connection);
 		}
@@ -190,15 +240,15 @@
 			        	</div>
 			        	<div>
 			            	<span>Date</span>
-			            	<input type="text" name="editDate" maxlength="50" value="<?php echo $orderSelectedDate; ?>" required>
+			            	<input type="text" name="editDate" maxlength="10" value="<?php echo $orderSelectedDate; ?>" required>
 			        	</div>
 			        	<div>
 			            	<span>Amount</span>
-			            	<input type="text" class="inputDisabled" name="editAmountProd" maxlength="50" value="<?php echo $orderSelectedAmountProd; ?>" tabindex="-1">
+			            	<input type="text" class="inputDisabled" name="editAmountProd" maxlength="6" value="<?php echo $orderSelectedAmountProd; ?>" tabindex="-1">
 			        	</div>
 			        	<div>
 			            	<span>Price</span>
-			            	<input type="text" name="editPrice" maxlength="50" value="<?php echo $orderSelectedPrice; ?>">
+			            	<input type="text" name="editPrice" maxlength="9" value="<?php echo $orderSelectedPrice; ?>" required>
 			        	</div>
 			        	<br/>
 			        	<div>
@@ -222,7 +272,43 @@
 		  	</div>
 		</div>
 
-
+		<div id="modalWindowAdd" class="modal">
+			<div class="modal-content">
+				<label id="closeModalAdd" class="close">&times;</label>
+		        <h1>Add Order</h1>
+		        <hr>
+		        <br>
+		        <div id="down">
+					<form method="post">
+						<div>
+			            	<span>Customer ID</span>
+			            	<input type="text" name="addCustomerID" maxlength="80" required>
+			        	</div>
+			        	<div>
+			            	<span>Price</span>
+			            	<input type="text" name="addPrice" maxlength="9" required>
+			        	</div>
+			        	<br/>
+			            <div>
+							<span>Product(s)</span>
+							<span>Product ID</span>
+							<span>Amount</span>
+							<span id="addProduct">&#10133;</span>
+			        	</div>
+						<div id="putProducts">
+							<div class='products'><input type='text' class='inputProd' name='addProducID_0' required><input type='number' class='inputAmount' name='addAmount_0' min="1" value="1" required></div>
+<!-- 							<div class='products'>
+								<input type='text' class='inputProd' name='editProducID_$i' required>
+								<input type='number' class='inputAmount' name='editAmount_$i' min="1" value="1" required>
+							</div> -->
+						</div>
+			            <div>
+			                <input type="submit" name="buttonAdd" class="standardButton" value="Add">
+			            </div>
+					</form>
+		        </div>
+			</div>
+		</div>
 
 	</div>
 </body>
