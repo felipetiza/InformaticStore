@@ -40,11 +40,11 @@ body{
 	border-radius: 10px;
 }
 #basic #cart img{
-  width: 38px;
+  	width: 38px;
 	height: 36px;
 	float: right;
 	margin-top: -1px;
-  filter: brightness(125%);
+  	filter: brightness(125%);
 }
 #infobar{
 	background: #E2ECEE;
@@ -58,7 +58,7 @@ body{
 	width: 70%;
 }
 #infobar > #left > #path{
-  margin-top: 2px;
+  	margin-top: 2px;
 }
 #infobar > #right{
 	width: 30%;

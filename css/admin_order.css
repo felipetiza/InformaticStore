@@ -154,3 +154,19 @@ input[type="file"]{
 .modal input[type='file']{
 	padding: 5px 12px !important;
 }
+.inputProd{
+  	width: 30px !important;
+}
+.inputAmount{
+  	width: 40px !important;
+	margin-left: 50px !important;
+}
+.products{
+	margin-left: 105px;
+}
+
+
+
+
+
+

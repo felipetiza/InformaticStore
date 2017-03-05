@@ -64,7 +64,7 @@
 			// Store the original pass. In edit screen, If password isn't put, it saved
 			// the previous, else it stored the new one
 			$userDataRecover = getUserData($connection, $_POST["editID"]);
-			$passwordSaved = $userDataRecover['pass'];
+			$passwordSaved   = $userDataRecover['pass'];
 
 			$userData['pass'] = (strlen($_POST['editPass']) == 0) ? $passwordSaved : $_POST['editPass'];
 

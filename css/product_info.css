@@ -174,18 +174,6 @@ hr{ color: #ffffff80; }
 	background: #2a6581ee;
 	transition: 150ms;
 }
-#content input[type='number']{
-	background: #c8d7decc;
-	color: #798e94;
-	transition: 150ms;
-	border: none;
-	padding: 6px 0px;
-	padding-left: 23px;
-	width: 46px;
-	border-radius: 7px;
-	margin: 0px 16px;
-	/*! padding-right: 100px; */
-}
 table{
 	width: 520px;
 }

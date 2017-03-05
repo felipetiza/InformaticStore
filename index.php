@@ -58,23 +58,19 @@
         }
 
         if (isset($_POST["buttonSignUp"])) {
-            $name    = $_POST['name'];
-            $surname = $_POST['surname'];
-            $email   = $_POST['email'];
-            $address = $_POST['address'];
-            $phone   = $_POST['phone'];
-            $type    = "User";
-            $user    = $_POST['user'];
-            $pass    = sha1($_POST['pass']);
+            $userData = [];
+            $userData['id']      = 'NULL';
+            $userData['name']    = $_POST['name'];
+            $userData['surname'] = $_POST['surname'];
+            $userData['email']   = $_POST['email'];
+            $userData['address'] = $_POST['address'];
+            $userData['phone']   = $_POST['phone'];
+            $userData['type']    = "User";
+            $userData['user']    = $_POST['user'];
+            $userData['pass']    = $_POST['pass'];
 
-            $insert = "INSERT INTO customer
-                       VALUES(NULL, '$name', '$surname', '$email', '$address', '$phone', '$type', '$user', '$pass');
-                      ";
-            if ($result = $connection->query($insert)) {
-                sleep(5);
-                header('Location: '.MAIN_PAGE);
-            }else
-                echo "Wrong Query";
+            insertUser($connection, $userData);
+            showToast("Account created with success");
         }
 
     ?>

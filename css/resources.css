@@ -30,6 +30,12 @@ a::-moz-focus-inner {
 }
 hr{ color: #ffffff80; }
 
+.inputDisabled{
+    pointer-events: none;
+    background: #ccc3;
+    color: #888c;
+}
+
 /* ----------------------------------------------- */
 /* Textbox
 /* ----------------------------------------------- */
@@ -57,6 +63,19 @@ input[type='tel']:focus,
 input[type='email']:focus{
     outline: none;
     box-shadow:0 0 0 3px #dde9ec;
+}
+
+input[type='number']{
+    background: #c8d7decc;
+    color: #798e94;
+    transition: 150ms;
+    border: none;
+    padding: 6px 0px;
+    padding-left: 23px;
+    width: 46px;
+    border-radius: 7px;
+    margin: 0px 16px;
+    /*! padding-right: 100px; */
 }
 
 /* ----------------------------------------------- */

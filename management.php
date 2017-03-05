@@ -221,7 +221,7 @@
     }
 
 	function getProductDataArray($connection, $prodID){
-		$productData = [[]];
+		$productData = [[[]]];
 
 		for($i=0;$i<count($prodID);$i++){				// Orders
 			for($j=0;$j<count($prodID[$i]);$j++){		// Values
@@ -410,7 +410,7 @@
         return $idorder;
 	}
 
-    function getProductIDFromCart($connection, $userID){
+    function getCartProductAndAmount($connection, $userID){
         $cartProductID = [];	// Asociative array
         $getusername = "SELECT *
                         FROM shopping_cart
@@ -537,9 +537,10 @@
 		global $cartProductPrice;
 
         // Get client's products from shopping cart
-		$cartProductIDAndAmount = getProductIDFromCart($connection, $_SESSION['userID']);
+		$cartProductIDAndAmount = getCartProductAndAmount($connection, $_SESSION['userID']);
 		$cartProductsNumber     = count($cartProductIDAndAmount);
 		$cartTotalPrice         = 0;
+
         // Get products data of client
 		$cartProductID     = [];
 		$cartProductAmount = [];
@@ -641,11 +642,11 @@
         return $orderData;
 	}
 
-	function getOrderProductAndAmount($connection, $orderID){
-	    $orderProductAndAmount = [[[]]];	// idProduct - order - value ; $i = order |	$j = value
+	function getOrderProductAndAmountFromArray($connection, $orderID){
+	    $orderProductAndAmount = [[[]]];	// idProduct - order - value
 
-	    for($i=0;$i<count($orderID);$i++){	// A order can have a few rows in the database
-	 	    $j = 0;
+	    for($i=0;$i<count($orderID);$i++){	// Orders (i) - $orderID is a array
+	 	    $j = 0;							// Values (j)
 		    $getOrder = "SELECT *
 		                 FROM contain
 		                 WHERE idorder = ".$orderID[$i].";
@@ -653,16 +654,39 @@
 
 		    if ($result = $connection->query($getOrder)) {
 		        if ($result->num_rows > 0){
-		        	while($order = $result->fetch_object()){
+		        	while($order = $result->fetch_object()){	// A order have a few rows in the database
 						$orderProductAndAmount['idProduct'][$i][$j] = $order->idproduct;
 						$orderProductAndAmount['amount'][$i][$j]    = $order->amount;
 						$j++;
 					}
 		        }else
-		            echo "Impossible to get the order data";
+		            echo "Impossible to get the relationship between product and its quantity.";
 		    }else
 		        echo "Wrong Query";
 		}
+		return $orderProductAndAmount;
+	}
+
+	function getOrderProductAndAmount($connection, $orderID){
+	    $orderProductAndAmount = [[]];	// idProduct - value
+ 	    $i = 0;
+	    $getOrder = "SELECT *
+	                 FROM contain
+	                 WHERE idorder = $orderID;
+	                ";
+
+	    if ($result = $connection->query($getOrder)) {
+	        if ($result->num_rows > 0){
+	        	while($order = $result->fetch_object()){
+					$orderProductAndAmount['idProduct'][$i] = $order->idproduct;
+					$orderProductAndAmount['amount'][$i]    = $order->amount;
+					$i++;
+				}
+	        }else
+	            echo "Impossible to get the relationship between product and its quantity.";
+	    }else
+	        echo "Wrong Query";
+
 		return $orderProductAndAmount;
 	}
 
@@ -694,21 +718,21 @@
 		global $productName;
 		global $productPrice;
 
-		$ordersData = getOrderDataOfAClient($connection, $userID);
+		$ordersData = getOrderDataOfAClient($connection, $userID);								// Return 2 dimensions
 		$orderOrderID    = $ordersData['orderID'];
 		$orderCustomerID = $ordersData['customerID'];
 		$orderDate       = $ordersData['date'];
 		$orderAmountProd = $ordersData['amount'];
 		$orderPrice      = $ordersData['price'];
 
-		// != 1  -> The array isn't empty. '1' because array is 2 dimensions
-		$orderProductAndAmount = getOrderProductAndAmount($connection, $orderOrderID);	// Return 3 dimensions
-		$orderProduct = (count($orderProductAndAmount) != 1) ? $orderProductAndAmount['idProduct'] : [];
-		$orderAmount  = (count($orderProductAndAmount) != 1) ? $orderProductAndAmount['amount'] : [];
+		// != 2  -> The array isn't empty. '2' because array is 3 dimensions
+		$orderProductAndAmount = getOrderProductAndAmountFromArray($connection, $orderOrderID);	// Return 3 dimensions
+		$orderProduct = (count($orderProductAndAmount) != 2) ? $orderProductAndAmount['idProduct'] : [];
+		$orderAmount  = (count($orderProductAndAmount) != 2) ? $orderProductAndAmount['amount'] : [];
 
-		$productData = getProductDataArray($connection, $orderProduct);				// Return 3 dimensions
-		$productName  = (count($productData) != 1) ? $productData['name'] : [];
-		$productPrice = (count($productData) != 1) ? $productData['price'] : [];
+		$productData = getProductDataArray($connection, $orderProduct);							// Return 3 dimensions
+		$productName  = (count($productData) != 2) ? $productData['name'] : [];
+		$productPrice = (count($productData) != 2) ? $productData['price'] : [];
 
 		/*
 		$productName[0][0]				// Order 0 - Prod 1
@@ -751,50 +775,10 @@
             echo "Wrong Query";
 	}
 
-	function insertContain($connection, $userID, $idorder, $prodNumber){
-        // Remove 		Relationship saved in table 'shopping_cart' (temporary)
-        // Create 		Relationship in table 'contain'
-
-        // Get relationship of product/amount from cart
-		$cartProductIDAndAmount = getProductIDFromCart($connection, $userID);
-		$cartProductID     = [];
-		$cartProductAmount = [];
-
-		foreach($cartProductIDAndAmount as $id=>$amount){
-			array_push($cartProductID, $id);
-			array_push($cartProductAmount, $amount);
-		}
-
-        for($i=0;$i<$prodNumber;$i++){
+	function insertContain($connection, $idorder, $productID, $productAmount){
+        for($i=0;$i<count($productID);$i++){
 	    	$setPurchase = "INSERT INTO contain
-	        			    VALUES($idorder, $cartProductID[$i], $cartProductAmount[$i]);
-	                       ";
-
-	        if ($result = $connection->query($setPurchase)){
-	            if (!$result)
-	                echo "Impossible insert within of the contain table.";
-	        }else
-	            echo "Wrong Query";
-	    }
-	}
-
-	function insertContain2($connection, $userID, $idorder, $prodNumber){
-        // Remove 		Relationship saved in table 'shopping_cart' (temporary)
-        // Create 		Relationship in table 'contain'
-
-        // Get relationship of product/amount
-		// $cartProductIDAndAmount = getProductIDFromContain($connection, $userID);
-		// $cartProductID     = [];
-		// $cartProductAmount = [];
-
-		// foreach($cartProductIDAndAmount as $id=>$amount){
-		// 	array_push($cartProductID, $id);
-		// 	array_push($cartProductAmount, $amount);
-		// }
-
-        for($i=0;$i<$prodNumber;$i++){
-	    	$setPurchase = "INSERT INTO contain
-	        			    VALUES($idorder, $cartProductID[$i], $cartProductAmount[$i]);
+	        			    VALUES($idorder, $productID[$i], $productAmount[$i]);
 	                       ";
 
 	        if ($result = $connection->query($setPurchase)){

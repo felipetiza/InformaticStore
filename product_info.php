@@ -92,7 +92,22 @@
 				insertOrder($connection, $orderData);
 
 				$orderID_previousInserted = getLastAutoIncrementGenerated($connection, "order2", "informaticstore");
-				insertContain($connection, $_SESSION['userID'], $orderID_previousInserted, $cartProductsNumber);
+
+				// Get relationship of product/amount from cart
+				// ==============================================
+				// Remove 		Relationship saved in table 'shopping_cart' (temporary)
+        		// Create 		Relationship in table 'contain'
+
+				$cartProductIDAndAmount = getCartProductAndAmount($connection, $_SESSION['userID']);
+				$cartProductID     = [];
+				$cartProductAmount = [];
+
+				foreach($cartProductIDAndAmount as $id=>$amount){
+					array_push($cartProductID, $id);
+					array_push($cartProductAmount, $amount);
+				}
+
+				insertContain($connection, $orderID_previousInserted, $cartProductID, $cartProductAmount);
 			}
 			// else if(isset($_POST["buyDirectly"])){	// Products within cart + current product
 			// 	$money = $cartTotalPrice + ($productPrice * $_POST["amountToAdd"]);
@@ -184,7 +199,7 @@
 					</h3>
 			        <form method="post" id="buttons">
 						<h3>Quantity:
-							<?php $min = ($productAmount > 0) ? 1 : 0 ?>
+							<?php $min = ($productAmount > 0) ? 1 : 0; ?>
 							<input type="number" name="amountToAdd" min="<?php echo $min; ?>" max="<?php echo $productAmount; ?>" value="<?php echo $min; ?>" >
 						</h3>
 						<input type="submit" name="add" value="Add to cart">
