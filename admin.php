@@ -35,21 +35,11 @@
 		<!-- Level 1 -->
 		<div id="basic">
 	        <div id="user">
-			    <div class="dropdown">
-			        <button class="flatButton dropbtnCategory">Category</button>
-			        <div class="dropdown-content">
- 						<?php
-							for($i=0;$i<count($listProductCategory);$i++){
-								echo "<a href='menu.php?categ=".strtolower($listProductCategory[$i])."' ?>";
-								echo $listProductCategory[$i]."</a>";
-							}
-						?>
-			        </div>
-			    </div>
+	        	<h1>Informatic Store</h1>
 	        </div>
-			<div id="title"><h1>Administration</h1></div>
+			<div id="title"></div>
 			<div id="cart">
-				<label><?php echo $cartProductsNumber; ?></label><img class="myBtn" src="resources/img/cart.png">
+				<label>Administration</label>
 			</div>
 		</div>
         <hr>
@@ -65,8 +55,9 @@
 	        	<div id="btnUser" class="dropdown">
 			        <button class="dropbtnUser"><?php echo $username; ?></button>
 			        <div class="dropdown-content-user">
-			        	<a class="myBtn">Shopping Cart</a>
-			        	<a href="order.php">Orders</a>
+			        	<a href="admin_customer.php">Customer</a>
+			        	<a href="admin_product.php">Products</a>
+			        	<a href="admin_order.php">Order</a>
 						<form method="post"><input type="submit" name="unlogin" value="Logout"></form>
 			        </div>
 			    </div>

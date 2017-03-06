@@ -23,21 +23,23 @@ body{
 	width: 33%;
 }
 #basic #cart{
-	width: 33%;
+	width: 34%;
 }
 #basic #user p{
   	margin-top: 18px;
 }
-#basic #title h1{
+#basic #user h1{
 	font-size: 18px;
-	text-align: center;
+	/* text-align: center; */
 }
 #basic #cart label{
 	float: right;
 	background: #798e94;
 	color: #fff;
 	padding: 3px 7px;
-	border-radius: 10px;
+	border-radius: 4px;
+	margin-top: 14px;
+	/*! margin-left: 29px; */
 }
 #basic #cart img{
   width: 38px;

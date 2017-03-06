@@ -818,11 +818,10 @@
 	}
 
 	function loadModalWindow($modalWindow, $buttonClose){
-		echo "
-		      <script>
-				  document.addEventListener('load', function(){
-				  	  loadModalWindow('$modalWindow', '$buttonClose');
-				  }, true);
+		echo "<script>
+				window.onload = function(){
+					loadModalWindow('$modalWindow', '$buttonClose');
+			 	};
 			  </script>
 			 ";
 	}

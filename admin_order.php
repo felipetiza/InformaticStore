@@ -8,14 +8,15 @@
 	<link rel="stylesheet" href="css/resources.css">
 	<script src="js/management.js"></script>
 	<script src="js/author.js"></script>
-	<script>
+<!-- 	<script>
 		// When you click on the button + , a new field will be added to place the product data
 		window.onload = function(){
 			var cont = 1;	// The first product field (value 0) already is wrote
 			var buttonAddOrder = document.getElementById('addProduct');
+			console.log(buttonAddOrder);
 
 			buttonAddOrder.addEventListener("click", function(ev){
-
+				console.log("Ouhh yeahh!");
 				var newInput = "<div class='products'><input type='text' class='inputProd' name='addProducID_"+cont+"' required><input type='number' class='inputAmount' name='addAmount_"+cont+"' min='1' value='1' required></div>";
 
 				document.getElementById('putProducts').insertAdjacentHTML("beforeend", newInput);
@@ -23,7 +24,7 @@
 				// console.log(newInput);
 			},false);
 		};
-	</script>
+	</script> -->
 </head>
 <body>
 
@@ -97,12 +98,28 @@
 			refreshOrders($connection);
 		}
 		if(isset($_POST["openModalAdd"])){
-			loadModalWindow("modalWindowAdd", "closeModalAdd");
+			echo "
+				<script>
+					window.onload = function(){
+
+						loadModalWindow('modalWindowAdd', 'closeModalAdd');
+
+						var cont = 1;
+						var buttonAddOrder = document.getElementById('addProduct');
+
+						buttonAddOrder.addEventListener('click', function(ev){
+							var newInput = '<div class=products><input type=text class=inputProd name=addProducID_'+cont+' required><input type=number class=inputAmount name=addAmount_'+cont+' min=1 value=1 required></div>';
+
+							document.getElementById('putProducts').insertAdjacentHTML('beforeend', newInput);
+							cont++;
+						},false);
+					};
+				</script>
+			";
 		}
 		if(isset($_POST["buttonAdd"])){
 			// Get relationship of product/amount from modalWindowAdd
 			// ------------------------------------------------------
-
 			// Default 5.
 			// 2 are of 1 product (input text and number)
 			// 3 are of the fields (customerID, price, buttonAdd)
@@ -136,21 +153,11 @@
 		<!-- Level 1 -->
 		<div id="basic">
 	        <div id="user">
-			    <div class="dropdown">
-			        <button class="flatButton dropbtnCategory">Category</button>
-			        <div class="dropdown-content">
- 						<?php
-							for($i=0;$i<count($listProductCategory);$i++){
-								echo "<a href='menu.php?categ=".strtolower($listProductCategory[$i])."' ?>";
-								echo $listProductCategory[$i]."</a>";
-							}
-						?>
-			        </div>
-			    </div>
+	        	<h1>Order</h1>
 	        </div>
-			<div id="title"><h1>Order</h1></div>
+			<div id="title"></div>
 			<div id="cart">
-				<label><?php echo $cartProductsNumber; ?></label><img src="resources/img/cart.png">
+				<label>Administration</label>
 			</div>
 		</div>
         <hr>
@@ -167,8 +174,9 @@
 	        	<div id="btnUser" class="dropdown">
 			        <button class="dropbtnUser"><?php echo $username; ?></button>
 			        <div class="dropdown-content-user">
-			        	<a>Shopping Cart</a>
-			        	<a href="order.php">Orders</a>
+			        	<a href="admin_customer.php">Customer</a>
+			        	<a href="admin_product.php">Products</a>
+			        	<a href="admin_order.php">Order</a>
 						<form method="post"><input type="submit" name="unlogin" value="Logout"></form>
 			        </div>
 			    </div>
