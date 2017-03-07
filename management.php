@@ -1,5 +1,6 @@
 <?php
-	const MAIN_PAGE = "../informaticstore";
+	// const MAIN_PAGE = "../informaticstore";
+	const MAIN_PAGE = "../";	// Go to the proyect root. Load the index file
 
 	$connection;
 
@@ -47,17 +48,22 @@
 	function databaseConnection(){
 		global $connection;
 
-	    if(isset($_ENV['OPENSHIFT_APP_NAME'])){
-	        $user     = $_ENV['OPENSHIFT_MYSQL_DB_USERNAME'];
-	        $host     = $_ENV['OPENSHIFT_MYSQL_DB_HOST'];
-	        $password = $_ENV['OPENSHIFT_MYSQL_DB_PASSWORD'];
-	        $database = "informaticstore";
-	    }else{
-	        $host     = "localhost";
-	        $user     = "informatic";
-	        $password = "store";
-	        $database = "informaticstore";
-	    }
+	    // if(isset($_ENV['OPENSHIFT_APP_NAME'])){
+	    //     $user     = $_ENV['OPENSHIFT_MYSQL_DB_USERNAME'];
+	    //     $host     = $_ENV['OPENSHIFT_MYSQL_DB_HOST'];
+	    //     $password = $_ENV['OPENSHIFT_MYSQL_DB_PASSWORD'];
+	    //     $database = "informaticstore";
+	    // }else{
+	    //     $host     = "localhost";
+	    //     $user     = "informatic";
+	    //     $password = "store";
+	    //     $database = "informaticstore";
+	    // }
+
+    	$host     = "mysql.hostinger.es";
+        $user     = "u449232361_inf";
+        $password = "J9KMLLpWt2JmNmys09";
+        $database = "u449232361_store";
 
 	    $connection = new mysqli($host, $user, $password, $database);
 	    $connection->set_charset("utf8");
