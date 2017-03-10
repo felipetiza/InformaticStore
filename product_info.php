@@ -89,16 +89,14 @@
 				$orderData['date']           = "";						// Within the function, the current date is saved
 				$orderData['amountProducts'] = $cartProductsNumber;
 				$orderData['price']          = $cartTotalPrice;
-				insertOrder($connection, $orderData);
-
-				$orderID_previousInserted = getLastAutoIncrementGenerated($connection, "order2", "informaticstore");
+				$orderID_lastInserted = insertOrder($connection, $orderData);
 
 				// Get relationship of product/amount from cart
 				$cartProductIDAndAmount = getCartProductAndAmount($connection, $_SESSION['userID']);
 				$cartProductID     = $cartProductIDAndAmount['idProduct'];
 				$cartProductAmount = $cartProductIDAndAmount['amount'];
 
-				insertContain($connection, $orderID_previousInserted, $cartProductID, $cartProductAmount);
+				insertContain($connection, $orderID_lastInserted, $cartProductID, $cartProductAmount);
 			}
 			// else if(isset($_POST["buyDirectly"])){	// Products within cart + current product
 			// 	$money = $cartTotalPrice + ($productPrice * $_POST["amountToAdd"]);

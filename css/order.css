@@ -70,13 +70,13 @@ hr{ color: #ffffff80; }
   margin-left: auto;
 }
 #content{
-	display: flex;
-	flex-wrap: wrap;
+/* 	display: flex;
+	flex-wrap: wrap; */
 	/* justify-content: space-around; */
 	/* border: 1px solid #555; */
+	width: 100%;
 }
 .accordion{
-	padding: 5px 10px;
 	display: flex;
 	background: #E2ECEE;
 	border-radius: 6px;
@@ -84,10 +84,8 @@ hr{ color: #ffffff80; }
 	height: 55px;
   	margin: 5px auto;
     padding: 5px;
-	width: 575px;
     border: none;
     transition: 0.4s;
-	margin: 5px auto;
 }
 .accordion:hover{
 	transition: 250ms;
@@ -131,14 +129,14 @@ hr{ color: #ffffff80; }
     content: "\2212";
 }
 .panel {
-	/* border: 1px solid red; */
-	/* width: 575px; */
-    background: white;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
-    margin: 0 auto;
     outline: none;
+	/* border: 1px solid red; */
+	width: 530px;
+    background: white;
+    margin: 0 auto;
 }
 table{
 	width: 520px;

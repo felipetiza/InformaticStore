@@ -400,27 +400,6 @@
             echo "Wrong Query";
     }
 
-	function getLastAutoIncrementGenerated($connection, $table, $databaseName){
-	    // Get the idorder of previous query
-        // Returns the next idorder to insert, so we subtract 1
-        $idorder;
-        $getOrderID = "SELECT AUTO_INCREMENT
-					   FROM information_schema.tables
-					   WHERE table_name = '$table' AND
-					   		 table_schema = '$databaseName';
-                      ";
-
-        if ($result = $connection->query($getOrderID)){
-            if ($result)
-            	$idorder = $result->fetch_object()->AUTO_INCREMENT - 1;
-            else
-                echo "Impossible to get the orderID of the previous insertion.";
-        }else
-            echo "Wrong Query";
-
-        return $idorder;
-	}
-
 	function getCartProductAndAmount($connection, $userID){
         $cartProductAndAmount = [[]];
         $i = 0;
@@ -771,16 +750,23 @@
 		$date           = (strlen($orderData['date']) == 0) ? date('Y-m-d') : $orderData['date'];
 		$amountProducts = $orderData['amountProducts'];
 		$price          = $orderData['price'];
+		$lastID			= 0;
 
         $insertOrder = "INSERT INTO order2
                         VALUES($orderID, $customerID, '$date', $amountProducts, $price);
                        ";
 
 	    if ($result = $connection->query($insertOrder)) {
-            if (!$result)
+
+            if ($result)
+            	$lastID = $connection->insert_id;
+            else
                 echo "Impossible insert within of the order.";
+
         }else
             echo "Wrong Query";
+
+        return $lastID;
 	}
 
 	function insertContain($connection, $idorder, $productID, $productAmount){

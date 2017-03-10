@@ -304,8 +304,8 @@ th{
     color: #798e94;
     padding: 5px;
     padding-left: 10px;
-    border-top: 2px solid #798e94aa;
-    border-bottom: 2px solid #798e94aa;
+    border-top: 2px solid rgba(121, 142, 148, 0.7);
+    border-bottom: 2px solid rgba(121, 142, 148, 0.5);
     border-radius: 0px;
 }
 td{
