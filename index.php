@@ -72,23 +72,24 @@
             insertUser($connection, $userData);
             showToast("Account created with success");
         }
-
     ?>
 
     <img id="logo" src="resources/img/logo.png">
     <div id="wrapper">
         <form method="post">
-            <div>
-                <img src="resources/img/user.png">
-                <input name="user" type="text" required>
+            <div class="row">
+                <div class="left"><img src="resources/img/user.png"></div>
+                <div class="right"><input name="user" type="text" required></div>
             </div>
-            <div>
-                <img src="resources/img/pass.png">
-                <input name="pass" type="password" required>
+            <div class="row">
+                <div class="left"><img src="resources/img/pass.png"></div>
+                <div class="right"><input name="pass" type="password" required></div>
             </div>
-            <div>
+            <div class="row">
                 <input type="submit" name="buttonLogIn" class="standardButton"  value="Log In">
-            <div>Don't have an account? <a id="openModalWindow">Sign Up</a></div>
+            </div>
+            <div class="row">
+                <label>Don't have an account? <a id="openModalWindow">Sign Up</a></label>
             </div>
         </form>
     </div>
