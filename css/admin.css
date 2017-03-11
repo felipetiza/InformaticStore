@@ -102,7 +102,8 @@ hr{ color: #ffffff80; }
 	height: 100px;
 }
 #content #img a:hover{
-    background: rgba(0, 0, 255, .10);
+    /* background: rgba(0, 0, 255, .10); */
+    background: #E2ECEE;
 	border-radius: 6px 6px 0px 0px;
 	transition: 250ms;
 }
@@ -112,7 +113,8 @@ hr{ color: #ffffff80; }
 	display: flex;
 	font-weight: bold;
 	padding: 5px 0px;
-    background: rgba(0, 0, 255, .10);
+    /* background: rgba(0, 0, 255, .10); */
+    background: #E2ECEE;
 }
 #content #text div p:nth-child(1){
 	margin: 0 auto;

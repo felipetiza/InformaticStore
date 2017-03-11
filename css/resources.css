@@ -290,8 +290,7 @@ table {
     transition: 250ms;
 }
 tr:hover{
-    background: #0000ff15;
-    background: rgba(0, 0, 255, 0.10);
+    background: #E2ECEE;
     border-radius: 6px;
     transition: 250ms;
 }
