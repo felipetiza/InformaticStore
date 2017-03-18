@@ -27,9 +27,10 @@
         checkAccesOptionOnLogin();
 
         if (isset($_POST["buttonLogIn"])) {
-            $user = $_POST['user'];
-            $pass = sha1($_POST['pass']);
+            $user = trim($_POST['user']);
+            $pass = sha1(trim($_POST['pass']));
 
+            echo $pass;
             $login = "SELECT idcustomer, type
                       FROM customer
                       WHERE username = ? AND
@@ -60,14 +61,14 @@
         if (isset($_POST["buttonSignUp"])) {
             $userData = [];
             $userData['id']      = 'NULL';
-            $userData['name']    = $_POST['name'];
-            $userData['surname'] = $_POST['surname'];
-            $userData['email']   = $_POST['email'];
-            $userData['address'] = $_POST['address'];
-            $userData['phone']   = $_POST['phone'];
+            $userData['name']    = trim($_POST['name']);
+            $userData['surname'] = trim($_POST['surname']);
+            $userData['email']   = trim($_POST['email']);
+            $userData['address'] = trim($_POST['address']);
+            $userData['phone']   = trim($_POST['phone']);
             $userData['type']    = "User";
-            $userData['user']    = $_POST['user'];
-            $userData['pass']    = $_POST['pass'];
+            $userData['user']    = trim($_POST['user']);
+            $userData['pass']    = trim($_POST['pass']);
 
             insertUser($connection, $userData);
             showToast("Account created with success");

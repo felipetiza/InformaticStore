@@ -87,13 +87,13 @@
 
 			// Insert within 2 tables
 			$orderData = [];
-			$orderData['orderID']        = $_POST['editOrderID'];
-			$orderData['customerID']     = $_POST['editCustomerID'];
-			$orderData['date']           = $_POST['editDate'];
-			$orderData['amountProducts'] = $_POST['editAmountProd'];
-			$orderData['price']          = $_POST['editPrice'];
+			$orderData['orderID']        = trim($_POST['editOrderID']);
+			$orderData['customerID']     = trim($_POST['editCustomerID']);
+			$orderData['date']           = trim($_POST['editDate']);
+			$orderData['amountProducts'] = trim($_POST['editAmountProd']);
+			$orderData['price']          = trim($_POST['editPrice']);
 			insertOrder($connection, $orderData);
-			insertContain($connection, $_POST['editOrderID'], $orderProductID, $orderProductAmount);
+			insertContain($connection, $orderData['orderID'], $orderProductID, $orderProductAmount);
 
 			refreshOrders($connection);
 		}

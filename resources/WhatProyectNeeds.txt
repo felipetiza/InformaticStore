@@ -1,38 +1,25 @@
-JD - Se puede usar JavaScript en lugar de PHP en algunos sitios
-     A la hora de obtener campos de un form, en vez de enviarlos al mismo fichero por POST, mejor con JS
-   - Es mejor hacer el proyecto 1 solo lenguaje para no mezclar? O en cambio si hay cosas que se puede hacer de forma mas facil en JS por ejemplo, usarlo como 2º lenguaje
+Proyecto
+-----------
 
-Como insertar usuario desde sign_up.php
+Usar trim() para validar que no haya espacios en todo lo que el usuario introduzca en los input
+Meter los ficheros de usuario y de administracion en carpetas ordenadas
+Bug: al cambiar la PK de cliente, ya no corresponden sus pedidos con dicho cliente
+Bug: al editar un cliente, se borran sus pedidos. Hay que actualizar en lugar de borrar y agregar
+Descuento
+Iva
+img     Guardar las imgs en base64
+        Detectar si las imgs estan caidas
+La fecha de pedido (editar y añadir) ponerla con input type date            NO
+Cambiar nombre de los ficheros de usuarios
+Al editar el producto de un pedido, que guarde su nuevo precio
 
+Pantalla orders - mostrar todo el dinero gastado
+Shopping cart - Quitar el nº unidades de un producto (= cantidad que se vaya a comprar)
 
-PONER DISEÑO AL MENÚ
-Ver como poner CSS en comun en distintos ficheros css
-
-
-NO ESTOY LOGUEADO Y CARGO MENU.PHP
-
-3º - Bienvenido + nº User - hace falta otra consulta
-
-
-M
-V   HTML y CSS
-C   PHP
-
-
-Login   Funcion prepare()   X
-        sesiones            X
-        Pass en SHA1        X
 
 - Mejora: [Clientes] Los clientes tengan dinero y al comprar se les reste
 - Mejora: [Admin] Meter tabla contabilidad: Llevar las ganancias de la tienda. Los gastos de los proveedores.
 - Mejora: Cambiar el idioma segun el usuario. Guardar atributo en la BD.
-- Desloguear
-- Comentarios grandes en el codigo
-- Escribir comentarios en las funciones
-
-LOGIN
---------
-- Poner el login dentro del menu, en forma de ventana emergente o de alguna manera
 - Prevenir ataques SQLi, CSRF y XSS
 
 Estructura de MundoInformatica - Para tabla Pedidos hacerlo mejor con Sesiones
@@ -43,15 +30,6 @@ Todo nombre minusculas, sin ñ y sin acentos
 SHOPPINGCART - En esta tabla inserto los datos de los productos durante el tiempo que dure la compra. Una el cliente haya comprado, borro de esta tabla los productos asociados a dicho cliente
 
 - Todas las restricciones serán del lado del cliente para ahorrar trabajo de produccion al servidor.
-
-
-Ejemplo Bootstrap
-https://github.com/pekechis/teaching_examples/tree/master/CSS/BootStrap_Example
-
-Subir imagenes al servidor
-https://github.com/pekechis/teaching_examples/blob/master/Php/Passing_Info/upload_image.php
-
-
 
 
 

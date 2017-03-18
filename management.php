@@ -1,6 +1,6 @@
 <?php
-	// const MAIN_PAGE = "../informaticstore";
-	const MAIN_PAGE = "../";	// Go to the proyect root. Load the index file
+	const MAIN_PAGE = "../informaticstore";
+	// const MAIN_PAGE = "../";	// Go to the proyect root. Load the index file
 
 	$connection;
 
@@ -60,15 +60,15 @@
 	    //     $database = "informaticstore";
 	    // }
 
-    	$host     = "mysql.hostinger.es";
-        $user     = "u449232361_inf";
-        $password = "J9KMLLpWt2JmNmys09";
-        $database = "u449232361_store";
+    	// $host     = "mysql.hostinger.es";
+     //    $user     = "u449232361_inf";
+     //    $password = "J9KMLLpWt2JmNmys09";
+     //    $database = "u449232361_store";
 
-		    // $host     = "localhost";
-	     //    $user     = "informatic";
-	     //    $password = "store";
-	     //    $database = "informaticstore";
+	    $host     = "localhost";
+        $user     = "informatic";
+        $password = "store";
+        $database = "informaticstore";
 
 	    $connection = new mysqli($host, $user, $password, $database);
 	    $connection->set_charset("utf8");

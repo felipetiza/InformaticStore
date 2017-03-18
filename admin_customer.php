@@ -52,14 +52,14 @@
 		}
 		if(isset($_POST["buttonEdit"])){
 			$userData = [];
-			$userData['id']      = $_POST['editID'];
-			$userData['name']    = $_POST['editName'];
-			$userData['surname'] = $_POST['editSurname'];
-			$userData['email']   = $_POST['editEmail'];
-			$userData['address'] = $_POST['editAddress'];
-			$userData['phone']   = $_POST['editPhone'];
-			$userData['type']    = $_POST['editType'];
-			$userData['user']    = $_POST['editUser'];
+			$userData['id']      = trim($_POST['editID']);
+			$userData['name']    = trim($_POST['editName']);
+			$userData['surname'] = trim($_POST['editSurname']);
+			$userData['email']   = trim($_POST['editEmail']);
+			$userData['address'] = trim($_POST['editAddress']);
+			$userData['phone']   = trim($_POST['editPhone']);
+			$userData['type']    = trim($_POST['editType']);
+			$userData['user']    = trim($_POST['editUser']);
 
 			// Store the original pass. In edit screen, If password isn't put, it saved
 			// the previous, else it stored the new one
@@ -79,14 +79,14 @@
 		if(isset($_POST["buttonAdd"])){
 			$userData = [];
 			$userData['id']      = 'NULL';
-			$userData['name']    = $_POST['addName'];
-			$userData['surname'] = $_POST['addSurname'];
-			$userData['email']   = $_POST['addEmail'];
-			$userData['address'] = $_POST['addAddress'];
-			$userData['phone']   = $_POST['addPhone'];
-			$userData['type']    = $_POST['addType'];
-			$userData['user']    = $_POST['addUser'];
-			$userData['pass']    = $_POST['addPass'];
+			$userData['name']    = trim($_POST['addName']);
+			$userData['surname'] = trim($_POST['addSurname']);
+			$userData['email']   = trim($_POST['addEmail']);
+			$userData['address'] = trim($_POST['addAddress']);
+			$userData['phone']   = trim($_POST['addPhone']);
+			$userData['type']    = trim($_POST['addType']);
+			$userData['user']    = trim($_POST['addUser']);
+			$userData['pass']    = trim($_POST['addPass']);
 			insertUser($connection, $userData);
 
 			refreshUsers($connection);

@@ -52,13 +52,13 @@
 			deleteProduct($connection, $_POST["editID"]);
 
 			$productData = [];
-			$productData['id']          = $_POST['editID'];
-			$productData['name']        = $_POST['editName'];
-			$productData['category']    = $_POST['editCategory'];
-			$productData['description'] = $_POST['editDescript'];
-			$productData['price']       = $_POST['editPrice'];
-			$productData['amount']      = $_POST['editAmount'];
-			$productData['urlImage']    = $_POST['editImg'];
+			$productData['id']          = trim($_POST['editID']);
+			$productData['name']        = trim($_POST['editName']);
+			$productData['category']    = trim($_POST['editCategory']);
+			$productData['description'] = trim($_POST['editDescript']);
+			$productData['price']       = trim($_POST['editPrice']);
+			$productData['amount']      = trim($_POST['editAmount']);
+			$productData['urlImage']    = trim($_POST['editImg']);
 			insertProduct($connection, $productData);
 
 			refreshProducts($connection);
@@ -98,11 +98,11 @@
 
 				$productData = [];
 				$productData['id']          = 'NULL';
-				$productData['name']        = $_POST['addName'];
-				$productData['category']    = $_POST['addCategory'];
-				$productData['description'] = $_POST['addDescript'];
-				$productData['price']       = $_POST['addPrice'];
-				$productData['amount']      = $_POST['addAmount'];
+				$productData['name']        = trim($_POST['addName']);
+				$productData['category']    = trim($_POST['addCategory']);
+				$productData['description'] = trim($_POST['addDescript']);
+				$productData['price']       = trim($_POST['addPrice']);
+				$productData['amount']      = trim($_POST['addAmount']);
 				$productData['urlImage']    = $target_file;
 				insertProduct($connection, $productData);
 
