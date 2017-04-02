@@ -24,16 +24,19 @@
 <body>
 
  	<?php
-		include_once "management.php";
+        // File is created when finish the installation. Contains database connection variables
+        file_exists("database.php") ? include_once "database.php" : header('Location: index.php');
+        include_once "management.php";
+        session_start();
 
-	    session_start();
-	    databaseConnection();
+        // The arguments variables are into database.php
+        databaseConnection(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 		checkAccesOption("User");
 
 	    // If user clicked on unlogin button
 		if(isset($_POST["unlogin"])){
 			session_destroy();
-			header('Location: '.MAIN_PAGE);
+			header('Location: index.php');
 		}
 
 		$listProductCategory = getAllProductCategory($connection);
