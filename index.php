@@ -3,8 +3,8 @@
     if(file_exists("database.php")){
 
     	// Delete the installation file
-    	if(file_exists("install.php"))
-    		unlink("install.php");
+    	// if(file_exists("install.php"))
+    	// 	unlink("install.php");
 
         header('Location: login.php');
     }else
