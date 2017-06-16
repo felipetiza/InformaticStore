@@ -87,7 +87,7 @@
 			$userData['email']   = trim($_POST['addEmail']);
 			$userData['address'] = trim($_POST['addAddress']);
 			$userData['phone']   = trim($_POST['addPhone']);
-			$userData['type']    = trim($_POST['addType']);
+			$userData['type']    = $_POST['addType'];
 			$userData['user']    = trim($_POST['addUser']);
 			$userData['pass']    = trim($_POST['addPass']);
 			insertUser($connection, $userData);
@@ -124,6 +124,7 @@
 			        	<a href="admin_customer.php">Customer</a>
 			        	<a href="admin_product.php">Products</a>
 			        	<a href="admin_order.php">Order</a>
+			        	<a href="admin_panel.php">Control Panel</a>
 						<form method="post"><input type="submit" name="unlogin" value="Logout"></form>
 			        </div>
 			    </div>

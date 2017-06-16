@@ -71,8 +71,8 @@ hr{ color: #ffffff80; }
   margin-left: auto;
 }
 #content{
-	display: flex;
-	flex-wrap: wrap;
+	/* display: flex; */
+	/* flex-wrap: nowrap; */
 	/* justify-content: space-around; */
 	/* border: 1px solid #555; */
 }
@@ -109,30 +109,29 @@ hr{ color: #ffffff80; }
  	margin-top: -5px;
 	margin-left: 5px;
 }
-table{
-	width: 520px;
-}
-.modal h1{
-    font-size: 18px;
-    margin-top: 3px;
-}
-.modal h2{
+h2{
     font-size: 14px;
     margin-top: 3px;
 }
-.modal hr{
-    margin-top: -5px;
-}
+#theme-box{
 
-#modalWindowSettings #theme-box{
-	display: flex;
 }
-#modalWindowSettings #theme1{
+#theme1{
 	margin-left: 10px;
 }
-#modalWindowSettings #theme2{
+#theme2{
+	margin-left: 10px;
+}
+#theme3{
+	margin-left: 10px;
+}
+#chart-box{
 
 }
-#modalWindowSettings #theme3{
-
+#piechart{
+	width: 600px;
+	height: 200px;
+}
+#buttonPDF{
+	float: right;
 }

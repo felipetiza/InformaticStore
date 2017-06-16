@@ -180,6 +180,7 @@
 			        	<a href="admin_customer.php">Customer</a>
 			        	<a href="admin_product.php">Products</a>
 			        	<a href="admin_order.php">Order</a>
+			        	<a href="admin_panel.php">Control Panel</a>
 						<form method="post"><input type="submit" name="unlogin" value="Logout"></form>
 			        </div>
 			    </div>

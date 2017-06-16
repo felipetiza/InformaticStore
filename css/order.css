@@ -70,11 +70,18 @@ hr{ color: #ffffff80; }
   margin-left: auto;
 }
 #content{
-/* 	display: flex;
-	flex-wrap: wrap; */
+ 	/* display: flex; */
 	/* justify-content: space-around; */
 	/* border: 1px solid #555; */
 	width: 100%;
+}
+#orderEmpty{
+	display: block;
+	text-align: center;
+	font-size: 20px;
+	font-weight: bold;
+	padding: 87px 0;
+	margin: 0 auto;
 }
 .accordion{
 	display: flex;
@@ -141,10 +148,4 @@ hr{ color: #ffffff80; }
 table{
 	width: 520px;
 }
-#orderEmpty{
-	display: flex;
-	font-size: 20px;
-	font-weight: bold;
-	padding: 87px 0;
-	margin: 0 auto;
-}
+

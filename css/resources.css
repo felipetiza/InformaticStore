@@ -48,15 +48,6 @@ input[type='email']{
     box-shadow: 0 0 0 1px #EEF5F7;
     border-radius: 6px;
 }
-.modal input[type='text'],
-.modal input[type='password'],
-.modal input[type='tel'],
-.modal input[type='file'],
-.modal input[type='email']{
-    padding: 1px 10px;
-    width: 180px;
-    height: 25px;
-}
 input[type='text']:focus,
 input[type='password']:focus,
 input[type='tel']:focus,
@@ -258,6 +249,15 @@ input[type='number']{
     box-shadow: 0px 5px 10px #B5C1C5,
                 0 0 0 10px #EEF5F7 inset;
 }
+.modal input[type='text'],
+.modal input[type='password'],
+.modal input[type='tel'],
+.modal input[type='file'],
+.modal input[type='email']{
+    padding: 1px 10px;
+    width: 180px;
+    height: 25px;
+}
 #cartEmpty{
     display: flex;
     font-size: 20px;
@@ -337,11 +337,17 @@ table input[type="submit"]{
     width: 70px;
 }
 
+/* ----------------------------------------------- */
+/* Theme
+/* ----------------------------------------------- */
 
-
-
-
-
-
-
-
+.theme1{
+    background: #E2ECEE;
+}
+.theme2{
+    background: #838ca1;
+    filter: grayscale(100%);
+}
+.theme3{
+    background: #c1cfc6;
+}

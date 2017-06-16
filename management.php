@@ -196,7 +196,7 @@
 	}
 
 	function insertValuesCustomer($connection){
-		$insertTable = [];
+		$insertValue = [];
 
 		// Encrypted passwords with sha1 algorithm
 		// Pass: 1234
@@ -240,6 +240,17 @@
 	        }else
 	            echo "Wrong Query";
         }
+
+        for($i=0;$i<count($insertValue);$i++){
+		    if ($result = $connection->query($insertValue[$i])){
+	            if (!$result)
+	                echo "Impossible to insert the values of customer table";
+	        }else
+	            echo "Wrong Query";
+        }
+
+
+
 	}
 
 	function insertValuesProduct($connection){
@@ -1029,7 +1040,7 @@
 
 
 	// Check if user is logged and access only allowed pages
-	function checkAccesOption($pageBelongs){
+	function checkAccesOption($pageBelongs){	// User, Admin, Both
 		if(isset($_SESSION["userID"])){
             if($_SESSION["userType"] != $pageBelongs){
             	session_destroy();
@@ -1063,26 +1074,6 @@
         echo "<script>loadToast();</script>";
 	}
 
-	function toggleDesignCart(){
-		global $cartProductsNumber;
-
-		if($cartProductsNumber == 0){
-			echo "<script>";
-			echo "document.addEventListener('load', function(){";
-			echo "document.getElementById('inner').style.display = 'none';";
-			echo "document.getElementById('cartEmpty').style.display = 'flex';";
-			echo "}, true);";
-			echo "</script>";
-		}else{
-			echo "<script>";
-			echo "document.addEventListener('load', function(){";
-			echo "document.getElementById('inner').style.display = 'inline';";
-			echo "document.getElementById('cartEmpty').style.display = 'none';";
-			echo "}, true);";
-			echo "</script>";
-		}
-	}
-
 	function shortenStrings($string, $maxNumberCharacter){
 		if(strlen($string) >= $maxNumberCharacter)
 			echo substr($string, 0, $maxNumberCharacter)."...";
@@ -1090,29 +1081,39 @@
 			echo $string;
 	}
 
-	// function uploadImg(){
-	// 	$valid       = true;
-	// 	$tmp_file    = $_FILES['addImg']['tmp_name'];
-	// 	$target_dir  = "resources/img/product/";
-	// 	$target_file = strtolower($target_dir . basename($_FILES['addImg']['name']));
+	function changeTheme(){
 
- //        if (file_exists($target_file)) {
- //            echo "Sorry, file already exists.";
- //            $valid = false;
- //        }
+		if($_SESSION["userTheme"] == "Fresh"){
+			echo "<script>
+					window.onload = function(){
+						var element = document.getElementById('theme1');
+						if(element != undefined)
+							element.setAttribute('checked', 'checked');
 
- //        if($_FILES['addImg']['size'] > (2048000)) {
- //            $valid = false;
-	//         echo 'Oops!  Your file\'s size is to large.';
- //        }
+						document.getElementsByTagName('body')[0].classList.add('theme1');
+					};
+				  </script>";
+		}
+		else if($_SESSION["userTheme"] == "Dark"){
+			echo "<script>
+					window.onload = function(){
+						var element = document.getElementById('theme2');
+						if(element != undefined)
+							element.setAttribute('checked', 'checked');
 
- //        $file_extension = pathinfo($target_file, PATHINFO_EXTENSION);
- //        if ($file_extension != "jpg" &&
- //            $file_extension != "jpeg" &&
- //            $file_extension != "png" &&
- //            $file_extension != "gif") {
- //            $valid = false;
- //            echo "Only JPG, JPEG, PNG & GIF files are allowed";
- //        }
-	// }
+						document.getElementsByTagName('body')[0].classList.add('theme2');
+					};
+				  </script>";
+		}else if($_SESSION["userTheme"] == "Colorful"){
+			echo "<script>
+					window.onload = function(){
+						var element = document.getElementById('theme3');
+						if(element != undefined)
+							element.setAttribute('checked', 'checked');
+
+						document.getElementsByTagName('body')[0].classList.add('theme3');
+					};
+				  </script>";
+		}
+	}
 ?>

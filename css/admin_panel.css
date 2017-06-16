@@ -96,85 +96,16 @@ body{
   	float: right;
 	margin-top: 8px;
 }
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: rgba(0,0,0,0.4);
-}
-.modal-content {
-    margin: 5% auto;
-    padding: 20px 45px;
-    border: 1px solid #888;
-    width: 525px;
-    border: 1px solid #CED5D7;
-    border-radius: 6px;
-    background: #ffff;
-    box-shadow: 0px 5px 10px #B5C1C5,
-                0 0 0 10px #EEF5F7 inset;
-}
-.modal-content #down{
-	width: 100%;
-	/*! border: 1px solid red; */
-}
-.modal-content form{
-	margin: 0 auto;
-	width: 325px;
-}
-.modal-content span{
-	width: 100px;
-	display: inline-block;
-}
-.modal-content input[type="text"],
-input[type="email"],
-input[type="tel"],
-input[type="radio"]{
-	margin-top: 5px;
-}
-.modal-content h1{
-	font-size: 18px;
-	margin-top: 3px;
-}
-.modal-content hr{
-	margin-top: -5px;
-}
-.modal-content input[type='submit']{
-	width: 150px;
-	height: 32px;
-	font-weight: bold;
-	/*! margin: 15px 75px; */
-	margin-left: 75px;
-	margin-top: 25px;
-	margin-bottom: 10px;
-}
-#radioBox{
-  display: flex;
-	flex-direction: column;
-	padding: 10px 0px;
-}
-#radioBox span{
-  margin-top: 7px;
-}
-#labelLeft{
-	margin-top: -25px;
-	margin-left: 110px;
-}
-#labelRight{
-	margin-left: 110px;
-}
-#radioLeft{
-	margin-left: 26px;
+#chart-box{
 
 }
-#radioRight{
-	margin-left: 15px;
+#piechart{
+	width: 600px;
+	height: 200px;
 }
-
+#buttonPDF{
+	float: right;
+}
 
 
 

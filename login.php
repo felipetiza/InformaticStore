@@ -47,8 +47,9 @@
                 $query->fetch();
 
                 if(isset($userID)){
-                    $_SESSION["userID"]   = $userID;
-                    $_SESSION["userType"] = $userType;
+                    $_SESSION["userID"]    = $userID;
+                    $_SESSION["userType"]  = $userType;
+                    $_SESSION["userTheme"] = "Fresh";
 
                     if($userType == "Admin")
                         header('Location: admin.php');

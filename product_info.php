@@ -76,12 +76,10 @@
 		}
 		if(isset($_POST["delete"])){
 			deleteProductFromCart($connection, $_POST["cartProductID"]);
-			showCart();
 			refreshCart($connection);
 		}
 		if(isset($_POST["clear"])){
 			clearCart($connection);
-			showCart();
 			refreshCart($connection);
 		}
 		if(isset($_POST["buy"]) || isset($_POST["buyDirectly"])){
@@ -109,7 +107,7 @@
 			refreshCart($connection);
             showToast("Purchase made with success");
 		}
-		toggleDesignCart();
+		changeTheme();
 	?>
 
 	<div id="wrapper">
@@ -151,6 +149,7 @@
 			        <div class="dropdown-content-user">
 			        	<a id="openModalWindow2">Shopping Cart</a>
 			        	<a href="order.php">Orders</a>
+			        	<a href="settings.php">Settings</a>
 						<form method="post"><input type="submit" name="unlogin" value="Logout"></form>
 			        </div>
 			    </div>
@@ -207,9 +206,11 @@
 		<!-- Modal Window -->
 		<div id="modalWindowCart" class="modal">
 			<div class="modal-content">
-				<p id="cartEmpty">The cart is empty</p>
-				<div id="inner">
-				    <span id="closeModalCart" class="close">&times;</span>
+				<?php if($cartProductsNumber == 0){ ?>
+			    	<label id="closeModalCart" class="close">&times;</label>
+					<p id="cartEmpty">The cart is empty</p>
+				<?php }else{ ?>
+				    <label id="closeModalCart" class="close">&times;</label>
 				    <p>(<?php echo $cartProductsNumber; ?>) Products in your shopping cart</p>
 						<table>
 						<tr>
@@ -244,9 +245,10 @@
 						<input class="standardButton" id="btnClear" type='submit' name='clear' value='Clear'>
 						<input class="standardButton" id="btnBuy" type='submit' name='buy' value='Buy'>
 					</form>
-				</div>
+				<?php } ?>
 		  	</div>
 		</div>
+
 	</div>
 </body>
 </html>
