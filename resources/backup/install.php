@@ -73,20 +73,20 @@
         <div id="down">
 	        <form method="post">
 	            <div>
+	                <span>Database host</span>
+	                <input name="databaseHost" type="text" maxlength="45" placeholder="localhost" required>
+	            </div>
+	            <div>
 	                <span>Database name</span>
-	                <input name="databaseName" type="text" maxlength="25" value="informaticstore" required>
+	                <input name="databaseName" type="text" maxlength="25" placeholder="informaticstore" required>
 	            </div>
 	            <div>
 	                <span>User</span>
-	                <input name="databaseUser" type="text" maxlength="50" value="informatic" required>
+	                <input name="databaseUser" type="text" maxlength="50" placeholder="informatic" required>
 	            </div>
 	            <div>
 	                <span>Password</span>
-	                <input name="databasePassword" type="text" maxlength="45" value="store" required>
-	            </div>
-	            <div>
-	                <span>Database host</span>
-	                <input name="databaseHost" type="text" maxlength="45" value="localhost" required>
+	                <input name="databasePassword" type="password" maxlength="45" placeholder="store" required>
 	            </div>
 	            <br/>
 

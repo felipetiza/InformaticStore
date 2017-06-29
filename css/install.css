@@ -39,7 +39,7 @@ span{
 hr{
 	margin-top: -5px;
 }
-input[type="text"]{
+input[type="text"], input[type="password"]{
 	margin-top: 5px;
     padding: 1px 10px;
     width: 180px;
@@ -59,8 +59,5 @@ input[type='submit']{
 	height: 35px;
 }
 #btnInstall{
-	float: left;
-}
-#btnContinue{
-	float: right;
+	margin-left: 42%;
 }

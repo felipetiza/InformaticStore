@@ -57,15 +57,6 @@
 // ██████╔╝██║  ██║   ██║   ██║  ██║██████╔╝██║  ██║███████║███████╗
 // ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝
 
-	// function databaseConnection($host     = "mysql.hostinger.es",
-	// 							$user     = "u449232361_inf",
-	// 							$password = "J9KMLLpWt2JmNmys09",
-	// 							$database = "u449232361_store"){
-
-	// function databaseConnection($host     = "localhost",
-	// 							$user     = "informatic",
-	// 							$password = "store",
-	// 							$database = "informaticstore"){
 
 	// Use the connection variables of the database - database.php
 	function databaseConnection($host, $user, $password, $database){
@@ -75,6 +66,7 @@
 		// Install.php - When database connection is wrong, it showed this error always
 		error_reporting(E_ALL ^ E_WARNING);
 
+	    // $connection = new mysqli('localhost', 'root', '', 'informaticstore');
 	    $connection = new mysqli($host, $user, $password, $database);
     	$connection->set_charset("utf8");
 
@@ -89,7 +81,7 @@
 
 	function insertCustomerTable($connection){
 		$insertTable = "
-			CREATE TABLE customer
+			CREATE TABLE IF NOT EXISTS customer
 			(
 				idcustomer		INT AUTO_INCREMENT NOT NULL,
 				name			VARCHAR(25),
@@ -113,7 +105,7 @@
 
 	function insertProductTable($connection){
 		$insertTable = "
-			CREATE TABLE product
+			CREATE TABLE IF NOT EXISTS product
 			(
 				idproduct		INT AUTO_INCREMENT NOT NULL,
 				name			VARCHAR(80),
@@ -136,7 +128,7 @@
 	function insertOrderTable($connection){
 		// It gives error if the name is ORDER
 		$insertTable = "
-			CREATE TABLE order2
+			CREATE TABLE IF NOT EXISTS order2
 			(
 			    idorder         INT AUTO_INCREMENT NOT NULL,
 			    idcustomer      INT,
@@ -157,7 +149,7 @@
 
 	function insertCartTable($connection){
 		$insertTable = "
-			CREATE TABLE shopping_cart
+			CREATE TABLE IF NOT EXISTS shopping_cart
 			(
 				idcustomer		INT,
 				idproduct		INT,
@@ -177,7 +169,7 @@
 
 	function insertContainTable($connection){
 		$insertTable = "
-			CREATE TABLE contain
+			CREATE TABLE IF NOT EXISTS contain
 			(
 				idorder			INT,
 				idproduct		INT,
@@ -240,16 +232,6 @@
 	        }else
 	            echo "Wrong Query";
         }
-
-        for($i=0;$i<count($insertValue);$i++){
-		    if ($result = $connection->query($insertValue[$i])){
-	            if (!$result)
-	                echo "Impossible to insert the values of customer table";
-	        }else
-	            echo "Wrong Query";
-        }
-
-
 
 	}
 

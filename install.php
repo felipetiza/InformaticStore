@@ -34,6 +34,13 @@
 
             $connect = databaseConnection($dbHost, $dbUser, $dbPass, $dbName);
             if($connect == "true"){
+
+            	// Create a file with the connection variables of the database
+            	$dataFile = "<?php\n\tconst DB_NAME = '$dbName';\n\tconst DB_USER = '$dbUser';\n\tconst DB_PASS = '$dbPass';\n\tconst DB_HOST = '$dbHost';\n?>";
+            	$file = fopen("database.php", "w") or die("Unable to create file of database");
+        		fwrite($file, $dataFile);
+        		Fclose($file);
+
 				insertCustomerTable($connection);
 				insertProductTable($connection);
 				insertOrderTable($connection);
@@ -45,21 +52,9 @@
 					insertValuesProduct($connection);
             	}
 
-            	// Create a file with the connection variables of the database
-            	$dataFile = "<?php\n\tconst DB_NAME = '$dbName';\n\tconst DB_USER = '$dbUser';\n\tconst DB_PASS = '$dbPass';\n\tconst DB_HOST = '$dbHost';\n?>";
-
-            	$file = fopen("database.php", "w");
-        		fwrite($file, $dataFile);
-        		Fclose($file);
-
-		    	showToast("Installation completed correctly");
+		    	// showToast("Installation completed correctly");
+		    	header('Location: index.php');
             }
-        }
-        if (isset($_POST["buttonContinue"])) {
-       	    if(file_exists("database.php"))
-				header('Location: index.php');
-        	else
-		    	showToast("You need to complete the installation");
         }
     ?>
 
@@ -73,20 +68,20 @@
         <div id="down">
 	        <form method="post">
 	            <div>
+	                <span>Database host</span>
+	                <input name="databaseHost" type="text" maxlength="45" placeholder="localhost" required>
+	            </div>
+	            <div>
 	                <span>Database name</span>
-	                <input name="databaseName" type="text" maxlength="25" value="informaticstore" required>
+	                <input name="databaseName" type="text" maxlength="25" placeholder="informaticstore" required>
 	            </div>
 	            <div>
 	                <span>User</span>
-	                <input name="databaseUser" type="text" maxlength="50" value="informatic" required>
+	                <input name="databaseUser" type="text" maxlength="50" placeholder="informatic" required>
 	            </div>
 	            <div>
 	                <span>Password</span>
-	                <input name="databasePassword" type="text" maxlength="45" value="store" required>
-	            </div>
-	            <div>
-	                <span>Database host</span>
-	                <input name="databaseHost" type="text" maxlength="45" value="localhost" required>
+	                <input name="databasePassword" type="password" maxlength="45" placeholder="store" required>
 	            </div>
 	            <br/>
 
@@ -96,7 +91,6 @@
 	            <br/>
 	            <div id="buttons">
 	                <input id="btnInstall" type="submit" name="buttonInstall" class="standardButton" value="Start installation">
-	                <input id="btnContinue" type="submit" name="buttonContinue" class="standardButton" value="Continue">
 	            </div>
 	        </form>
 	    </div>
